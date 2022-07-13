@@ -1,4 +1,4 @@
-package it.seba.metodologie.player;
+package it.seba.metodologie.juno.player;
 
 import java.util.List;
 

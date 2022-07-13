@@ -7,13 +7,13 @@ import it.seba.metodologie.juno.card.UnoCard;
 import it.seba.metodologie.juno.card.UnoDeck;
 import it.seba.metodologie.juno.card.UnoDeckSimpleFactory;
 import it.seba.metodologie.juno.card.UnoValue;
-import it.seba.metodologie.player.NonPlayerCharacter;
-import it.seba.metodologie.player.NonPlayerCharacterDrop;
-import it.seba.metodologie.player.HumanDrop;
-import it.seba.metodologie.player.HumanPlayer;
-import it.seba.metodologie.player.Player;
-import it.seba.metodologie.player.PriorityColorDropBehavior;
-import it.seba.metodologie.player.UnoPlayers;
+import it.seba.metodologie.juno.player.HumanDrop;
+import it.seba.metodologie.juno.player.HumanPlayer;
+import it.seba.metodologie.juno.player.NonPlayerCharacter;
+import it.seba.metodologie.juno.player.NonPlayerCharacterDrop;
+import it.seba.metodologie.juno.player.Player;
+import it.seba.metodologie.juno.player.PriorityColorDropBehavior;
+import it.seba.metodologie.juno.player.UnoPlayers;
 
 public class JUno {
 
