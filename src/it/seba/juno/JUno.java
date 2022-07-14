@@ -1,18 +1,18 @@
 package it.seba.juno;
 
-import java.util.ArrayDeque;
 
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.card.UnoValue;
 import it.seba.juno.deck.DiscardPile;
 import it.seba.juno.deck.UnoDeck;
 import it.seba.juno.deck.UnoDeckSimpleFactory;
-import it.seba.juno.player.HumanDrop;
+import it.seba.juno.player.HumanDropAction;
 import it.seba.juno.player.HumanPlayer;
-import it.seba.juno.player.NonPlayerCharacter;
-import it.seba.juno.player.NonPlayerCharacterDrop;
+import it.seba.juno.player.MostColorStrategy;
+import it.seba.juno.player.NpcPlayer;
+import it.seba.juno.player.NpcDropAction;
 import it.seba.juno.player.Player;
-import it.seba.juno.player.PriorityColorDropBehavior;
+import it.seba.juno.player.ColorDropStrategy;
 import it.seba.juno.player.UnoPlayers;
 
 public class JUno {
@@ -53,8 +53,8 @@ public class JUno {
 
         // players
         HumanPlayer player1 = new HumanPlayer("Sebastian");
-        NonPlayerCharacter npc1 = new NonPlayerCharacter("NPC1", new PriorityColorDropBehavior(discardPile));
-        NonPlayerCharacter npc2 = new NonPlayerCharacter("NPC2", new PriorityColorDropBehavior(discardPile));
+        NpcPlayer npc1 = new NpcPlayer("NPC1", new ColorDropStrategy(discardPile), new MostColorStrategy());
+        NpcPlayer npc2 = new NpcPlayer("NPC2", new ColorDropStrategy(discardPile), new MostColorStrategy());
         //NonPlayerCharacter npc3 = new NonPlayerCharacter("NPC3", new PriorityColorDropBehavior(discardPile));
 
         UnoPlayers ps = new UnoPlayers();
@@ -62,7 +62,8 @@ public class JUno {
         ps.add(player1);
         ps.add(npc1);
         ps.add(npc2);
-        // ps.add(npc3);
+
+        //npc2.changeColor();
 
         // cards to players
         for (int i = 0; i < 7; i++) {
@@ -77,6 +78,10 @@ public class JUno {
             npc2.takeCard(deck.dealCard());
         }
 
+        
+        System.out.println(npc2.changeColor());
+        System.out.println();
+        
         // drop first card to discard pile
         discardPile.dropToPile(deck.dealCard());
 
@@ -124,9 +129,9 @@ public class JUno {
             }
 
             if (p.isNpc())
-                ((NonPlayerCharacterDrop) p).dropCard();
+                ((NpcDropAction) p).dropCard();
             else
-                ((HumanDrop) p).dropCard(0);
+                ((HumanDropAction) p).dropCard(0);
 
             System.out.println(p + " " + ps.getOrderOfPlay());
 
@@ -139,65 +144,5 @@ public class JUno {
 
             }
         }
-
-        /*
-         * players.offer(player1); players.offer(npc1); players.offer(npc2);
-         * players.offer(npc3);
-         * 
-         * printPlayerCards(player1, npc1, npc2);
-         * 
-         * for (int i = 0; i < 10; i++) { PlayerInterface currentPlayer =
-         * players.poll();
-         * 
-         * System.out.println(currentPlayer.getName());
-         * 
-         * players.offer(currentPlayer);
-         * 
-         * if (i == 4) { System.out.println("Switch Directions");
-         * switchDirection(players, players.size()); } }
-         */
-
-        // for (UnoCard cc : discardPile) {
-
-        // }
-
-       /* for (int i = 0; i < 10; i++) {
-
-            discardPile.dropToPile(deck.dealCard());
-            // System.out.println();
-
-            // UnoCard cardInDiscardCard = discardPile.topCard();
-
-            // System.out.println(cardInDiscardCard.getColor() + " " +
-            // cardInDiscardCard.getValue());
-
-        }*/
-
-        /*
-         * Player test = new Player("Sebastian"); test.takeCard(deck.card());
-         * test.takeCard(deck.card()); test.takeCard(deck.card());
-         * test.takeCard(deck.card()); test.takeCard(deck.card());
-         * test.takeCard(deck.card()); test.takeCard(deck.card());
-         * test.takeCard(deck.card()); test.takeCard(deck.card());
-         * test.takeCard(deck.card()); test.takeCard(deck.card());
-         * test.takeCard(deck.card());
-         * 
-         * for (UnoCard card : test.getCards()) {
-         * 
-         * System.out.println(card.getColor() + " " + card.getValue()); }
-         */
-
-        // test.dropCard(5);
-        // test.dropCard(0);
-        // test.dropCard(0);
-
-        // System.out.println();
-
-        // for (UnoCard card : test.getCards()) {
-
-        // System.out.println(card.getColor() + " " + card.getValue());
-        // }
-
     }
-
 }

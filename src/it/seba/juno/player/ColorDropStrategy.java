@@ -1,17 +1,12 @@
 package it.seba.juno.player;
 
-import java.util.List;
-
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.deck.DiscardPile;
 
-public class PriorityColorDropBehavior implements DropBehavior {
+public class ColorDropStrategy extends AbstractDropStrategy {
 
-    private List<UnoCard> cards;
-    private DiscardPile discardPile;
-
-    public PriorityColorDropBehavior(DiscardPile discardPile) {
-        this.discardPile = discardPile;
+    public ColorDropStrategy(DiscardPile dPile) {
+        super(dPile);
     }
 
     @Override
@@ -19,21 +14,18 @@ public class PriorityColorDropBehavior implements DropBehavior {
 
         for (UnoCard c : cards) {
             if (discardPile.cardMatchColor(c)) {
+                cards.remove(c);
                 return c;
             }
         }
 
         for (UnoCard c : cards) {
             if (discardPile.cardMatchValue(c)) {
+                cards.remove(c);
                 return c;
             }
         }
 
         return null;
-    }
-
-    @Override
-    public void setPlayerCards(List<UnoCard> cards) {
-        this.cards = cards;
     }
 }

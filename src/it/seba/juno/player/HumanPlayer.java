@@ -4,7 +4,7 @@ import it.seba.juno.card.UnoCard;
 
 //import javax.swing.Icon;
 
-public class HumanPlayer extends AbstractPlayer implements HumanDrop {
+public class HumanPlayer extends AbstractPlayer implements HumanDropAction {
 
     public HumanPlayer(String name) {
         super(name);

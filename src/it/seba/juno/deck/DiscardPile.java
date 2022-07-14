@@ -25,6 +25,11 @@ public class DiscardPile {
             return true;
         }
 
+        // both have a color
+        if (!(topCard.hasColor() && card.hasColor())) {
+            return false;
+        }
+
         // same color
         if (topCard.getColor().equals(card.getColor())) {
             return true;
@@ -40,10 +45,17 @@ public class DiscardPile {
     }
 
     public boolean cardMatchColor(UnoCard card) {
+
+        // both have a color
+        if (!(topCard.hasColor() && card.hasColor())) {
+            return false;
+        }
+
         // same color
         if (topCard.getColor().equals(card.getColor())) {
             return true;
         }
+
         return false;
     }
 

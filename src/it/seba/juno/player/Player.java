@@ -12,6 +12,8 @@ public interface Player {
 
     public void takeCard(UnoCard card);
 
+    public int getCardsNumber();
+    
     public List<UnoCard> getCards();
 
     public boolean isNpc();

@@ -2,7 +2,7 @@ package it.seba.juno.player;
 
 import it.seba.juno.card.UnoCard;
 
-public interface HumanDrop {
+public interface HumanDropAction extends PlayerAction {
 
     UnoCard dropCard(int index);
 }
