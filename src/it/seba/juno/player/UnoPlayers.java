@@ -2,14 +2,14 @@ package it.seba.juno.player;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 public class UnoPlayers implements Iterable<Player> {
 
     // direction default clockwise
     private boolean clockwise = true;
-    
     private ArrayDeque<Player> players;
-    
+
     public UnoPlayers() {
         players = new ArrayDeque<Player>();
     }
@@ -17,15 +17,23 @@ public class UnoPlayers implements Iterable<Player> {
     public boolean getOrderOfPlay() {
         return clockwise;
     }
-    
+
     public void add(Player player) {
         players.offer(player);
     }
-    
+
+    public int number() {
+        return players.size();
+    }
+
+    public void forEach(Consumer<? super Player> c) {
+        players.forEach(c);
+    }
+
     public void switchDirection() {
 
         clockwise = clockwise ? false : true;
-        
+
         ArrayDeque<Player> tmp = new ArrayDeque<Player>();
 
         for (int i = 1; i < players.size(); i++) {
@@ -42,7 +50,7 @@ public class UnoPlayers implements Iterable<Player> {
 
         tmp = null;
     }
-    
+
     @Override
     public Iterator<Player> iterator() {
         return new Iterator<Player>() {
@@ -50,9 +58,11 @@ public class UnoPlayers implements Iterable<Player> {
             @Override
             public boolean hasNext() {
 
-                for (Player p : players) {
-                    if (p.isWinner()) return false;
-                }
+                /*for (Player p : players) {
+                    if (p.isWinner()) {
+                        return false;
+                    }
+                }*/
 
                 return true;
             }

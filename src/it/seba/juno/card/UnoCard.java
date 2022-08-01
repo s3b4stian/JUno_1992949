@@ -68,4 +68,15 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
         return -o.getValue().compareTo(getValue());
     }
 
+    @Override
+    public String toString() {
+        
+        if (hasColor) {
+            return value.toString() + " ["+color.toString()+"]";
+        }
+        
+        return value.toString();
+        
+    }
+    
 }

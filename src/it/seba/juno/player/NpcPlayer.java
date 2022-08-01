@@ -9,7 +9,7 @@ public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChang
 
     DropStrategy dropStrategy;
     ColorStrategy changeColorStrategy;
-    
+
     public NpcPlayer(String name, DropStrategy dStrategy, ColorStrategy cStrategy) {
         super(name);
         dropStrategy = dStrategy;

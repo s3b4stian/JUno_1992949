@@ -1,115 +1,53 @@
 package it.seba.juno;
 
-//import java.util.NoSuchElementException;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.card.UnoColor;
 import it.seba.juno.card.UnoValue;
 import it.seba.juno.deck.DiscardPile;
 import it.seba.juno.deck.UnoDeck;
-import it.seba.juno.deck.UnoDeckSimpleFactory;
-import it.seba.juno.player.HumanDropAction;
-import it.seba.juno.player.HumanPlayer;
-import it.seba.juno.player.MostColorStrategy;
+//import it.seba.juno.player.HumanDropAction;
 import it.seba.juno.player.NpcChangeColorAction;
-import it.seba.juno.player.NpcPlayer;
 import it.seba.juno.player.NpcDropAction;
 import it.seba.juno.player.Player;
-import it.seba.juno.player.ColorDropStrategy;
 import it.seba.juno.player.UnoPlayers;
 
-public class JUno {
+public class UnoGame {
 
-    /*
-     * public static void printPlayerCards(Player... players) { for (Player p :
-     * players) { System.out.println("\n" + p.getName() + " cards:"); for (UnoCard
-     * card : p.getCards()) {
-     * 
-     * System.out.println(card); } } }
-     */
+    UnoDeck deck;
+    DiscardPile discardPile;
+    //UnoColor curentColor;
+    boolean skipped = true;
+    UnoPlayers players;
+    Player dealer;
+    
+    public UnoGame(UnoPlayers p, UnoDeck d, DiscardPile dp) {
+        players = p;
+        deck = d;
+        discardPile = dp;
+    }
 
-    /*
-     * public static void switchDirection(ArrayDeque<Player> p, int n) {
-     * 
-     * ArrayDeque<Player> tmp = new ArrayDeque<Player>();
-     * 
-     * for (int i = 1; i < n; i++) { p.offer(p.poll()); }
-     * 
-     * while (!p.isEmpty()) { tmp.push(p.poll()); }
-     * 
-     * while (!tmp.isEmpty()) { p.offer(tmp.pop()); }
-     * 
-     * tmp = null; }
-     */
-
-    public static void main(String[] args) {
-
-        System.out.println("Hello JUno");
-
-        // uno deck
-        UnoDeck deck = new UnoDeckSimpleFactory().makeUnoDeck();
-        // deck discard pile
-        DiscardPile discardPile = new DiscardPile();
-        // ArrayDeque<Player> players = new ArrayDeque<Player>();
-
-        // players
-        // HumanPlayer player1 = new HumanPlayer("Sebastian");
-        //NpcPlayer player1 = new NpcPlayer("NPC0", new ColorDropStrategy(discardPile), new MostColorStrategy());
-        //NpcPlayer npc1 = new NpcPlayer("NPC1", new ColorDropStrategy(discardPile), new MostColorStrategy());
-        //NpcPlayer npc2 = new NpcPlayer("NPC2", new ColorDropStrategy(discardPile), new MostColorStrategy());
-        // NonPlayerCharacter npc3 = new NonPlayerCharacter("NPC3", new
-        // PriorityColorDropBehavior(discardPile));
-
-        UnoPlayers ps = new UnoPlayers();
-
-        //ps.add(new HumanPlayer("Sebastian"));
-        ps.add(new NpcPlayer("NPC0", new ColorDropStrategy(discardPile), new MostColorStrategy()));
-        ps.add(new NpcPlayer("NPC1", new ColorDropStrategy(discardPile), new MostColorStrategy()));
-        ps.add(new NpcPlayer("NPC2", new ColorDropStrategy(discardPile), new MostColorStrategy()));
-
-        UnoGame game = new UnoGame(ps, deck, discardPile);
+    public void randomDealer() {
         
-        game.dealCardsToPlayers();
-        game.start();
-        
-        //game.pCards();
-        
-        
-        
-        // npc2.changeColor();
+    }
 
-        //for (Player p : ps) { 
-            
-        //}
+    public void dealCardsToPlayers() {
+        players.forEach(p -> { for (int i = 0; i < 7; i++) { p.takeCard(deck.dealCard()); }});
+    }
+    
+    public void start() {
         
-        // cards to players
-       /* for (int i = 0; i < 7; i++) {
-            player1.takeCard(deck.dealCard());
-        }
-
-        for (int i = 0; i < 7; i++) {
-            npc1.takeCard(deck.dealCard());
-        }
-
-        for (int i = 0; i < 7; i++) {
-            npc2.takeCard(deck.dealCard());
-        }
-
         // drop first card to discard pile
         discardPile.dropToPile(deck.dealCard());
 
-        boolean skipped = true;
-        // boolean switched = true;
-        UnoColor color = null;
-
-        for (Player p : ps) {
+        for (Player p : players) {
 
             UnoCard currentTopCard = discardPile.getTopCard();
 
-            if (currentTopCard.hasColor()){
-                color = currentTopCard.getColor();
-            }
+            //if (currentTopCard.hasColor()){
+            //    curentColor = currentTopCard.getColor();
+            //}
 
             //if (color == null) {
             //    color = currentTopCard.getColor();
@@ -117,19 +55,19 @@ public class JUno {
         
             System.out.println();
             System.out.println("Pile: " + currentTopCard);
-            System.out.println("Current color: " + color);
+            System.out.println("Current color: " + discardPile.getCurrentColor());
             System.out.println("Current player: " + p.getName());
 
-            if (ps.getOrderOfPlay()) {
+            if (players.getOrderOfPlay()) {
                 System.out.println("Play: clockwise");
             } else {
                 System.out.println("Play: anticlockwise");
             }
 
-            if (deck.getCardsInDeck() < 5) {
-                System.out.println("need refill");
+            //if (deck.getCardsInDeck() < 5) {
+            //    System.out.println("need refill");
                 // deck.refill(discardPile.reset());
-            }
+            //}
 
 
             if (currentTopCard.getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
@@ -196,15 +134,17 @@ public class JUno {
                     if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
                             || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
                         
-                            color = ((NpcChangeColorAction) p).changeColor();
+                            UnoColor curentColor = ((NpcChangeColorAction) p).changeColor();
                             
-                            System.out.println(p.getName() + " change color to: " + color);
+                            discardPile.setCurrentColor(curentColor);
+                            
+                            System.out.println(p.getName() + " change color to: " + curentColor);
                         }
                 
                 }
                 
             } else {
-                boolean next = true;
+                /*boolean next = true;
 
                 while (next) {
 
@@ -232,26 +172,33 @@ public class JUno {
                             p.takeCard(dropped);
                         }
                     }
-                }
+                }*/
             }
 
             // switch direction, from the next player
             if (discardPile.getTopCard().getValue().equals(UnoValue.REVERSE)) {
-                ps.switchDirection();
+                players.switchDirection();
             }
 
             skipped = true;
 
             System.out.println();
 
-        }*/
-
-        
-        /*for (Player p : ps) {
             if (p.isWinner()) {
-                System.out.println(p.getName() + " Win ");
                 break;
             }
-        }*/
+            
+        }
     }
+    
+    /*public void pCards() {
+        
+        players.forEach(p -> {  
+            System.out.println(p.getName());
+            for (UnoCard card : p.getCards()) {
+            System.out.println(card);
+        }});
+        
+    }*/
+    
 }

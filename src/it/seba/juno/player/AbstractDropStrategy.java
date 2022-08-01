@@ -8,7 +8,7 @@ import it.seba.juno.deck.DiscardPile;
 public abstract class AbstractDropStrategy implements DropStrategy {
 
     protected List<UnoCard> cards;
-    protected DiscardPile discardPile;
+    protected DiscardPile discardPile;    
     
     public AbstractDropStrategy(DiscardPile dPile) {
         discardPile = dPile;
