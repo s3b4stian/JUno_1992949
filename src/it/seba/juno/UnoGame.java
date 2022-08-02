@@ -17,11 +17,11 @@ public class UnoGame {
 
     UnoDeck deck;
     DiscardPile discardPile;
-    //UnoColor curentColor;
+    // UnoColor curentColor;
     boolean skipped = true;
     UnoPlayers players;
     Player dealer;
-    
+
     public UnoGame(UnoPlayers p, UnoDeck d, DiscardPile dp) {
         players = p;
         deck = d;
@@ -29,15 +29,19 @@ public class UnoGame {
     }
 
     public void randomDealer() {
-        
+
     }
 
     public void dealCardsToPlayers() {
-        players.forEach(p -> { for (int i = 0; i < 7; i++) { p.takeCard(deck.dealCard()); }});
+        players.forEach(p -> {
+            for (int i = 0; i < 7; i++) {
+                p.takeCard(deck.dealCard());
+            }
+        });
     }
-    
+
     public void start() {
-        
+
         // drop first card to discard pile
         discardPile.dropToPile(deck.dealCard());
 
@@ -45,26 +49,16 @@ public class UnoGame {
             deck.refill(discardPile.removeTopCard());
             discardPile.dropToPile(deck.dealCard());
         }
-        
-        
+
         for (Player p : players) {
 
             UnoCard currentTopCard = discardPile.getTopCard();
 
-            //if (currentTopCard.hasColor()){
-            //    curentColor = currentTopCard.getColor();
-            //}
-
-            //if (color == null) {
-            //    color = currentTopCard.getColor();
-            //}
-        
             System.out.println();
             System.out.println("Pile: " + currentTopCard);
             System.out.println("Current color: " + discardPile.getCurrentColor());
             System.out.println("Current player: " + p.getName());
 
-            
             if (players.getOrderOfPlay()) {
                 System.out.println("Play: clockwise");
             } else {
@@ -82,7 +76,7 @@ public class UnoGame {
                 p.takeCard(deck.dealCard());
                 p.takeCard(deck.dealCard());
                 p.takeCard(deck.dealCard());
-                
+
                 System.out.println(p.getName() + " take 4 cards");
             }
 
@@ -100,7 +94,7 @@ public class UnoGame {
                 // take 2 cards
                 p.takeCard(deck.dealCard());
                 p.takeCard(deck.dealCard());
-                
+
                 System.out.println(p.getName() + " take 2 cards");
             }
 
@@ -132,53 +126,45 @@ public class UnoGame {
                     discardPile.dropToPile(dropped);
 
                     System.out.println(p.getName() + " dropped " + dropped);
-                
-                    
+
                 }
 
                 if (dropped instanceof UnoCard) {
                     if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
                             || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
-                        
-                            UnoColor curentColor = ((NpcChangeColorAction) p).changeColor();
-                            
-                            discardPile.setCurrentColor(curentColor);
-                            
-                            System.out.println(p.getName() + " change color to: " + curentColor);
-                        }
-                
-                }
-                
-            } else {
-                /*boolean next = true;
 
-                while (next) {
+                        UnoColor curentColor = ((NpcChangeColorAction) p).changeColor();
 
-                    int icard = 0;
+                        discardPile.setCurrentColor(curentColor);
 
-                    Scanner sn = new Scanner(System.in);
-                    icard = Integer.parseInt(sn.nextLine());
-
-                    if (icard == -1) {
-                        p.takeCard(deck.dealCard());
-                        System.out.println(p.getName() + " take one card ");
-
-                    } else {
-                        // discardPile((HumanDropAction) p).dropCard(icard);
-
-                        discardPile.cardMatch(currentTopCard);
-
-                        UnoCard dropped = ((HumanDropAction) p).dropCard(icard);
-
-                        if (discardPile.cardMatch(dropped)) {
-                            discardPile.dropToPile(dropped);
-                            System.out.println(p.getName() + " dropped " + dropped);
-                            next = false;
-                        } else {
-                            p.takeCard(dropped);
-                        }
+                        System.out.println(p.getName() + " change color to: " + curentColor);
                     }
-                }*/
+
+                }
+
+            } else {
+                /*
+                 * boolean next = true;
+                 * 
+                 * while (next) {
+                 * 
+                 * int icard = 0;
+                 * 
+                 * Scanner sn = new Scanner(System.in); icard = Integer.parseInt(sn.nextLine());
+                 * 
+                 * if (icard == -1) { p.takeCard(deck.dealCard());
+                 * System.out.println(p.getName() + " take one card ");
+                 * 
+                 * } else { // discardPile((HumanDropAction) p).dropCard(icard);
+                 * 
+                 * discardPile.cardMatch(currentTopCard);
+                 * 
+                 * UnoCard dropped = ((HumanDropAction) p).dropCard(icard);
+                 * 
+                 * if (discardPile.cardMatch(dropped)) { discardPile.dropToPile(dropped);
+                 * System.out.println(p.getName() + " dropped " + dropped); next = false; } else
+                 * { p.takeCard(dropped); } } }
+                 */
             }
 
             // switch direction, from the next player
@@ -191,23 +177,13 @@ public class UnoGame {
             System.out.println();
 
             if (p.isWinner()) {
-                
+
                 System.out.println(p.getName() + " is the Winner");
-                
+
                 break;
             }
-            
+
         }
     }
-    
-    /*public void pCards() {
-        
-        players.forEach(p -> {  
-            System.out.println(p.getName());
-            for (UnoCard card : p.getCards()) {
-            System.out.println(card);
-        }});
-        
-    }*/
-    
+
 }

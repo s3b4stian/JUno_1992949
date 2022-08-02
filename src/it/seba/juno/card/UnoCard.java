@@ -1,5 +1,14 @@
 package it.seba.juno.card;
 
+/**
+ * UnoCard
+ * <p>
+ * A card for the game UNO, this type of card has a value and may have a color
+ * </p>
+ * 
+ * @author Sebastian Rapetti
+ * 
+ */
 public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, WithOptionalColor, Comparable<UnoCard> {
 
     private final UnoValue value;
@@ -7,16 +16,35 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
 
     private boolean hasColor = true;
 
+    /**
+     * Class Constructor.
+     * 
+     * @param value Value of the card from UnoValue enum type
+     */
     public UnoCard(UnoValue value) {
         this(value, null);
         hasColor = false;
     }
 
+    /**
+     * Class Constructor.
+     * 
+     * @param value Value of the card from UnoValue enum type
+     * @param color Color of the card from UnoColor enum type
+     */
     public UnoCard(UnoValue value, UnoColor color) {
         this.value = value;
         this.color = color;
     }
 
+    /**
+     * Compare current UNO cards with another and returns true if card are equals,
+     * false otherwise
+     * 
+     * @param card Card to compare
+     * 
+     * @return true if cards are equals, false otherwise
+     */
     public boolean equals(UnoCard card) {
         // check for the same object in memory
         if (card == this)
@@ -37,21 +65,41 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UnoValue getValue() {
         return value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UnoColor getColor() {
         return color;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasColor() {
         return hasColor;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b>Overridden method for UnoCard</b>
+     * </p>
+     * 
+     * <p>
+     * This is the specific implementation to compare cards in UNO card game
+     * </p>
+     */
     @Override
     public int compareTo(UnoCard o) {
 
@@ -68,15 +116,26 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
         return -o.getValue().compareTo(getValue());
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b>Overridden method for UnoCard</b>
+     * </p>
+     * 
+     * <p>
+     * Return a string representation of the Uno Card
+     * </p>
+     * 
+     */
     @Override
     public String toString() {
-        
+
         if (hasColor) {
-            return value.toString() + " ["+color.toString()+"]";
+            return value.toString() + " [" + color.toString() + "]";
         }
-        
+
         return value.toString();
-        
     }
-    
+
 }
