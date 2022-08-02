@@ -4,9 +4,6 @@ import it.seba.juno.card.UnoColor;
 
 public class RandomColorStrategy extends AbstractColorStrategy {
 
-    public RandomColorStrategy() {
-    }
-
     @Override
     public UnoColor changeColor() {
 

@@ -20,4 +20,27 @@ public abstract class AbstractDropStrategy implements DropStrategy {
     public void setPlayerCards(List<UnoCard> cards) {
         this.cards = cards;
     }
+    
+    protected UnoCard searchColor() {
+        for (UnoCard c : cards) {
+            if (discardPile.cardMatchColor(c)) {
+                cards.remove(c);
+                return c;
+            }
+        }
+        
+        return null;
+    }
+    
+    protected UnoCard searchValue() {
+        
+        for (UnoCard c : cards) {
+            if (discardPile.cardMatchValue(c)) {
+                cards.remove(c);
+                return c;
+            }
+        }
+        
+        return null;
+    }
 }

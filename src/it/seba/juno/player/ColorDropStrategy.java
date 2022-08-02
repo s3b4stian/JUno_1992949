@@ -12,7 +12,17 @@ public class ColorDropStrategy extends AbstractDropStrategy {
     @Override
     public UnoCard dropCard() {
 
-        for (UnoCard c : cards) {
+        UnoCard c;
+        
+        if ((c = this.searchColor()) != null) {
+            return c;
+        }
+        
+        if ((c = this.searchValue()) != null) {
+            return c;
+        }
+
+        /*for (UnoCard c : cards) {
             if (discardPile.cardMatchColor(c)) {
                 cards.remove(c);
                 return c;
@@ -24,7 +34,7 @@ public class ColorDropStrategy extends AbstractDropStrategy {
                 cards.remove(c);
                 return c;
             }
-        }
+        }*/
 
         return null;
     }

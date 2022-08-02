@@ -41,6 +41,12 @@ public class UnoGame {
         // drop first card to discard pile
         discardPile.dropToPile(deck.dealCard());
 
+        if (discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
+            deck.refill(discardPile.removeTopCard());
+            discardPile.dropToPile(deck.dealCard());
+        }
+        
+        
         for (Player p : players) {
 
             UnoCard currentTopCard = discardPile.getTopCard();
@@ -58,17 +64,17 @@ public class UnoGame {
             System.out.println("Current color: " + discardPile.getCurrentColor());
             System.out.println("Current player: " + p.getName());
 
+            
             if (players.getOrderOfPlay()) {
                 System.out.println("Play: clockwise");
             } else {
                 System.out.println("Play: anticlockwise");
             }
 
-            //if (deck.getCardsInDeck() < 5) {
-            //    System.out.println("need refill");
-                // deck.refill(discardPile.reset());
-            //}
-
+            if (deck.getCardsInDeck() < 5) {
+                System.out.println("need refill");
+                deck.refill(discardPile.reset());
+            }
 
             if (currentTopCard.getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
                 // take 4 cards
@@ -185,6 +191,9 @@ public class UnoGame {
             System.out.println();
 
             if (p.isWinner()) {
+                
+                System.out.println(p.getName() + " is the Winner");
+                
                 break;
             }
             

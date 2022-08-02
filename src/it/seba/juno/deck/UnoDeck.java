@@ -21,8 +21,14 @@ public class UnoDeck implements Deck {
     }
 
     public void refill(List<UnoCard> cards) {
-        Collections.shuffle(initDeck, new SecureRandom());
+        Collections.shuffle(cards, new SecureRandom());
         cards.forEach(e -> finalDeck.push(e));
+        cardsInDeck = finalDeck.size();
+    }
+    
+    public void refill(UnoCard card) {
+        finalDeck.addLast(card);
+        cardsInDeck++;
     }
     
     @Override
@@ -39,6 +45,8 @@ public class UnoDeck implements Deck {
         return finalDeck.pop();
     }
 
+    
+    
     public boolean isEmpty() {
         return finalDeck.isEmpty();
     }

@@ -16,8 +16,10 @@ import it.seba.juno.player.NpcChangeColorAction;
 import it.seba.juno.player.NpcPlayer;
 import it.seba.juno.player.NpcDropAction;
 import it.seba.juno.player.Player;
+import it.seba.juno.player.RandomColorStrategy;
 import it.seba.juno.player.ColorDropStrategy;
 import it.seba.juno.player.UnoPlayers;
+import it.seba.juno.player.ValueDropStrategy;
 
 public class JUno {
 
@@ -65,8 +67,9 @@ public class JUno {
 
         //ps.add(new HumanPlayer("Sebastian"));
         ps.add(new NpcPlayer("NPC0", new ColorDropStrategy(discardPile), new MostColorStrategy()));
-        ps.add(new NpcPlayer("NPC1", new ColorDropStrategy(discardPile), new MostColorStrategy()));
+        ps.add(new NpcPlayer("NPC1", new ValueDropStrategy(discardPile), new RandomColorStrategy()));
         ps.add(new NpcPlayer("NPC2", new ColorDropStrategy(discardPile), new MostColorStrategy()));
+        ps.add(new NpcPlayer("NPC3", new ValueDropStrategy(discardPile), new RandomColorStrategy()));
 
         UnoGame game = new UnoGame(ps, deck, discardPile);
         
