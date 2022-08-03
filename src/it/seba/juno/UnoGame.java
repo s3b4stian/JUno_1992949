@@ -19,6 +19,7 @@ public class UnoGame {
     DiscardPile discardPile;
     // UnoColor curentColor;
     boolean skipped = true;
+    boolean first = true;
     UnoPlayers players;
     Player dealer;
 
@@ -105,6 +106,17 @@ public class UnoGame {
             }
 
             if (p.isNpc()) {
+
+                // if first card in discard is WILD at the first round, player choose the color
+                if (first && discardPile.getTopCard().getValue().equals(UnoValue.WILD)) {
+
+                    UnoColor curentColor = ((NpcChangeColorAction) p).changeColor();
+
+                    discardPile.setCurrentColor(curentColor);
+
+                    System.out.println("First card WILD " + p.getName() + " change color to: " + curentColor);
+                }
+
                 // discardPile.
                 UnoCard dropped = ((NpcDropAction) p).dropCard();
 
@@ -173,6 +185,7 @@ public class UnoGame {
             }
 
             skipped = true;
+            first = false;
 
             System.out.println();
 
