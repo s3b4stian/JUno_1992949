@@ -3,6 +3,8 @@ package it.seba.juno;
 //import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.card.UnoColor;
 import it.seba.juno.card.UnoValue;
@@ -20,8 +22,9 @@ import it.seba.juno.player.RandomColorStrategy;
 import it.seba.juno.player.ColorDropStrategy;
 import it.seba.juno.player.UnoPlayers;
 import it.seba.juno.player.ValueDropStrategy;
+import it.seba.juno.view.Main;
 
-public class JUno {
+public class JUno extends JFrame {
 
     /*
      * public static void printPlayerCards(Player... players) { for (Player p :
@@ -47,6 +50,8 @@ public class JUno {
 
     public static void main(String[] args) {
 
+        JFrame mainFrame = new Main();
+        
         System.out.println("Hello JUno");
 
         // uno deck
