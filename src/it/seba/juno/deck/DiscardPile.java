@@ -116,7 +116,7 @@ public class DiscardPile {
     public UnoCard removeTopCard() {
         return discardPile.pop();
     }
-    
+
     public List<UnoCard> reset() {
 
         UnoCard topCard = discardPile.pop();

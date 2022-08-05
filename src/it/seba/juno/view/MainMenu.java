@@ -10,60 +10,60 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import it.seba.juno.sound.AudioManager;
+import it.seba.juno.view.component.MainMenuButton;
+
 public class MainMenu extends JPanel {
 
-    private JButton jButton0;
-    private JButton jButton1;
-    private JButton jButton2;
-    private JButton jButton3;
-    private JButton jButton4;
-    private JLabel jLabel1;
-    
-    public MainMenu() {
-       // java.awt.GridBagConstraints gridBagConstraints;
+    private static final long serialVersionUID = 1L;
 
-        //jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new JLabel();
-        jButton0 = new JButton();
-        jButton1 = new JButton();
-        jButton2 = new JButton();
-        jButton3 = new JButton();
-        jButton4 = new JButton();
-        
+    private MainMenuButton buttonQuick;
+    private MainMenuButton buttonCarrer;
+    private MainMenuButton buttonPlayers;
+    private MainMenuButton buttonOptions;
+    private MainMenuButton buttonExit;
+    private JLabel welcomeBanner;
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/images/cards/logo.png")));
-        
+    public MainMenu(AudioManager am) {
+
+        welcomeBanner = new JLabel();
+        buttonQuick = new MainMenuButton(am);
+        buttonCarrer = new MainMenuButton(am);
+        buttonPlayers = new MainMenuButton(am);
+        buttonOptions = new MainMenuButton(am);
+        buttonExit = new MainMenuButton(am);
+
+        welcomeBanner.setIcon(
+                new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
+
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        
+
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        //gbc.insets = new java.awt.Insets(0,10,10,10);
-        add(jLabel1, gbc);
-
+        add(welcomeBanner, gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new java.awt.Insets(0,10,20,10);
-        
-        JPanel buttons = new JPanel(new GridBagLayout());
-        
-        buttons.setOpaque(false);
-        
-        jButton0.setText("Quick Play");
-        jButton1.setText("Play");
-        jButton2.setText("Players");
-        jButton3.setText("Options");
-        jButton4.setText("Exit");
+        gbc.insets = new java.awt.Insets(0, 10, 20, 10);
 
-        jButton4.addActionListener(new ActionListener() {
+        JPanel buttons = new JPanel(new GridBagLayout());
+
+        buttons.setOpaque(false);
+
+        buttonQuick.setText("Quick Play");
+        buttonCarrer.setText("Tournament");
+        buttonPlayers.setText("Players");
+        buttonOptions.setText("Options");
+        buttonExit.setText("Exit");
+
+        buttonExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -71,26 +71,27 @@ public class MainMenu extends JPanel {
 
             }
         });
-        
-        buttons.add(jButton0, gbc);
-        buttons.add(jButton1, gbc);
-        buttons.add(jButton2, gbc);
-        buttons.add(jButton3, gbc);
-        buttons.add(jButton4, gbc);
+
+        buttons.add(buttonQuick, gbc);
+        buttons.add(buttonCarrer, gbc);
+        buttons.add(buttonPlayers, gbc);
+        buttons.add(buttonOptions, gbc);
+        buttons.add(buttonExit, gbc);
 
         gbc.weighty = 0;
-        add(buttons, gbc);    
+        add(buttons, gbc);
 
     }
-    
+
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        // diagonal gradient
-        GradientPaint g = new GradientPaint(0, getHeight(), Color.decode("#607123"), getWidth(), 0, Color.decode("#95B54C"));
-        g2.setPaint(g);
+        // diagonal gradient as paint
+        g2.setPaint(new GradientPaint(0, getHeight(), Color.decode("#009FFD"), getWidth(), 0, Color.decode("#2A2A72")));
+        // fill the panel
         g2.fillRect(0, 0, getWidth(), getHeight());
+
         super.paintChildren(grphcs);
     }
 

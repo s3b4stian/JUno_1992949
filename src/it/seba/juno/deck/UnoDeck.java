@@ -13,7 +13,7 @@ public class UnoDeck implements Deck {
     private List<UnoCard> initDeck;
     private Deque<UnoCard> finalDeck;
     private int cardsInDeck;
-    
+
     public UnoDeck(List<UnoCard> deck) {
         initDeck = deck;
         finalDeck = new ArrayDeque<UnoCard>();
@@ -25,12 +25,12 @@ public class UnoDeck implements Deck {
         cards.forEach(e -> finalDeck.push(e));
         cardsInDeck = finalDeck.size();
     }
-    
+
     public void refill(UnoCard card) {
         finalDeck.addLast(card);
         cardsInDeck++;
     }
-    
+
     @Override
     public void shuffle() {
         Collections.shuffle(initDeck, new SecureRandom());
@@ -45,12 +45,10 @@ public class UnoDeck implements Deck {
         return finalDeck.pop();
     }
 
-    
-    
     public boolean isEmpty() {
         return finalDeck.isEmpty();
     }
-    
+
     public int getCardsInDeck() {
         return cardsInDeck;
     }

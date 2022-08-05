@@ -13,28 +13,22 @@ public class ColorDropStrategy extends AbstractDropStrategy {
     public UnoCard dropCard() {
 
         UnoCard c;
-        
+
         if ((c = this.searchColor()) != null) {
             return c;
         }
-        
+
         if ((c = this.searchValue()) != null) {
             return c;
         }
 
-        /*for (UnoCard c : cards) {
-            if (discardPile.cardMatchColor(c)) {
-                cards.remove(c);
-                return c;
-            }
-        }
-
-        for (UnoCard c : cards) {
-            if (discardPile.cardMatchValue(c)) {
-                cards.remove(c);
-                return c;
-            }
-        }*/
+        /*
+         * for (UnoCard c : cards) { if (discardPile.cardMatchColor(c)) {
+         * cards.remove(c); return c; } }
+         * 
+         * for (UnoCard c : cards) { if (discardPile.cardMatchValue(c)) {
+         * cards.remove(c); return c; } }
+         */
 
         return null;
     }

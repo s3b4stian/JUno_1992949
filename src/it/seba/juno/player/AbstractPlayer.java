@@ -31,7 +31,7 @@ public abstract class AbstractPlayer implements Player {
         cards.add(card);
         // cards.sort(new UnoCardComparator());
     }
- 
+
     @Override
     public int getCardsNumber() {
         return cards.size();

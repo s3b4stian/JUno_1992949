@@ -2,9 +2,10 @@ package it.seba.juno.view;
 
 import javax.swing.JPanel;
 
-public class OneNpcGame extends JPanel {
+public class Options extends JPanel {
 
-    public OneNpcGame() {
+    public Options() {
         // TODO Auto-generated constructor stub
     }
+
 }
