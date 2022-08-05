@@ -5,23 +5,20 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.sound.AudioManager;
 
 public class MainMenuButton extends JButton {
+
+    private static final long serialVersionUID = 1L;
 
     private AudioManager audioManager;
     private ButtonStyle style = ButtonStyle.DESTRUCTIVE;
@@ -55,11 +52,7 @@ public class MainMenuButton extends JButton {
         setForeground(Color.WHITE);
         setFocusPainted(false);
 
-        // try {
-
         try {
-            // Font font = Font.createFont(Font.TRUETYPE_FONT,
-            // getClass().getResourceAsStream("/it/seba/juno/resources/font/agency-fb.ttf")).deriveFont(22f);
             setFont(Font
                     .createFont(Font.TRUETYPE_FONT,
                             getClass().getResourceAsStream("/it/seba/juno/resources/font/agency-fb.ttf"))
@@ -69,24 +62,10 @@ public class MainMenuButton extends JButton {
             e.printStackTrace();
         }
 
-        // } catch (FontFormatException e) {
-        // e.printStackTrace();
-        // } catch (IOException e) {
-        // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-
-        // use the font
-        // setFont(customFont);
-
-        // setFont(new Font("Agency FB", Font.BOLD, 22));
-        // setMargin(new Insets(40,40,40,40));
-
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
                 currentStyle.backgroundHover = style.backgroundHover;
-
                 repaint();
             }
 
@@ -94,16 +73,12 @@ public class MainMenuButton extends JButton {
             public void mouseExited(MouseEvent me) {
                 currentStyle.backgroundHover = style.background;
                 repaint();
-
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
                 currentStyle.background = style.backgroundPress;
-                // audioManager.play(new File("").getAbsolutePath() +
-                // "/src/it/seba/juno/sound/click.wav");
-
-                // System.out.println(new File("").getAbsolutePath());
+                audioManager.playSoundEffect("click");
                 repaint();
             }
 

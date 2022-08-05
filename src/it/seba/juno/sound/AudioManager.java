@@ -1,10 +1,14 @@
 package it.seba.juno.sound;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -15,7 +19,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class AudioManager {
 
     private static AudioManager instance;
-
+    private Map<String, byte[]> sounds;
+    
     public static AudioManager getInstance() {
         if (instance == null)
             instance = new AudioManager();
@@ -23,13 +28,25 @@ public class AudioManager {
     }
 
     private AudioManager() {
-
+        sounds = new HashMap<String, byte[]>();
     }
 
-    public void play(String filename) {
+    public void addToPlayList(String key, String filename)
+    {
+        Path path = Paths.get(filename);
+        
+        try {
+            sounds.put(key, Files.readAllBytes(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void playSoundEffect(String key) {
 
         try {
-            InputStream in = new BufferedInputStream(new FileInputStream(filename));
+            
+            InputStream in = new ByteArrayInputStream(sounds.get(key));
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);

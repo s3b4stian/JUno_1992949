@@ -1,4 +1,4 @@
-package it.seba.juno.view;
+package it.seba.juno.view.component;
 
 import javax.swing.JPanel;
 

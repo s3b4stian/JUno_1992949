@@ -1,4 +1,4 @@
-package it.seba.juno.view;
+package it.seba.juno.view.component;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.sound.AudioManager;
-import it.seba.juno.view.component.MainMenuButton;
 
 public class MainMenu extends JPanel {
 
@@ -63,14 +62,14 @@ public class MainMenu extends JPanel {
         buttonOptions.setText("Options");
         buttonExit.setText("Exit");
 
-        buttonExit.addActionListener(new ActionListener() {
+        /*buttonExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 System.exit(0);
 
             }
-        });
+        });*/
 
         buttons.add(buttonQuick, gbc);
         buttons.add(buttonCarrer, gbc);
@@ -82,6 +81,46 @@ public class MainMenu extends JPanel {
         add(buttons, gbc);
 
     }
+
+    public MainMenuButton getButtonQuick() {
+        return buttonQuick;
+    }
+
+    /*public void setButtonQuick(MainMenuButton buttonQuick) {
+        this.buttonQuick = buttonQuick;
+    }*/
+
+    public MainMenuButton getButtonCarrer() {
+        return buttonCarrer;
+    }
+
+    /*public void setButtonCarrer(MainMenuButton buttonCarrer) {
+        this.buttonCarrer = buttonCarrer;
+    }*/
+
+    public MainMenuButton getButtonPlayers() {
+        return buttonPlayers;
+    }
+
+    /*public void setButtonPlayers(MainMenuButton buttonPlayers) {
+        this.buttonPlayers = buttonPlayers;
+    }*/
+
+    public MainMenuButton getButtonOptions() {
+        return buttonOptions;
+    }
+
+    /*public void setButtonOptions(MainMenuButton buttonOptions) {
+        this.buttonOptions = buttonOptions;
+    }*/
+
+    public MainMenuButton getButtonExit() {
+        return buttonExit;
+    }
+
+    /*public void setButtonExit(MainMenuButton buttonExit) {
+        this.buttonExit = buttonExit;
+    }*/
 
     @Override
     protected void paintChildren(Graphics grphcs) {
