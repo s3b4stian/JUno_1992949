@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.sound.AudioManager;
 
-public class MainMenuButton extends JButton {
+public class MenuButton extends JButton {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class MainMenuButton extends JButton {
      * public void setRound(int round) { this.round = round; repaint(); }
      */
 
-    public MainMenuButton(AudioManager am) {
+    public MenuButton(AudioManager am) {
 
         audioManager = am;
 

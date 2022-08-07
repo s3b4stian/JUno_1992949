@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.seba.juno.card"},{"l":"it.seba.juno.controller"},{"l":"it.seba.juno.deck"},{"l":"it.seba.juno.model"},{"l":"it.seba.juno.sound"},{"l":"it.seba.juno.view"},{"l":"it.seba.juno.view.component"}];updateSearchResults();

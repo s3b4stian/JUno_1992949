@@ -1,4 +1,4 @@
-package it.seba.juno.view.component;
+package it.seba.juno.view;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -15,26 +15,27 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.sound.AudioManager;
+import it.seba.juno.view.component.MenuButton;
 
-public class MainMenu extends JPanel {
+public class MenuView extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private MainMenuButton buttonQuick;
-    private MainMenuButton buttonCarrer;
-    private MainMenuButton buttonPlayers;
-    private MainMenuButton buttonOptions;
-    private MainMenuButton buttonExit;
+    private MenuButton buttonQuick;
+    private MenuButton buttonCarrer;
+    private MenuButton buttonPlayers;
+    private MenuButton buttonOptions;
+    private MenuButton buttonExit;
     private JLabel welcomeBanner;
 
-    public MainMenu(AudioManager am) {
+    public MenuView(AudioManager am) {
 
         welcomeBanner = new JLabel();
-        buttonQuick = new MainMenuButton(am);
-        buttonCarrer = new MainMenuButton(am);
-        buttonPlayers = new MainMenuButton(am);
-        buttonOptions = new MainMenuButton(am);
-        buttonExit = new MainMenuButton(am);
+        buttonQuick = new MenuButton(am);
+        buttonCarrer = new MenuButton(am);
+        buttonPlayers = new MenuButton(am);
+        buttonOptions = new MenuButton(am);
+        buttonExit = new MenuButton(am);
 
         welcomeBanner.setIcon(
                 new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
@@ -82,7 +83,7 @@ public class MainMenu extends JPanel {
 
     }
 
-    public MainMenuButton getButtonQuick() {
+    public MenuButton getButtonQuick() {
         return buttonQuick;
     }
 
@@ -90,7 +91,7 @@ public class MainMenu extends JPanel {
         this.buttonQuick = buttonQuick;
     }*/
 
-    public MainMenuButton getButtonCarrer() {
+    public MenuButton getButtonCarrer() {
         return buttonCarrer;
     }
 
@@ -98,7 +99,7 @@ public class MainMenu extends JPanel {
         this.buttonCarrer = buttonCarrer;
     }*/
 
-    public MainMenuButton getButtonPlayers() {
+    public MenuButton getButtonPlayers() {
         return buttonPlayers;
     }
 
@@ -106,7 +107,7 @@ public class MainMenu extends JPanel {
         this.buttonPlayers = buttonPlayers;
     }*/
 
-    public MainMenuButton getButtonOptions() {
+    public MenuButton getButtonOptions() {
         return buttonOptions;
     }
 
@@ -114,7 +115,7 @@ public class MainMenu extends JPanel {
         this.buttonOptions = buttonOptions;
     }*/
 
-    public MainMenuButton getButtonExit() {
+    public MenuButton getButtonExit() {
         return buttonExit;
     }
 

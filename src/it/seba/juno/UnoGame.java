@@ -155,28 +155,36 @@ public class UnoGame {
                 }
 
             } else {
-                /*
-                 * boolean next = true;
-                 * 
-                 * while (next) {
-                 * 
-                 * int icard = 0;
-                 * 
-                 * Scanner sn = new Scanner(System.in); icard = Integer.parseInt(sn.nextLine());
-                 * 
-                 * if (icard == -1) { p.takeCard(deck.dealCard());
-                 * System.out.println(p.getName() + " take one card ");
-                 * 
-                 * } else { // discardPile((HumanDropAction) p).dropCard(icard);
-                 * 
-                 * discardPile.cardMatch(currentTopCard);
-                 * 
-                 * UnoCard dropped = ((HumanDropAction) p).dropCard(icard);
-                 * 
-                 * if (discardPile.cardMatch(dropped)) { discardPile.dropToPile(dropped);
-                 * System.out.println(p.getName() + " dropped " + dropped); next = false; } else
-                 * { p.takeCard(dropped); } } }
-                 */
+
+                /*boolean next = true;
+
+                while (next) {
+
+                    int icard = 0;
+
+                    Scanner sn = new Scanner(System.in);
+                    icard = Integer.parseInt(sn.nextLine());
+
+                    if (icard == -1) {
+                        p.takeCard(deck.dealCard());
+                        System.out.println(p.getName() + " take one card ");
+
+                    } else { // discardPile((HumanDropAction) p).dropCard(icard);
+
+                        discardPile.cardMatch(currentTopCard);
+
+                        UnoCard dropped = ((HumanDropAction) p).dropCard(icard);
+
+                        if (discardPile.cardMatch(dropped)) {
+                            discardPile.dropToPile(dropped);
+                            System.out.println(p.getName() + " dropped " + dropped);
+                            next = false;
+                        } else {
+                            p.takeCard(dropped);
+                        }
+                    }
+                }*/
+
             }
 
             // switch direction, from the next player
