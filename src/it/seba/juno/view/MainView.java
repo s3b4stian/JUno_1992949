@@ -3,6 +3,7 @@ package it.seba.juno.view;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -10,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.sound.AudioManager;
+import it.seba.juno.util.InterfaceObserver;
+import it.seba.juno.util.Observable;
 
 public class MainView extends JFrame {
 
@@ -25,7 +28,7 @@ public class MainView extends JFrame {
         currentPanel.repaint();
         currentPanel.revalidate();
     }
-    
+
     public MainView(AudioManager am) {
 
         super("JUno");
@@ -35,7 +38,7 @@ public class MainView extends JFrame {
         currentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
         currentPanel.setOpaque(false);
         currentPanel.setLayout(new java.awt.BorderLayout());
-        
+
         // default behavior on close
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -55,5 +58,15 @@ public class MainView extends JFrame {
                         .getImage());
 
         setVisible(true);
+    }
+    
+    public void setFullScreen() {
+        device.setFullScreenWindow(this);
+    }
+    
+    public void setWindow() {
+        device.setFullScreenWindow(null);
+        setSize(1200, 800);
+        setMinimumSize(new Dimension(1200, 800));
     }
 }

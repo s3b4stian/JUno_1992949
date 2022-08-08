@@ -7,34 +7,37 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
+import java.util.EventObject;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
+import it.seba.juno.model.OptionsModel;
 import it.seba.juno.sound.AudioManager;
+import it.seba.juno.util.InterfaceObserver;
+import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.MenuButton;
 
-//import it.seba.juno.sound.AudioManager;
+public class OptionsView extends JPanel implements InterfaceObserver {
 
-public class OptionsView extends JPanel {
-
-    
     private static final long serialVersionUID = 1L;
 
     private JLabel welcomeBanner;
 
     private MenuButton buttonBack;
-    
-    public MenuButton getButtonBack() {
-        return buttonBack;
-    }
 
+    private JToggleButton buttonFullScreen;
 
-    public OptionsView(AudioManager am) {
+    private MainView mainView;
+
+    public OptionsView(AudioManager am, MainView mainView) {
+
+        this.mainView = mainView;
 
         welcomeBanner = new JLabel();
-        
+
         welcomeBanner.setText("Options");
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -46,33 +49,58 @@ public class OptionsView extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
 
         add(welcomeBanner, gbc);
-        
+
         buttonBack = new MenuButton(am);
         buttonBack.setText("Back");
-        /*buttonCarrer = new MainMenuButton(am);
-        buttonPlayers = new MainMenuButton(am);
-        buttonOptions = new MainMenuButton(am);
-        buttonExit = new MainMenuButton(am);*/
 
-        /*welcomeBanner.setIcon(
-                new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
+        // buttonFullScreen = new MenuButton(am);
+        // buttonFullScreen.setText("Full Screen");
 
-        setBorder(new EmptyBorder(10, 10, 10, 10));
-        setLayout(new GridBagLayout());
+        // buttonWindows = new MenuButton(am);
+        // buttonWindows.setText("Windows");
 
-        GridBagConstraints gbc = new GridBagConstraints();*/
+        buttonFullScreen = new JToggleButton("Full Screen Mode");
+        //buttonFullScreen.setSelected(true);
+       
+        /*
+         * buttonCarrer = new MainMenuButton(am); buttonPlayers = new
+         * MainMenuButton(am); buttonOptions = new MainMenuButton(am); buttonExit = new
+         * MainMenuButton(am);
+         */
 
-        /*gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.CENTER;*/
+        /*
+         * welcomeBanner.setIcon( new javax.swing.ImageIcon(getClass().getResource(
+         * "/it/seba/juno/resources/images/cards/logo.png")));
+         * 
+         * setBorder(new EmptyBorder(10, 10, 10, 10)); setLayout(new GridBagLayout());
+         * 
+         * GridBagConstraints gbc = new GridBagConstraints();
+         */
+
+        /*
+         * gbc.gridwidth = GridBagConstraints.REMAINDER; gbc.anchor =
+         * GridBagConstraints.CENTER;
+         */
 
         add(welcomeBanner, gbc);
         add(buttonBack, gbc);
-        //buttons.add(buttonBack, gbc);
+        add(buttonFullScreen, gbc);
+        //add(buttonWindows, gbc);
+        //add(fullScreenButton, gbc);
+        // buttons.add(buttonBack, gbc);
 
-        /*gbc.weighty = 0;
-        add(buttons, gbc);*/
+        /*
+         * gbc.weighty = 0; add(buttons, gbc);
+         */
     }
 
+    public MenuButton getButtonBack() {
+        return buttonBack;
+    }
+
+    public JToggleButton getButtonFullScreen() {
+        return buttonFullScreen;
+    }
 
     @Override
     protected void paintChildren(Graphics grphcs) {
@@ -84,5 +112,22 @@ public class OptionsView extends JPanel {
         g2.fillRect(0, 0, getWidth(), getHeight());
 
         super.paintChildren(grphcs);
+    }
+
+    @Override
+    public void update(Observable o, EventObject e) {
+
+        Object t = e.getSource();
+
+        if (t instanceof JToggleButton) {
+            if (t == buttonFullScreen) {
+
+                if (((OptionsModel) o).isFullScreen()) {
+                    mainView.setFullScreen();
+                } else {
+                    mainView.setWindow();
+                }
+            }
+        }
     }
 }

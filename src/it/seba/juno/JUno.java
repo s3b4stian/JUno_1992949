@@ -6,6 +6,7 @@ import it.seba.juno.controller.MainController;
 import it.seba.juno.controller.MenuController;
 import it.seba.juno.controller.OptionsController;
 import it.seba.juno.controller.PlayersController;
+import it.seba.juno.model.OptionsModel;
 /*import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.NoSuchElementException;
@@ -49,13 +50,17 @@ public class JUno {
         // initialize views
         MainView mainView = new MainView(audioManager);
         MenuView menuView = new MenuView(audioManager);
-        OptionsView optionsView = new OptionsView(audioManager);
+        OptionsView optionsView = new OptionsView(audioManager, mainView);
         PlayersView playersView = new PlayersView(audioManager);
+
+        // initialize models
+        OptionsModel optionsModel = new OptionsModel();
+        optionsModel.addObserver(optionsView);
 
         // initialize controllers
         MainController mainController = new MainController(mainView, menuView);
         MenuController menuController = new MenuController(mainView, menuView, optionsView, playersView);
-        OptionsController optionsController = new OptionsController(mainView, menuView, optionsView);
+        OptionsController optionsController = new OptionsController(optionsModel, mainView, menuView, optionsView);
         PlayersController playersController = new PlayersController(mainView, menuView, playersView);
 
         // mainController.setDefaultView(menuView);
@@ -64,26 +69,25 @@ public class JUno {
 
         // mainFrame.getMainMenu().getButtonExit().addActionListener(e -> gameExit());
 
-        /*
-         * System.out.println("Hello JUno");
-         * 
-         * UnoDeck deck = new UnoDeckSimpleFactory().makeUnoDeck();
-         * 
-         * DiscardPile discardPile = new DiscardPile();
-         * 
-         * UnoPlayers ps = new UnoPlayers();
-         * 
-         * //ps.add(new HumanPlayer("Sebastian")); ps.add(new NpcPlayer("NPC0", new
-         * ColorDropStrategy(discardPile), new MostColorStrategy())); ps.add(new
-         * NpcPlayer("NPC1", new ValueDropStrategy(discardPile), new
-         * RandomColorStrategy())); ps.add(new NpcPlayer("NPC2", new
-         * ColorDropStrategy(discardPile), new MostColorStrategy())); ps.add(new
-         * NpcPlayer("NPC3", new ValueDropStrategy(discardPile), new
-         * RandomColorStrategy()));
-         * 
-         * UnoGame game = new UnoGame(ps, deck, discardPile);
-         * 
-         * game.dealCardsToPlayers(); game.start();
-         */
+        // System.out.println("Hello JUno");
+
+        // UnoDeck deck = new UnoDeckSimpleFactory().makeUnoDeck();
+
+        // DiscardPile discardPile = new DiscardPile();
+
+        // UnoPlayers ps = new UnoPlayers();
+
+        // ps.add(new HumanPlayer("Sebastian")); ps.add(new NpcPlayer("NPC0", new
+        // ColorDropStrategy(discardPile), new MostColorStrategy())); ps.add(new
+        // NpcPlayer("NPC1", new ValueDropStrategy(discardPile), new
+        // RandomColorStrategy())); ps.add(new NpcPlayer("NPC2", new
+        // ColorDropStrategy(discardPile), new MostColorStrategy())); ps.add(new
+        // NpcPlayer("NPC3", new ValueDropStrategy(discardPile), new
+        // RandomColorStrategy()));
+
+        // UnoGame game = new UnoGame(ps, deck, discardPile);
+
+        // game.dealCardsToPlayers(); game.start();
+
     }
 }

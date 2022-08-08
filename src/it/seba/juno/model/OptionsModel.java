@@ -1,9 +1,11 @@
 package it.seba.juno.model;
 
-public class OptionsModel {
+import it.seba.juno.util.Observable;
+
+public class OptionsModel extends Observable {
 
     private int numberOfPlayer;
-    private int screenResolution;
+    private boolean fullScreen;
 
     public OptionsModel() {
 
@@ -17,11 +19,11 @@ public class OptionsModel {
         return numberOfPlayer;
     }
 
-    public void setScreenResolution(int sr) {
-        screenResolution = sr;
+    public boolean isFullScreen() {
+        return fullScreen;
     }
 
-    public int getScreenResolution() {
-        return screenResolution;
+    public void setFullScreen(boolean fullScreen) {
+        this.fullScreen = fullScreen;
     }
 }
