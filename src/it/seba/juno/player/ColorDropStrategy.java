@@ -22,14 +22,6 @@ public class ColorDropStrategy extends AbstractDropStrategy {
             return c;
         }
 
-        /*
-         * for (UnoCard c : cards) { if (discardPile.cardMatchColor(c)) {
-         * cards.remove(c); return c; } }
-         * 
-         * for (UnoCard c : cards) { if (discardPile.cardMatchValue(c)) {
-         * cards.remove(c); return c; } }
-         */
-
         return null;
     }
 }

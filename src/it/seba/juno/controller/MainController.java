@@ -1,10 +1,5 @@
 package it.seba.juno.controller;
 
-import java.io.File;
-
-import javax.swing.JComponent;
-
-//import it.seba.juno.sound.AudioManager;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
 

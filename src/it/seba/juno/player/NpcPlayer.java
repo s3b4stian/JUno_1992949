@@ -3,8 +3,6 @@ package it.seba.juno.player;
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.card.UnoColor;
 
-//import javax.swing.Icon;
-
 public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChangeColorAction {
 
     DropStrategy dropStrategy;

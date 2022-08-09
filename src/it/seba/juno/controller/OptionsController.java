@@ -1,6 +1,5 @@
 package it.seba.juno.controller;
 
-//import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -18,6 +17,7 @@ public class OptionsController {
     OptionsModel optionsModel;
 
     public OptionsController(OptionsModel optionsModel, MainView mainView, MenuView menuView, OptionsView optionsView) {
+
         this.mainView = mainView;
         this.menuView = menuView;
         this.optionsView = optionsView;
@@ -28,38 +28,55 @@ public class OptionsController {
     }
 
     private void initView() {
-        optionsView.getButtonBack().addActionListener(e -> buttonBackAction());
+        // button back
+        optionsView.getButtonBack().addActionListener(e -> goBackAction());
+
+        // button full screen
         optionsView.getButtonFullScreen().addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
 
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    buttonFullScreenAction(e);
+                    goFullScreenAction(e);
                 } else {
-                    buttonWindowAction(e);
+                    goWindowAction(e);
+                }
+            }
+        });
+
+        // button sound
+        optionsView.getButtonSound().addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    soundOnAction(e);
+                } else {
+                    soundOffAction(e);
                 }
             }
         });
     }
 
-    public void buttonBackAction() {
+    public void goBackAction() {
         mainView.setCurrentView(menuView);
     }
 
-    /*
-     * public void buttonFullScreenAction(ActionEvent e) {
-     * optionsModel.setFullScreen(true); optionsModel.notifyObservers(e); }
-     * 
-     * public void buttonWindowAction(ActionEvent e) {
-     * optionsModel.setFullScreen(false); optionsModel.notifyObservers(e); }
-     */
-
-    public void buttonFullScreenAction(ItemEvent e) {
+    public void goFullScreenAction(ItemEvent e) {
         optionsModel.setFullScreen(true);
         optionsModel.notifyObservers(e);
     }
 
-    public void buttonWindowAction(ItemEvent e) {
+    public void goWindowAction(ItemEvent e) {
         optionsModel.setFullScreen(false);
+        optionsModel.notifyObservers(e);
+    }
+
+    public void soundOnAction(ItemEvent e) {
+        optionsModel.setSound(true);
+        optionsModel.notifyObservers(e);
+    }
+
+    public void soundOffAction(ItemEvent e) {
+        optionsModel.setSound(false);
         optionsModel.notifyObservers(e);
     }
 }

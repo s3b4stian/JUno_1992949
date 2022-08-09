@@ -18,10 +18,11 @@ public class PlayersController {
     }
 
     private void initView() {
-        playersView.getButtonBack().addActionListener(e -> mainView.setCurrentView(menuView));
+        // button back
+        playersView.getButtonBack().addActionListener(e -> goBackAction());
     }
 
-    public void buttonBackAction() {
+    public void goBackAction() {
         mainView.setCurrentView(menuView);
     }
 }

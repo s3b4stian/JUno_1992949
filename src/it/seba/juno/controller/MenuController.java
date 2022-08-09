@@ -21,20 +21,25 @@ public class MenuController {
     }
 
     private void initView() {
-        menuView.getButtonExit().addActionListener(e -> buttonExitAction());
-        menuView.getButtonOptions().addActionListener(e -> buttonOptionsAction());
-        menuView.getButtonPlayers().addActionListener(e -> buttonPlayersAction());
+        // button exit
+        menuView.getButtonExit().addActionListener(e -> exitAction());
+        
+        // button options
+        menuView.getButtonOptions().addActionListener(e -> goOptionsAction());
+        
+        // button players
+        menuView.getButtonPlayers().addActionListener(e -> goPlayersAction());
     }
 
-    public void buttonExitAction() {
+    public void exitAction() {
         System.exit(0);
     }
 
-    public void buttonOptionsAction() {
+    public void goOptionsAction() {
         mainView.setCurrentView(optionsView);
     }
 
-    public void buttonPlayersAction() {
+    public void goPlayersAction() {
         mainView.setCurrentView(playersView);
     }
 }

@@ -1,7 +1,6 @@
 package it.seba.juno;
 
 import java.io.File;
-
 import it.seba.juno.controller.MainController;
 import it.seba.juno.controller.MenuController;
 import it.seba.juno.controller.OptionsController;
@@ -33,6 +32,7 @@ import it.seba.juno.player.ColorDropStrategy;
 import it.seba.juno.player.UnoPlayers;
 import it.seba.juno.player.ValueDropStrategy;*/
 import it.seba.juno.sound.AudioManager;
+import it.seba.juno.util.FirstLoadEvent;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
 import it.seba.juno.view.OptionsView;
@@ -47,27 +47,28 @@ public class JUno {
         // load sounds
         audioManager.addToPlayList("click", (new File("")).getAbsolutePath() + "/src/it/seba/juno/sound/click.wav");
 
+        // initialize models
+        OptionsModel optionsModel = new OptionsModel();
+
+        // initial audio manager status
+        audioManager.setSound(optionsModel.isSound());
+
         // initialize views
-        MainView mainView = new MainView(audioManager);
+        MainView mainView = new MainView(optionsModel.isFullScreen());
         MenuView menuView = new MenuView(audioManager);
         OptionsView optionsView = new OptionsView(audioManager, mainView);
         PlayersView playersView = new PlayersView(audioManager);
 
-        // initialize models
-        OptionsModel optionsModel = new OptionsModel();
+        // add observers
         optionsModel.addObserver(optionsView);
+        // notify initial status
+        optionsModel.notifyObservers(new FirstLoadEvent(new JUno()));
 
         // initialize controllers
         MainController mainController = new MainController(mainView, menuView);
         MenuController menuController = new MenuController(mainView, menuView, optionsView, playersView);
         OptionsController optionsController = new OptionsController(optionsModel, mainView, menuView, optionsView);
         PlayersController playersController = new PlayersController(mainView, menuView, playersView);
-
-        // mainController.setDefaultView(menuView);
-
-        // Main mainFrame = new Main(AudioManager.getInstance());
-
-        // mainFrame.getMainMenu().getButtonExit().addActionListener(e -> gameExit());
 
         // System.out.println("Hello JUno");
 

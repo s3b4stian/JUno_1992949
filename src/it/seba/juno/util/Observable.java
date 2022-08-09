@@ -1,6 +1,5 @@
 package it.seba.juno.util;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
@@ -25,6 +24,7 @@ public class Observable {
 
     /**
      * Add an observer.
+     * 
      * @param o
      */
     public void addObserver(InterfaceObserver o) {

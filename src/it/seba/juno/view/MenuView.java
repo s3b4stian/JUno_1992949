@@ -7,9 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -63,15 +60,6 @@ public class MenuView extends JPanel {
         buttonOptions.setText("Options");
         buttonExit.setText("Exit");
 
-        /*buttonExit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                System.exit(0);
-
-            }
-        });*/
-
         buttons.add(buttonQuick, gbc);
         buttons.add(buttonCarrer, gbc);
         buttons.add(buttonPlayers, gbc);
@@ -80,48 +68,27 @@ public class MenuView extends JPanel {
 
         gbc.weighty = 0;
         add(buttons, gbc);
-
     }
 
     public MenuButton getButtonQuick() {
         return buttonQuick;
     }
 
-    /*public void setButtonQuick(MainMenuButton buttonQuick) {
-        this.buttonQuick = buttonQuick;
-    }*/
-
     public MenuButton getButtonCarrer() {
         return buttonCarrer;
     }
-
-    /*public void setButtonCarrer(MainMenuButton buttonCarrer) {
-        this.buttonCarrer = buttonCarrer;
-    }*/
 
     public MenuButton getButtonPlayers() {
         return buttonPlayers;
     }
 
-    /*public void setButtonPlayers(MainMenuButton buttonPlayers) {
-        this.buttonPlayers = buttonPlayers;
-    }*/
-
     public MenuButton getButtonOptions() {
         return buttonOptions;
     }
 
-    /*public void setButtonOptions(MainMenuButton buttonOptions) {
-        this.buttonOptions = buttonOptions;
-    }*/
-
     public MenuButton getButtonExit() {
         return buttonExit;
     }
-
-    /*public void setButtonExit(MainMenuButton buttonExit) {
-        this.buttonExit = buttonExit;
-    }*/
 
     @Override
     protected void paintChildren(Graphics grphcs) {

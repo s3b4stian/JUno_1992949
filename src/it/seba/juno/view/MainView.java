@@ -3,16 +3,10 @@ package it.seba.juno.view;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import it.seba.juno.sound.AudioManager;
-import it.seba.juno.util.InterfaceObserver;
-import it.seba.juno.util.Observable;
 
 public class MainView extends JFrame {
 
@@ -20,50 +14,52 @@ public class MainView extends JFrame {
 
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
-    private JPanel currentPanel;
+    private JPanel panel;
 
     public void setCurrentView(JComponent com) {
-        currentPanel.removeAll();
-        currentPanel.add(com);
-        currentPanel.repaint();
-        currentPanel.revalidate();
+        panel.removeAll();
+        panel.add(com);
+        panel.repaint();
+        panel.revalidate();
     }
 
-    public MainView(AudioManager am) {
+    public MainView(boolean isFullScreen) {
 
         super("JUno");
 
-        // init current panel
-        currentPanel = new JPanel();
-        currentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-        currentPanel.setOpaque(false);
-        currentPanel.setLayout(new java.awt.BorderLayout());
+        // init main panel
+        // it will contains all other game views
+        panel = new JPanel();
+        panel.setBorder(new EmptyBorder(0, 0, 0, 0));
+        panel.setOpaque(false);
+        panel.setLayout(new java.awt.BorderLayout());
 
         // default behavior on close
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
 
-        // uncomment to set full screen
-        device.setFullScreenWindow(this);
+        // full screen or no from options
+        if (isFullScreen) {
+            setFullScreen();
+        } else {
+            setWindow();
+        }
 
-        //setSize(1200, 800);
-        //setMinimumSize(new Dimension(1200, 800));
-        setLocationRelativeTo(null);
-
-        add(currentPanel);
+        add(panel);
 
         // set the system icon of the program
         setIconImage(
                 new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/deck_1.png"))
                         .getImage());
 
+        pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
-    
+
     public void setFullScreen() {
         device.setFullScreenWindow(this);
     }
-    
+
     public void setWindow() {
         device.setFullScreenWindow(null);
         setSize(1200, 800);

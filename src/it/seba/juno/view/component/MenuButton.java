@@ -23,26 +23,7 @@ public class MenuButton extends JButton {
     private AudioManager audioManager;
     private ButtonStyle style = ButtonStyle.DESTRUCTIVE;
     private ButtonColor currentStyle = new ButtonColor(ButtonStyle.DESTRUCTIVE);
-    // private int round = 10;
-
-    /*
-     * public ButtonStyle getStyle() { return style; }
-     */
-
-    /*
-     * public void setStyle(ButtonStyle style) { if (this.style != style) {
-     * this.style = style; currentStyle.changeStyle(style);
-     * setForeground(style.foreground); } }
-     */
-
-    /*
-     * public int getRound() { return round; }
-     */
-
-    /*
-     * public void setRound(int round) { this.round = round; repaint(); }
-     */
-
+    
     public MenuButton(AudioManager am) {
 
         audioManager = am;

@@ -19,22 +19,20 @@ import it.seba.juno.view.component.MenuButton;
 
 public class PlayersView extends JPanel {
 
-    
     private static final long serialVersionUID = 1L;
 
     private JLabel welcomeBanner;
 
     private MenuButton buttonBack;
-    
+
     public MenuButton getButtonBack() {
         return buttonBack;
     }
 
-
     public PlayersView(AudioManager am) {
 
         welcomeBanner = new JLabel();
-        
+
         welcomeBanner.setText("Players");
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -46,33 +44,37 @@ public class PlayersView extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
 
         add(welcomeBanner, gbc);
-        
+
         buttonBack = new MenuButton(am);
         buttonBack.setText("Back");
-        /*buttonCarrer = new MainMenuButton(am);
-        buttonPlayers = new MainMenuButton(am);
-        buttonOptions = new MainMenuButton(am);
-        buttonExit = new MainMenuButton(am);*/
+        /*
+         * buttonCarrer = new MainMenuButton(am); buttonPlayers = new
+         * MainMenuButton(am); buttonOptions = new MainMenuButton(am); buttonExit = new
+         * MainMenuButton(am);
+         */
 
-        /*welcomeBanner.setIcon(
-                new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
+        /*
+         * welcomeBanner.setIcon( new javax.swing.ImageIcon(getClass().getResource(
+         * "/it/seba/juno/resources/images/cards/logo.png")));
+         * 
+         * setBorder(new EmptyBorder(10, 10, 10, 10)); setLayout(new GridBagLayout());
+         * 
+         * GridBagConstraints gbc = new GridBagConstraints();
+         */
 
-        setBorder(new EmptyBorder(10, 10, 10, 10));
-        setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();*/
-
-        /*gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.CENTER;*/
+        /*
+         * gbc.gridwidth = GridBagConstraints.REMAINDER; gbc.anchor =
+         * GridBagConstraints.CENTER;
+         */
 
         add(welcomeBanner, gbc);
         add(buttonBack, gbc);
-        //buttons.add(buttonBack, gbc);
+        // buttons.add(buttonBack, gbc);
 
-        /*gbc.weighty = 0;
-        add(buttons, gbc);*/
+        /*
+         * gbc.weighty = 0; add(buttons, gbc);
+         */
     }
-
 
     @Override
     protected void paintChildren(Graphics grphcs) {

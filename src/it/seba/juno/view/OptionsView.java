@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
+import it.seba.juno.JUno;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.sound.AudioManager;
 import it.seba.juno.util.InterfaceObserver;
@@ -25,19 +26,20 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     private static final long serialVersionUID = 1L;
 
     private JLabel welcomeBanner;
-
     private MenuButton buttonBack;
-
     private JToggleButton buttonFullScreen;
-
+    private JToggleButton buttonSound;
     private MainView mainView;
 
+    private AudioManager audioManager;
+
     public OptionsView(AudioManager am, MainView mainView) {
+
+        this.audioManager = am;
 
         this.mainView = mainView;
 
         welcomeBanner = new JLabel();
-
         welcomeBanner.setText("Options");
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -59,9 +61,11 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         // buttonWindows = new MenuButton(am);
         // buttonWindows.setText("Windows");
 
-        buttonFullScreen = new JToggleButton("Full Screen Mode");
-        //buttonFullScreen.setSelected(true);
-       
+        buttonFullScreen = new JToggleButton("Full Screen");
+        buttonSound = new JToggleButton("Audio");
+
+        // buttonFullScreen.setSelected(true);
+
         /*
          * buttonCarrer = new MainMenuButton(am); buttonPlayers = new
          * MainMenuButton(am); buttonOptions = new MainMenuButton(am); buttonExit = new
@@ -71,11 +75,10 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         /*
          * welcomeBanner.setIcon( new javax.swing.ImageIcon(getClass().getResource(
          * "/it/seba/juno/resources/images/cards/logo.png")));
-         * 
-         * setBorder(new EmptyBorder(10, 10, 10, 10)); setLayout(new GridBagLayout());
-         * 
-         * GridBagConstraints gbc = new GridBagConstraints();
          */
+        gbc.insets = new java.awt.Insets(0, 10, 20, 10);
+
+        // GridBagConstraints gbc = new GridBagConstraints();
 
         /*
          * gbc.gridwidth = GridBagConstraints.REMAINDER; gbc.anchor =
@@ -85,8 +88,9 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         add(welcomeBanner, gbc);
         add(buttonBack, gbc);
         add(buttonFullScreen, gbc);
-        //add(buttonWindows, gbc);
-        //add(fullScreenButton, gbc);
+        add(buttonSound, gbc);
+        // add(buttonWindows, gbc);
+        // add(fullScreenButton, gbc);
         // buttons.add(buttonBack, gbc);
 
         /*
@@ -100,6 +104,10 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
     public JToggleButton getButtonFullScreen() {
         return buttonFullScreen;
+    }
+
+    public JToggleButton getButtonSound() {
+        return buttonSound;
     }
 
     @Override
@@ -119,13 +127,30 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         Object t = e.getSource();
 
+        if (t instanceof JUno) {
+            if (((OptionsModel) o).isFullScreen()) {
+                buttonFullScreen.setSelected(true);
+            }
+
+            if (((OptionsModel) o).isSound()) {
+                buttonSound.setSelected(true);
+            }
+        }
+
         if (t instanceof JToggleButton) {
             if (t == buttonFullScreen) {
-
                 if (((OptionsModel) o).isFullScreen()) {
                     mainView.setFullScreen();
                 } else {
                     mainView.setWindow();
+                }
+            }
+
+            if (t == buttonSound) {
+                if (((OptionsModel) o).isSound()) {
+                    audioManager.setSound(true);
+                } else {
+                    audioManager.setSound(false);
                 }
             }
         }

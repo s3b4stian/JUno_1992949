@@ -57,11 +57,6 @@ public class UnoPlayers implements Iterable<Player> {
 
             @Override
             public boolean hasNext() {
-
-                /*
-                 * for (Player p : players) { if (p.isWinner()) { return false; } }
-                 */
-
                 return true;
             }
 

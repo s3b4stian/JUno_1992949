@@ -29,7 +29,6 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public void takeCard(UnoCard card) {
         cards.add(card);
-        // cards.sort(new UnoCardComparator());
     }
 
     @Override
