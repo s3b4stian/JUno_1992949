@@ -10,8 +10,8 @@ import java.awt.RenderingHints;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 
-import it.seba.juno.sound.AudioManager;
 import it.seba.juno.view.component.MenuButton;
 
 public class MenuView extends JPanel {
@@ -25,19 +25,18 @@ public class MenuView extends JPanel {
     private MenuButton buttonExit;
     private JLabel welcomeBanner;
 
-    public MenuView(AudioManager am) {
+    public MenuView(/* AudioManager am */) {
 
         welcomeBanner = new JLabel();
-        buttonQuick = new MenuButton(am);
-        buttonCarrer = new MenuButton(am);
-        buttonPlayers = new MenuButton(am);
-        buttonOptions = new MenuButton(am);
-        buttonExit = new MenuButton(am);
+        buttonQuick = new MenuButton(/* am */);
+        buttonCarrer = new MenuButton(/* am */);
+        buttonPlayers = new MenuButton(/* am */);
+        buttonOptions = new MenuButton(/* am */);
+        buttonExit = new MenuButton(/* am */);
 
-        welcomeBanner.setIcon(
-                new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
+        welcomeBanner.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
 
-        setBorder(new EmptyBorder(10, 10, 10, 10));
+        setBorder(new EmptyBorder(40, 10, 10, 10));
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();

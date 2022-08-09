@@ -29,7 +29,7 @@ public class PlayersView extends JPanel {
         return buttonBack;
     }
 
-    public PlayersView(AudioManager am) {
+    public PlayersView(/*AudioManager am*/) {
 
         welcomeBanner = new JLabel();
 
@@ -45,7 +45,7 @@ public class PlayersView extends JPanel {
 
         add(welcomeBanner, gbc);
 
-        buttonBack = new MenuButton(am);
+        buttonBack = new MenuButton(/*am*/);
         buttonBack.setText("Back");
         /*
          * buttonCarrer = new MainMenuButton(am); buttonPlayers = new

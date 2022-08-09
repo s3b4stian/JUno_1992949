@@ -33,7 +33,7 @@ public class MainView extends JFrame {
         panel.setBorder(new EmptyBorder(0, 0, 0, 0));
         panel.setOpaque(false);
         panel.setLayout(new java.awt.BorderLayout());
-
+        
         // default behavior on close
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -44,16 +44,13 @@ public class MainView extends JFrame {
             setWindow();
         }
 
-        add(panel);
-
         // set the system icon of the program
         setIconImage(
                 new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/deck_1.png"))
                         .getImage());
 
-        pack();
         setLocationRelativeTo(null);
-        setVisible(true);
+        add(panel);
     }
 
     public void setFullScreen() {

@@ -14,6 +14,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
+import it.seba.juno.resources.font.FontManager;
 import it.seba.juno.sound.AudioManager;
 
 public class MenuButton extends JButton {
@@ -24,16 +25,18 @@ public class MenuButton extends JButton {
     private ButtonStyle style = ButtonStyle.DESTRUCTIVE;
     private ButtonColor currentStyle = new ButtonColor(ButtonStyle.DESTRUCTIVE);
     
-    public MenuButton(AudioManager am) {
+    public MenuButton(/*AudioManager am*/) {
 
-        audioManager = am;
+        audioManager = AudioManager.getInstance();
 
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(8, 32, 8, 32));
         setForeground(Color.WHITE);
         setFocusPainted(false);
 
-        try {
+        setFont(FontManager.getInstance().getCustomFont(22f));
+
+        /*try {
             setFont(Font
                     .createFont(Font.TRUETYPE_FONT,
                             getClass().getResourceAsStream("/it/seba/juno/resources/font/agency-fb.ttf"))
@@ -41,7 +44,7 @@ public class MenuButton extends JButton {
         } catch (FontFormatException | IOException e) {
 
             e.printStackTrace();
-        }
+        }*/
 
         addMouseListener(new MouseAdapter() {
             @Override

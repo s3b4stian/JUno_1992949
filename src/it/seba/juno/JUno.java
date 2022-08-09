@@ -6,6 +6,7 @@ import it.seba.juno.controller.MenuController;
 import it.seba.juno.controller.OptionsController;
 import it.seba.juno.controller.PlayersController;
 import it.seba.juno.model.OptionsModel;
+import it.seba.juno.resources.font.FontManager;
 /*import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.NoSuchElementException;
@@ -45,7 +46,12 @@ public class JUno {
         // initialize audio manager
         AudioManager audioManager = AudioManager.getInstance();
         // load sounds
-        audioManager.addToPlayList("click", (new File("")).getAbsolutePath() + "/src/it/seba/juno/sound/click.wav");
+        audioManager.addToPlayList("click", (new File("")).getAbsolutePath() + "/src/it/seba/juno/sound/ding.wav");
+
+        // initialize font manger
+        FontManager fontManager = FontManager.getInstance();
+        // load custom font
+        fontManager.setCustomFont("agency-fb");
 
         // initialize models
         OptionsModel optionsModel = new OptionsModel();
@@ -55,9 +61,9 @@ public class JUno {
 
         // initialize views
         MainView mainView = new MainView(optionsModel.isFullScreen());
-        MenuView menuView = new MenuView(audioManager);
-        OptionsView optionsView = new OptionsView(audioManager, mainView);
-        PlayersView playersView = new PlayersView(audioManager);
+        MenuView menuView = new MenuView(/*audioManager*/);
+        OptionsView optionsView = new OptionsView(/*audioManager, */mainView);
+        PlayersView playersView = new PlayersView(/*audioManager*/);
 
         // add observers
         optionsModel.addObserver(optionsView);

@@ -16,5 +16,6 @@ public class MainController {
 
     private void initView() {
         mainView.setCurrentView(menuView);
+        mainView.setVisible(true);
     }
 }
