@@ -1,8 +1,6 @@
 package it.seba.juno.view.component;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -10,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
-import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
@@ -21,54 +18,54 @@ public class MenuButton extends JButton {
 
     private static final long serialVersionUID = 1L;
 
-    private AudioManager audioManager;
-    private ButtonStyle style = ButtonStyle.DESTRUCTIVE;
-    private ButtonColor currentStyle = new ButtonColor(ButtonStyle.DESTRUCTIVE);
-    
-    public MenuButton(/*AudioManager am*/) {
+    //private AudioManager audioManager;
 
-        audioManager = AudioManager.getInstance();
+    private final Color background = new Color(255, 138, 48);
+    private final Color backgroundHover = new Color(198, 86, 0);
+    private final Color backgroundPress = new Color(255, 161, 90);
+    private final Color foreground = Color.WHITE;
+
+    private Color currentBackground;
+    private Color currentBackgroundHover;
+
+    public MenuButton() {
+        super();
+        
+        currentBackground = background;
+        currentBackgroundHover = background;
+
+        //audioManager = AudioManager.getInstance();
 
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(8, 32, 8, 32));
-        setForeground(Color.WHITE);
+        setForeground(foreground);
         setFocusPainted(false);
 
         setFont(FontManager.getInstance().getCustomFont(22f));
 
-        /*try {
-            setFont(Font
-                    .createFont(Font.TRUETYPE_FONT,
-                            getClass().getResourceAsStream("/it/seba/juno/resources/font/agency-fb.ttf"))
-                    .deriveFont(22f));
-        } catch (FontFormatException | IOException e) {
-
-            e.printStackTrace();
-        }*/
-
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
-                currentStyle.backgroundHover = style.backgroundHover;
+                currentBackgroundHover = backgroundHover;
                 repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-                currentStyle.backgroundHover = style.background;
+                currentBackgroundHover = background;
                 repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
-                currentStyle.background = style.backgroundPress;
-                audioManager.playSoundEffect("click");
+                currentBackground = backgroundPress;
+                AudioManager.getInstance().playSoundEffect("click");
                 repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-                currentStyle.background = style.background;
+                currentBackground = background;
                 repaint();
             }
         });
@@ -87,79 +84,18 @@ public class MenuButton extends JButton {
 
         // rounded rectangle
         Area area = new Area(new RoundRectangle2D.Double(x, y, width, height, 10, 10));
-        g2.setColor(currentStyle.background);
+        g2.setColor(currentBackground);
+
         g2.fill(area);
 
         // rounded rectangle 3px less higher
         area.subtract(new Area(new RoundRectangle2D.Double(x, y, width, height - 3, 10, 10)));
         // visible only when mouse is over
-        g2.setColor(currentStyle.backgroundHover);
+        g2.setColor(currentBackgroundHover);
 
         g2.fill(area);
         g2.dispose();
 
         super.paintComponent(grphcs);
-    }
-
-    public enum ButtonStyle {
-        // PRIMARY(new Color(0, 172, 126), new Color(238, 238, 238), new Color(2, 111,
-        // 82), new Color(4, 205, 151)),
-        // SECONDARY(new Color(203, 209, 219), new Color(58, 70, 81), new Color(81, 92,
-        // 108), new Color(230, 239, 255)),
-        DESTRUCTIVE(new Color(255, 138, 48), new Color(238, 238, 238), new Color(198, 86, 0), new Color(255, 161, 90));
-
-        private ButtonStyle(Color background, Color foreground, Color backgroundHover, Color backgroundPress) {
-            this.background = background;
-            this.foreground = foreground;
-            this.backgroundHover = backgroundHover;
-            this.backgroundPress = backgroundPress;
-        }
-
-        private Color background;
-        private Color foreground;
-        private Color backgroundHover;
-        private Color backgroundPress;
-    }
-
-    protected class ButtonColor {
-
-        /*
-         * public Color getBackground() { return background; }
-         * 
-         * public void setBackground(Color background) { this.background = background; }
-         * 
-         * public Color getForeground() { return foreground; }
-         * 
-         * public void setForeground(Color foreground) { this.foreground = foreground; }
-         * 
-         * public Color getBackgroundHover() { return backgroundHover; }
-         * 
-         * public void setBackgroundHover(Color backgroundHover) { this.backgroundHover
-         * = backgroundHover; }
-         * 
-         * public Color getBackgroundPress() { return backgroundPress; }
-         * 
-         * public void setBackgroundPress(Color backgroundPress) { this.backgroundPress
-         * = backgroundPress; }
-         */
-
-        public ButtonColor(ButtonStyle style) {
-            changeStyle(style);
-        }
-
-        public ButtonColor() {
-        }
-
-        private Color background;
-        private Color foreground;
-        private Color backgroundHover;
-        private Color backgroundPress;
-
-        private void changeStyle(ButtonStyle style) {
-            this.background = style.background;
-            this.foreground = style.foreground;
-            this.backgroundHover = style.background;
-            this.backgroundPress = style.backgroundPress;
-        }
     }
 }

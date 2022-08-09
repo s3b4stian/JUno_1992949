@@ -54,6 +54,23 @@ public class OptionsController {
                 }
             }
         });
+
+        // buttons for players
+        optionsView.getTwoPlayersRadio().addActionListener(e -> setTwoPlayersAction());
+        optionsView.getThreePlayersRadio().addActionListener(e -> setThreePlayersAction());
+        optionsView.getFourPlayersRadio().addActionListener(e -> setFourPlayersAction());
+    }
+
+    public void setTwoPlayersAction() {
+        optionsModel.setNumberOfPlayer(2);
+    }
+
+    public void setThreePlayersAction() {
+        optionsModel.setNumberOfPlayer(3);
+    }
+
+    public void setFourPlayersAction() {
+        optionsModel.setNumberOfPlayer(4);
     }
 
     public void goBackAction() {

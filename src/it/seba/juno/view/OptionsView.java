@@ -31,6 +31,11 @@ import it.seba.juno.sound.AudioManager;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.MenuButton;
+import it.seba.juno.view.component.OptionsButtonFullScreen;
+import it.seba.juno.view.component.OptionsButtonSound;
+import it.seba.juno.view.component.OptionsRadioFourPlayers;
+import it.seba.juno.view.component.OptionsRadioThreePlayers;
+import it.seba.juno.view.component.OptionsRadioTwoPlayers;
 
 public class OptionsView extends JPanel implements InterfaceObserver {
 
@@ -40,10 +45,10 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     private JRadioButton threePlayersRadio;
     private JRadioButton fourPlayersRadio;
 
-    // private JLabel optionsTitle;
-    private MenuButton buttonBack;
     private JToggleButton buttonFullScreen;
     private JToggleButton buttonSound;
+
+    private MenuButton buttonBack;
 
     private MainView mainView;
 
@@ -79,11 +84,10 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         playersLabel.setFont(sectionLabelFont);
         playersLabel.setForeground(new Color(255, 255, 255));
 
-        JSeparator playersSeparator = new JSeparator(SwingConstants.HORIZONTAL);
-        playersSeparator.setPreferredSize(new Dimension(400,2));
-        playersSeparator.setForeground(new Color(255, 255, 255));
-        
-        
+        /*JSeparator playersSeparator = new JSeparator(SwingConstants.HORIZONTAL);
+        playersSeparator.setPreferredSize(new Dimension(400, 2));
+        playersSeparator.setForeground(new Color(255, 255, 255));*/
+
         JLabel screenLabel = new JLabel();
         screenLabel.setText("Screen");
         screenLabel.setFont(sectionLabelFont);
@@ -94,21 +98,27 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         soundLabel.setFont(sectionLabelFont);
         soundLabel.setForeground(new Color(255, 255, 255));
 
-        twoPlayersRadio = new JRadioButton("Two Players");
-        // twoPlayersRadio.setOpaque(false);
-        // twoPlayersRadio.setActionCommand(birdString);
-        twoPlayersRadio.setSelected(true);
+        twoPlayersRadio = new OptionsRadioTwoPlayers();
+        /*twoPlayersRadio.setOpaque(false);
         twoPlayersRadio.setFocusPainted(false);
+        twoPlayersRadio.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p2.png")));
+        twoPlayersRadio
+                .setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p2s.png")));*/
 
-        threePlayersRadio = new JRadioButton("Three Players");
+        threePlayersRadio = new OptionsRadioThreePlayers();
+        /*threePlayersRadio.setOpaque(false);
         threePlayersRadio.setFocusPainted(false);
-        // twoPlayersRadio.setActionCommand(birdString);
-        // twoPlayersRadio.setSelected(true)
+        threePlayersRadio.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p3.png")));
+        threePlayersRadio
+                .setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p3s.png")));*/
 
-        fourPlayersRadio = new JRadioButton("Four Players");
+        fourPlayersRadio = new OptionsRadioFourPlayers();
+        /*fourPlayersRadio.setOpaque(false);
         fourPlayersRadio.setFocusPainted(false);
-        // twoPlayersRadio.setActionCommand(birdString);
-        // twoPlayersRadio.setSelected(true);
+        fourPlayersRadio.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p4.png")));
+        fourPlayersRadio
+                .setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p4s.png")));*/
+
 
         // Group the radio buttons.
         ButtonGroup group = new ButtonGroup();
@@ -118,22 +128,25 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         buttonBack = new MenuButton();
         buttonBack.setText("Back");
-        buttonBack.setFocusPainted(false);
+        //buttonBack.setFocusPainted(false);
 
-        buttonFullScreen = new JToggleButton();
-        buttonFullScreen.setFocusPainted(false);
+        buttonFullScreen = new OptionsButtonFullScreen();
+        /*buttonFullScreen.setFocusPainted(false);
         buttonFullScreen.setBorderPainted(false);
         buttonFullScreen.setContentAreaFilled(false);
-        buttonFullScreen.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/window.png")));
-        buttonFullScreen.setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/full-screen.png")));
+        buttonFullScreen
+                .setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/window.png")));
+        buttonFullScreen.setSelectedIcon(
+                new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/full-screen.png")));*/
 
-        
-        buttonSound = new JToggleButton();
-        buttonSound.setFocusPainted(false);
+        buttonSound = new OptionsButtonSound();
+        /*buttonSound.setFocusPainted(false);
         buttonSound.setBorderPainted(false);
         buttonSound.setContentAreaFilled(false);
-        buttonSound.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-off.png")));
-        buttonSound.setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-on.png")));
+        buttonSound
+                .setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-off.png")));
+        buttonSound.setSelectedIcon(
+                new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-on.png")));*/
 
         gbc.insets = new Insets(0, 10, 20, 10);
 
@@ -182,9 +195,24 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         gbc.gridx = 1;
         gbc.gridy = 7;
         add(buttonBack, gbc);
-
     }
 
+    public JRadioButton getTwoPlayersRadio() {
+        return twoPlayersRadio;
+    }
+
+    public JRadioButton getThreePlayersRadio() {
+        return threePlayersRadio;
+    }
+    
+    public JRadioButton getFourPlayersRadio() {
+        return fourPlayersRadio;
+    }
+
+    public MainView getMainView() {
+        return mainView;
+    }
+    
     public MenuButton getButtonBack() {
         return buttonBack;
     }
@@ -214,23 +242,30 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         Object t = e.getSource();
 
+        // update for initial state
         if (t instanceof JUno) {
             if (((OptionsModel) o).isFullScreen()) {
                 buttonFullScreen.setSelected(true);
-                //buttonFullScreen.setText("Set Fullscreen");
-            } else {
-                buttonFullScreen.setSelected(false);
-                //buttonFullScreen.
             }
-                
 
             if (((OptionsModel) o).isSound()) {
                 buttonSound.setSelected(true);
-            } else {
-                buttonSound.setSelected(false);
+            }
+
+            switch (((OptionsModel) o).getNumberOfPlayer()) {
+            case 2:
+                twoPlayersRadio.setSelected(true);
+                break;
+            case 3:
+                threePlayersRadio.setSelected(true);
+                break;
+            case 4:
+                fourPlayersRadio.setSelected(true);
+                break;
             }
         }
 
+        // update for user clicks
         if (t instanceof JToggleButton) {
             if (t == buttonFullScreen) {
                 if (((OptionsModel) o).isFullScreen()) {

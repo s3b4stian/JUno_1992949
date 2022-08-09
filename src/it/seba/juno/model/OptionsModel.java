@@ -4,7 +4,7 @@ import it.seba.juno.util.Observable;
 
 public class OptionsModel extends Observable {
 
-    private int numberOfPlayer = 2;
+    private int numberOfPlayer = 3;
     private boolean fullScreen = false;
     private boolean sound = true;
 
