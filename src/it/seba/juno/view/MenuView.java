@@ -10,6 +10,7 @@ import java.awt.RenderingHints;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
 import it.seba.juno.view.component.MenuButton;
@@ -25,16 +26,14 @@ public class MenuView extends JPanel {
     private MenuButton buttonExit;
     private JLabel welcomeBanner;
 
-    public MenuView(/* AudioManager am */) {
+    public MenuView() {
 
-        welcomeBanner = new JLabel();
-        buttonQuick = new MenuButton(/* am */);
-        buttonCarrer = new MenuButton(/* am */);
-        buttonPlayers = new MenuButton(/* am */);
-        buttonOptions = new MenuButton(/* am */);
-        buttonExit = new MenuButton(/* am */);
-
-        welcomeBanner.setIcon(new ImageIcon(getClass().getResource("/images/cards/logo.png")));
+        // interactive components
+        buttonQuick = new MenuButton("Quick Play");
+        buttonCarrer = new MenuButton("Tournament");
+        buttonPlayers = new MenuButton("Players");
+        buttonOptions = new MenuButton("Options");
+        buttonExit = new MenuButton("Exit");
 
         setBorder(new EmptyBorder(40, 10, 10, 10));
         setLayout(new GridBagLayout());
@@ -44,21 +43,13 @@ public class MenuView extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        add(welcomeBanner, gbc);
+        add(new JLabel("", new ImageIcon(getClass().getResource("/images/cards/logo.png")), 0), gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new java.awt.Insets(0, 10, 20, 10);
 
         JPanel buttons = new JPanel(new GridBagLayout());
-
         buttons.setOpaque(false);
-
-        buttonQuick.setText("Quick Play");
-        buttonCarrer.setText("Tournament");
-        buttonPlayers.setText("Players");
-        buttonOptions.setText("Options");
-        buttonExit.setText("Exit");
-
         buttons.add(buttonQuick, gbc);
         buttons.add(buttonCarrer, gbc);
         buttons.add(buttonPlayers, gbc);

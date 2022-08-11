@@ -2,8 +2,9 @@ it.seba.juno
 it.seba.juno.card
 it.seba.juno.controller
 it.seba.juno.deck
+it.seba.juno.manger
 it.seba.juno.model
 it.seba.juno.player
-it.seba.juno.sound
+it.seba.juno.util
 it.seba.juno.view
 it.seba.juno.view.component

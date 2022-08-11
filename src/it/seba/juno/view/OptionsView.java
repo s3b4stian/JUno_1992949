@@ -30,12 +30,14 @@ import it.seba.juno.manger.FontManager;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
+import it.seba.juno.view.component.MainLabel;
 import it.seba.juno.view.component.MenuButton;
 import it.seba.juno.view.component.OptionsButtonFullScreen;
 import it.seba.juno.view.component.OptionsButtonSound;
 import it.seba.juno.view.component.OptionsRadioFourPlayers;
 import it.seba.juno.view.component.OptionsRadioThreePlayers;
 import it.seba.juno.view.component.OptionsRadioTwoPlayers;
+import it.seba.juno.view.component.SectionLabel;
 
 public class OptionsView extends JPanel implements InterfaceObserver {
 
@@ -53,20 +55,28 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     private MainView mainView;
 
     private AudioManager audioManager;
-    private FontManager fontManager;
 
     public OptionsView(MainView mainView) {
 
         this.mainView = mainView;
 
         audioManager = AudioManager.getInstance();
-        fontManager = FontManager.getInstance();
 
-        JLabel optionsTitle = new JLabel();
-        optionsTitle.setText("Options");
-        optionsTitle.setFont(fontManager.getCustomFont(72f));
-        optionsTitle.setForeground(new Color(255, 255, 255));
+        // interactive components
+        twoPlayersRadio = new OptionsRadioTwoPlayers();
+        threePlayersRadio = new OptionsRadioThreePlayers();
+        fourPlayersRadio = new OptionsRadioFourPlayers();
 
+        // group the radio buttons.
+        ButtonGroup group = new ButtonGroup();
+        group.add(twoPlayersRadio);
+        group.add(threePlayersRadio);
+        group.add(fourPlayersRadio);
+
+        buttonFullScreen = new OptionsButtonFullScreen();
+        buttonSound = new OptionsButtonSound();
+        buttonBack = new MenuButton("Back");
+        
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
 
@@ -74,92 +84,24 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
-
-        add(optionsTitle, gbc);
-
-        Font sectionLabelFont = fontManager.getCustomFont(36f);
-
-        JLabel playersLabel = new JLabel();
-        playersLabel.setText("Players");
-        playersLabel.setFont(sectionLabelFont);
-        playersLabel.setForeground(new Color(255, 255, 255));
-
-        /*JSeparator playersSeparator = new JSeparator(SwingConstants.HORIZONTAL);
-        playersSeparator.setPreferredSize(new Dimension(400, 2));
-        playersSeparator.setForeground(new Color(255, 255, 255));*/
-
-        JLabel screenLabel = new JLabel();
-        screenLabel.setText("Screen");
-        screenLabel.setFont(sectionLabelFont);
-        screenLabel.setForeground(new Color(255, 255, 255));
-
-        JLabel soundLabel = new JLabel();
-        soundLabel.setText("Sound");
-        soundLabel.setFont(sectionLabelFont);
-        soundLabel.setForeground(new Color(255, 255, 255));
-
-        twoPlayersRadio = new OptionsRadioTwoPlayers();
-        /*twoPlayersRadio.setOpaque(false);
-        twoPlayersRadio.setFocusPainted(false);
-        twoPlayersRadio.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p2.png")));
-        twoPlayersRadio
-                .setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p2s.png")));*/
-
-        threePlayersRadio = new OptionsRadioThreePlayers();
-        /*threePlayersRadio.setOpaque(false);
-        threePlayersRadio.setFocusPainted(false);
-        threePlayersRadio.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p3.png")));
-        threePlayersRadio
-                .setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p3s.png")));*/
-
-        fourPlayersRadio = new OptionsRadioFourPlayers();
-        /*fourPlayersRadio.setOpaque(false);
-        fourPlayersRadio.setFocusPainted(false);
-        fourPlayersRadio.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p4.png")));
-        fourPlayersRadio
-                .setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p4s.png")));*/
-
-
-        // Group the radio buttons.
-        ButtonGroup group = new ButtonGroup();
-        group.add(twoPlayersRadio);
-        group.add(threePlayersRadio);
-        group.add(fourPlayersRadio);
-
-        buttonBack = new MenuButton();
-        buttonBack.setText("Back");
-        //buttonBack.setFocusPainted(false);
-
-        buttonFullScreen = new OptionsButtonFullScreen();
-        /*buttonFullScreen.setFocusPainted(false);
-        buttonFullScreen.setBorderPainted(false);
-        buttonFullScreen.setContentAreaFilled(false);
-        buttonFullScreen
-                .setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/window.png")));
-        buttonFullScreen.setSelectedIcon(
-                new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/full-screen.png")));*/
-
-        buttonSound = new OptionsButtonSound();
-        /*buttonSound.setFocusPainted(false);
-        buttonSound.setBorderPainted(false);
-        buttonSound.setContentAreaFilled(false);
-        buttonSound
-                .setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-off.png")));
-        buttonSound.setSelectedIcon(
-                new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-on.png")));*/
-
         gbc.insets = new Insets(0, 10, 20, 10);
 
+        // non interactive components
+        // created on add call
+        
+        // add option title
         gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(optionsTitle, gbc);
+        add(new MainLabel("Options"), gbc);
 
+        // add players label
         gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        add(playersLabel, gbc);
+        add(new SectionLabel("Players"), gbc);
 
+        // add radio button for players
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -171,26 +113,31 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         gbc.gridy = 2;
         add(fourPlayersRadio, gbc);
 
+        // add screen label
         gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 3;
-        add(screenLabel, gbc);
+        add(new SectionLabel("Screen"), gbc);
 
+        // add button for fullscreen/window
         gbc.gridwidth = 1;
         gbc.gridx = 1;
         gbc.gridy = 4;
         add(buttonFullScreen, gbc);
 
+        // add sound label
         gbc.gridwidth = 3;
         gbc.gridx = 0;
         gbc.gridy = 5;
-        add(soundLabel, gbc);
+        add(new SectionLabel("Sound"), gbc);
 
+        // add button to enable/disable sound
         gbc.gridwidth = 1;
         gbc.gridx = 1;
         gbc.gridy = 6;
         add(buttonSound, gbc);
 
+        // add butto to return to main menu
         gbc.insets = new Insets(20, 10, 0, 10);
         gbc.gridx = 1;
         gbc.gridy = 7;

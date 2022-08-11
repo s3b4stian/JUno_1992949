@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 
 public class MainView extends JFrame {
 
@@ -33,7 +34,7 @@ public class MainView extends JFrame {
         panel.setBorder(new EmptyBorder(0, 0, 0, 0));
         panel.setOpaque(false);
         panel.setLayout(new java.awt.BorderLayout());
-        
+
         // default behavior on close
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -45,9 +46,7 @@ public class MainView extends JFrame {
         }
 
         // set the system icon of the program
-        setIconImage(
-                new javax.swing.ImageIcon(getClass().getResource("/images/cards/deck_1.png"))
-                        .getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/images/cards/deck_1.png")).getImage());
 
         setLocationRelativeTo(null);
         add(panel);

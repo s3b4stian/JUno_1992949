@@ -18,8 +18,6 @@ public class MenuButton extends JButton {
 
     private static final long serialVersionUID = 1L;
 
-    //private AudioManager audioManager;
-
     private final Color background = new Color(255, 138, 48);
     private final Color backgroundHover = new Color(198, 86, 0);
     private final Color backgroundPress = new Color(255, 161, 90);
@@ -28,13 +26,11 @@ public class MenuButton extends JButton {
     private Color currentBackground;
     private Color currentBackgroundHover;
 
-    public MenuButton() {
-        super();
-        
+    public MenuButton(String text) {
+        super(text);
+
         currentBackground = background;
         currentBackgroundHover = background;
-
-        //audioManager = AudioManager.getInstance();
 
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(8, 32, 8, 32));
@@ -69,6 +65,10 @@ public class MenuButton extends JButton {
                 repaint();
             }
         });
+    }
+    
+    public MenuButton() {
+        this("");
     }
 
     @Override
