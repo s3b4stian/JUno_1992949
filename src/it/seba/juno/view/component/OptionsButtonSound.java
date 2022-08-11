@@ -22,8 +22,8 @@ public class OptionsButtonSound extends JToggleButton {
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-off.png")));
-        setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/sound-on.png")));
+        setIcon(new ImageIcon(getClass().getResource("/images/icons/sound-off.png")));
+        setSelectedIcon(new ImageIcon(getClass().getResource("/images/icons/sound-on.png")));
         
         addMouseListener(new MouseAdapter() {
             @Override

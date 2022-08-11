@@ -17,8 +17,8 @@ public class OptionsRadioFourPlayers extends JRadioButton {
         
         setOpaque(false);
         setFocusPainted(false);
-        setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p4.png")));
-        setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p4s.png")));
+        setIcon(new ImageIcon(getClass().getResource("/images/icons/p4.png")));
+        setSelectedIcon(new ImageIcon(getClass().getResource("/images/icons/p4s.png")));
         
         addMouseListener(new MouseAdapter() {
             @Override

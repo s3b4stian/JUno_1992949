@@ -20,7 +20,7 @@ public class FontManager {
         try {
             customFont = Font
                     .createFont(Font.TRUETYPE_FONT,
-                            getClass().getResourceAsStream("/it/seba/juno/resources/font/" + font + ".ttf"))
+                            getClass().getResourceAsStream("/font/" + font + ".ttf"))
                     .deriveFont(22f);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

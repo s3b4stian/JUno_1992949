@@ -46,7 +46,7 @@ public class MainView extends JFrame {
 
         // set the system icon of the program
         setIconImage(
-                new javax.swing.ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/deck_1.png"))
+                new javax.swing.ImageIcon(getClass().getResource("/images/cards/deck_1.png"))
                         .getImage());
 
         setLocationRelativeTo(null);

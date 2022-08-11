@@ -43,7 +43,7 @@ public class AudioManager {
     }
 
     public void addToPlayList(String key, String filename) {
-        Path path = Paths.get((new File("")).getAbsolutePath() + "/resources/it/seba/juno/resources/sound/" + filename);
+        Path path = Paths.get((new File("")).getAbsolutePath() + "/resources/sound/" + filename);
 
         try {
             sounds.put(key, Files.readAllBytes(path));

@@ -34,7 +34,7 @@ public class MenuView extends JPanel {
         buttonOptions = new MenuButton(/* am */);
         buttonExit = new MenuButton(/* am */);
 
-        welcomeBanner.setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/cards/logo.png")));
+        welcomeBanner.setIcon(new ImageIcon(getClass().getResource("/images/cards/logo.png")));
 
         setBorder(new EmptyBorder(40, 10, 10, 10));
         setLayout(new GridBagLayout());

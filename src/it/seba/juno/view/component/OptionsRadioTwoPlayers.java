@@ -17,8 +17,8 @@ public class OptionsRadioTwoPlayers extends JRadioButton {
         
         setOpaque(false);
         setFocusPainted(false);
-        setIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p2.png")));
-        setSelectedIcon(new ImageIcon(getClass().getResource("/it/seba/juno/resources/images/icons/p2s.png")));
+        setIcon(new ImageIcon(getClass().getResource("/images/icons/p2.png")));
+        setSelectedIcon(new ImageIcon(getClass().getResource("/images/icons/p2s.png")));
         
         addMouseListener(new MouseAdapter() {
             @Override
