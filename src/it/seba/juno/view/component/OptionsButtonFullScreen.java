@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
-import it.seba.juno.sound.AudioManager;
+import it.seba.juno.manger.AudioManager;
 
 public class OptionsButtonFullScreen extends JToggleButton {
 

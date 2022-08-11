@@ -25,9 +25,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import it.seba.juno.JUno;
+import it.seba.juno.manger.AudioManager;
+import it.seba.juno.manger.FontManager;
 import it.seba.juno.model.OptionsModel;
-import it.seba.juno.resources.font.FontManager;
-import it.seba.juno.sound.AudioManager;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.MenuButton;

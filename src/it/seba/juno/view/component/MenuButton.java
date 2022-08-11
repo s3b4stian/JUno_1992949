@@ -11,8 +11,8 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-import it.seba.juno.resources.font.FontManager;
-import it.seba.juno.sound.AudioManager;
+import it.seba.juno.manger.AudioManager;
+import it.seba.juno.manger.FontManager;
 
 public class MenuButton extends JButton {
 

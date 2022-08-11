@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import it.seba.juno.sound.AudioManager;
+import it.seba.juno.manger.AudioManager;
 import it.seba.juno.view.component.MenuButton;
 
 //import it.seba.juno.sound.AudioManager;

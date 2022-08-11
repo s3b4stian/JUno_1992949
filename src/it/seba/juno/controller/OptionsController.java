@@ -3,6 +3,7 @@ package it.seba.juno.controller;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import it.seba.juno.manger.SerializationManager;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -75,6 +76,7 @@ public class OptionsController {
 
     public void goBackAction() {
         mainView.setCurrentView(menuView);
+        SerializationManager.getInstance().saveOptions(optionsModel);
     }
 
     public void goFullScreenAction(ItemEvent e) {

@@ -1,6 +1,7 @@
-package it.seba.juno.sound;
+package it.seba.juno.manger;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +43,7 @@ public class AudioManager {
     }
 
     public void addToPlayList(String key, String filename) {
-        Path path = Paths.get(filename);
+        Path path = Paths.get((new File("")).getAbsolutePath() + "/resources/it/seba/juno/resources/sound/" + filename);
 
         try {
             sounds.put(key, Files.readAllBytes(path));

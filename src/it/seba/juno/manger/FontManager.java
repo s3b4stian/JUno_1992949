@@ -1,4 +1,4 @@
-package it.seba.juno.resources.font;
+package it.seba.juno.manger;
 
 import java.awt.Font;
 import java.awt.FontFormatException;

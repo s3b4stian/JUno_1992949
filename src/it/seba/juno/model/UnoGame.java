@@ -1,4 +1,4 @@
-package it.seba.juno;
+package it.seba.juno.model;
 
 //import java.util.Scanner;
 
@@ -12,6 +12,26 @@ import it.seba.juno.player.NpcChangeColorAction;
 import it.seba.juno.player.NpcDropAction;
 import it.seba.juno.player.Player;
 import it.seba.juno.player.UnoPlayers;
+
+// System.out.println("Hello JUno");
+
+// UnoDeck deck = new UnoDeckSimpleFactory().makeUnoDeck();
+
+// DiscardPile discardPile = new DiscardPile();
+
+// UnoPlayers ps = new UnoPlayers();
+
+// ps.add(new HumanPlayer("Sebastian")); ps.add(new NpcPlayer("NPC0", new
+// ColorDropStrategy(discardPile), new MostColorStrategy())); ps.add(new
+// NpcPlayer("NPC1", new ValueDropStrategy(discardPile), new
+// RandomColorStrategy())); ps.add(new NpcPlayer("NPC2", new
+// ColorDropStrategy(discardPile), new MostColorStrategy())); ps.add(new
+// NpcPlayer("NPC3", new ValueDropStrategy(discardPile), new
+// RandomColorStrategy()));
+
+// UnoGame game = new UnoGame(ps, deck, discardPile);
+
+// game.dealCardsToPlayers(); game.start();
 
 public class UnoGame {
 

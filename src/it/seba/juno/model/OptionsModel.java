@@ -1,8 +1,12 @@
 package it.seba.juno.model;
 
+import java.io.Serializable;
+
 import it.seba.juno.util.Observable;
 
-public class OptionsModel extends Observable {
+public class OptionsModel extends Observable implements Serializable {
+
+    private static final long serialVersionUID = 3L;
 
     private int numberOfPlayer = 3;
     private boolean fullScreen = false;
