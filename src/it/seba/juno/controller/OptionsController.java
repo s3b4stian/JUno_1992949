@@ -19,11 +19,11 @@ public class OptionsController {
 
     public OptionsController(OptionsModel optionsModel, MainView mainView, MenuView menuView, OptionsView optionsView) {
 
+        this.optionsModel = optionsModel;
+
         this.mainView = mainView;
         this.menuView = menuView;
         this.optionsView = optionsView;
-
-        this.optionsModel = optionsModel;
 
         initView();
     }

@@ -1,18 +1,33 @@
 package it.seba.juno.model;
 
-import it.seba.juno.player.PlayerProfile;
+import java.util.HashMap;
+import java.util.Map;
 
-public class PlayersModel {
+import it.seba.juno.util.Observable;
 
-    PlayerProfile currentProfile;
-    
+public class PlayersModel extends Observable  {
+
+    PlayerProfileModel currentProfile;
+
+    Map<String, PlayerProfileModel> models;
+
     public PlayersModel() {
-        // TODO Auto-generated constructor stub
+        models = new HashMap<String, PlayerProfileModel>();
     }
 
-    public void addPlayer() {}
-    
-    public void removePlayer() {}
-    
-    public void selectPlayer() {}
+    public PlayerProfileModel getCurrentProfile() {
+        return currentProfile;
+    }
+
+    public void setCurrentProfile(String name) {
+        currentProfile = models.get(name);
+    }
+
+    public void addPlayer(String name, PlayerProfileModel model) {
+        models.put(name, model);
+    }
+
+    public void removePlayer(String name) {
+        models.remove(name);
+    }
 }

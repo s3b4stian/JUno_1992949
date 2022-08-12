@@ -8,52 +8,129 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.util.EventObject;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import it.seba.juno.JUno;
 import it.seba.juno.manger.AudioManager;
-import it.seba.juno.manger.FontManager;
+import it.seba.juno.model.PlayerProfileModel;
 import it.seba.juno.player.BadgePlayed;
 import it.seba.juno.player.BadgeWon;
+import it.seba.juno.util.InterfaceObserver;
+import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.BadgeLabel;
-import it.seba.juno.view.component.BadgePlayedLabel;
+import it.seba.juno.view.component.ListPlayers;
 import it.seba.juno.view.component.MainLabel;
 import it.seba.juno.view.component.MenuButton;
 import it.seba.juno.view.component.SectionLabel;
 import it.seba.juno.view.component.SubSectionLabel;
 
-//import it.seba.juno.sound.AudioManager;
-
-public class PlayersView extends JPanel {
+public class PlayersView extends JPanel implements InterfaceObserver {
 
     private static final long serialVersionUID = 1L;
 
+    private ListPlayers<PlayerProfileModel> listPlayers;
+
+    private MenuButton buttonNew;
+    private MenuButton buttonDelete;
+
+    private BadgeLabel badgePlayedGreen;
+
+    private BadgeLabel badgePlayedBronze;
+    private BadgeLabel badgePlayedSilver;
+    private BadgeLabel badgePlayedGold;
+    private BadgeLabel badgePlayedRed;
+
+    private BadgeLabel badgeWonGreen;
+    private BadgeLabel badgeWonBronze;
+    private BadgeLabel badgeWonSilver;
+    private BadgeLabel badgeWonGold;
+    private BadgeLabel badgeWonRed;
+
     private MenuButton buttonBack;
 
-    private AudioManager audioManager;
+    public ListPlayers<PlayerProfileModel> getListPlayers() {
+        return listPlayers;
+    }
 
-    //private FontManager fontManager;
+    public MenuButton getButtonNew() {
+        return buttonNew;
+    }
 
+    public MenuButton getButtonDelete() {
+        return buttonDelete;
+    }
+    
     public MenuButton getButtonBack() {
         return buttonBack;
     }
 
+    public BadgeLabel getBadgePlayedGreen() {
+        return badgePlayedGreen;
+    }
+
+    public BadgeLabel getBadgePlayedBronze() {
+        return badgePlayedBronze;
+    }
+
+    public BadgeLabel getBadgePlayedSilver() {
+        return badgePlayedSilver;
+    }
+
+    public BadgeLabel getBadgePlayedGold() {
+        return badgePlayedGold;
+    }
+
+    public BadgeLabel getBadgePlayedRed() {
+        return badgePlayedRed;
+    }
+
+    public BadgeLabel getBadgeWonGreen() {
+        return badgeWonGreen;
+    }
+
+    public BadgeLabel getBadgeWonBronze() {
+        return badgeWonBronze;
+    }
+
+    public BadgeLabel getBadgeWonSilver() {
+        return badgeWonSilver;
+    }
+
+    public BadgeLabel getBadgeWonGold() {
+        return badgeWonGold;
+    }
+
+    public BadgeLabel getBadgeWonRed() {
+        return badgeWonRed;
+    }
+    
     public PlayersView() {
 
-        audioManager = AudioManager.getInstance();
+        AudioManager.getInstance();
 
-        //interactive components
-        //JPanel playerProfiles = new JPanel(new GridBagLayout());
-        //playerProfiles.setOpaque(true);
-        String[] data = {"one", "two", "three", "four"};
-        JList<String> profiles = new JList<String>(data);
-        
+        // interactive components
+        listPlayers = new ListPlayers<>();
+
+        buttonNew = new MenuButton("New");
+        buttonDelete = new MenuButton("Delete");
+
+        badgePlayedGreen = new BadgeLabel(BadgePlayed.GREEN);
+        badgePlayedBronze = new BadgeLabel(BadgePlayed.BRONZE);
+        badgePlayedSilver = new BadgeLabel(BadgePlayed.SILVER);
+        badgePlayedGold = new BadgeLabel(BadgePlayed.GOLD);
+        badgePlayedRed = new BadgeLabel(BadgePlayed.RED);
+
+        badgeWonGreen = new BadgeLabel(BadgeWon.GREEN);
+        badgeWonBronze = new BadgeLabel(BadgeWon.BRONZE);
+        badgeWonSilver = new BadgeLabel(BadgeWon.SILVER);
+        badgeWonGold = new BadgeLabel(BadgeWon.GOLD);
+        badgeWonRed = new BadgeLabel(BadgeWon.RED);
+
         buttonBack = new MenuButton("Back");
-        
+
         // layout
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
@@ -66,7 +143,7 @@ public class PlayersView extends JPanel {
 
         // non interactive components
         // created on add call
-        
+
         // add players title
         gbc.gridwidth = 6;
         gbc.gridx = 0;
@@ -77,84 +154,76 @@ public class PlayersView extends JPanel {
         gbc.gridwidth = 6;
         gbc.gridx = 0;
         gbc.gridy = 1;
+        add(new SectionLabel("Profiles saved"), gbc);
+
+        gbc.gridwidth = 6;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(listPlayers, gbc);
+
+        // add badges title
+        gbc.gridwidth = 6;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         add(new SectionLabel("Profile Badges Earned"), gbc);
 
+        // matches played
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = 1;
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 5;
         add(new SubSectionLabel("Played"), gbc);
-        
+        // matches won
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 6;
         add(new SubSectionLabel("Victories"), gbc);
-        
 
+        // badges for played
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 1;
-        gbc.gridy = 2;
-        add(new BadgeLabel(BadgePlayed.GREEN), gbc);
+        gbc.gridy = 5;
+        add(badgePlayedGreen, gbc);
         gbc.gridx = 2;
-        gbc.gridy = 2;
-        add(new BadgeLabel(BadgePlayed.BRONZE), gbc);
+        gbc.gridy = 5;
+        add(badgePlayedBronze, gbc);
         gbc.gridx = 3;
-        gbc.gridy = 2;
-        add(new BadgeLabel(BadgePlayed.SILVER), gbc);
+        gbc.gridy = 5;
+        add(badgePlayedSilver, gbc);
         gbc.gridx = 4;
-        gbc.gridy = 2;
-        add(new BadgeLabel(BadgePlayed.GOLD), gbc);
+        gbc.gridy = 5;
+        add(badgePlayedGold, gbc);
         gbc.gridx = 5;
-        gbc.gridy = 2;
-        add(new BadgeLabel(BadgePlayed.RED), gbc);
-        
-        
-        
+        gbc.gridy = 5;
+        add(badgePlayedRed, gbc);
+
+        // badges for won
         gbc.gridx = 1;
-        gbc.gridy = 3;
-        add(new BadgeLabel(BadgeWon.GREEN), gbc);
+        gbc.gridy = 6;
+        add(badgeWonGreen, gbc);
         gbc.gridx = 2;
-        gbc.gridy = 3;
-        add(new BadgeLabel(BadgeWon.BRONZE), gbc);
+        gbc.gridy = 6;
+        add(badgeWonBronze, gbc);
         gbc.gridx = 3;
-        gbc.gridy = 3;
-        add(new BadgeLabel(BadgeWon.SILVER), gbc);
+        gbc.gridy = 6;
+        add(badgeWonSilver, gbc);
         gbc.gridx = 4;
-        gbc.gridy = 3;
-        add(new BadgeLabel(BadgeWon.GOLD), gbc);
+        gbc.gridy = 6;
+        add(badgeWonGold, gbc);
         gbc.gridx = 5;
-        gbc.gridy = 3;
-        add(new BadgeLabel(BadgeWon.RED), gbc);
-        
-        
-        
-        // add saved profiles title
-        /*gbc.gridwidth = 3;
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        add(new SectionLabel("Saved Profiles"), gbc);*/
-        
-        
-        
-        
-        
-        
-        
-       /* // add jpanel with saved profiles
-        gbc.gridwidth = 3;
-        gbc.gridheight = 4;
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        add(profiles, gbc);*/
-        
-       
+        gbc.gridy = 6;
+        add(badgeWonRed, gbc);
+
         // add button to return to main menu
         gbc.insets = new Insets(20, 10, 0, 10);
-        gbc.gridwidth = 6;
-        gbc.gridheight = 1;
         gbc.gridx = 0;
         gbc.gridy = 7;
         add(buttonBack, gbc);
-
+        gbc.gridx = 4;
+        gbc.gridy = 7;
+        add(buttonNew, gbc);
+        gbc.gridx = 5;
+        gbc.gridy = 7;
+        add(buttonDelete, gbc);
     }
 
     @Override
@@ -168,4 +237,37 @@ public class PlayersView extends JPanel {
 
         super.paintChildren(grphcs);
     }
+
+    @Override
+    public void update(Observable o, EventObject e) {
+        // TODO Auto-generated method stub
+        Object t = e.getSource();
+
+        if (t instanceof ListPlayers) {
+           
+            PlayerProfileModel current = (PlayerProfileModel) listPlayers.getSelectedValue();
+            int played = current.getPlayed();
+            int won = current.getWon();
+            
+            if (played >= 10) {
+                badgePlayedGreen.setEnabled(true);
+            }
+            if (played >= 20) {
+                badgePlayedBronze.setEnabled(true);
+            }
+            if (played >= 40) {
+                badgePlayedSilver.setEnabled(true);
+            }
+            if (played >= 80) {
+                badgePlayedGold.setEnabled(true);
+            }
+            if (played >= 160) {
+                badgePlayedRed.setEnabled(true);
+            }
+        }
+
+        // update for initial state
+        System.out.println(t);
+    }
+
 }

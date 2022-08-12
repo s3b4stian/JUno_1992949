@@ -1,19 +1,19 @@
-package it.seba.juno.player;
+package it.seba.juno.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerProfile implements Serializable {
+public class PlayerProfileModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
 
-    private int played = 0;
+    private int played = 20;
     private int won = 0;
-    
-    public PlayerProfile(String name) {
+
+    public PlayerProfileModel(String name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public class PlayerProfile implements Serializable {
         played++;
         won++;
     }
-    
+
     public void incrementPlayed() {
         played++;
     }

@@ -1,6 +1,5 @@
 package it.seba.juno;
 
-import java.io.File;
 import it.seba.juno.controller.MainController;
 import it.seba.juno.controller.MenuController;
 import it.seba.juno.controller.OptionsController;
@@ -9,6 +8,7 @@ import it.seba.juno.manger.AudioManager;
 import it.seba.juno.manger.FontManager;
 import it.seba.juno.manger.SerializationManager;
 import it.seba.juno.model.OptionsModel;
+import it.seba.juno.model.PlayersModel;
 import it.seba.juno.util.FirstLoadEvent;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -19,7 +19,6 @@ public class JUno {
 
     public static void main(String[] args) {
 
-        
         SerializationManager SerializationManager = new SerializationManager();
         
         // initialize audio manager
@@ -35,6 +34,7 @@ public class JUno {
         // initialize models
         // option model, if exists load it from disk
         OptionsModel optionsModel = SerializationManager.loadOptions();
+        PlayersModel playersModel = new PlayersModel();
 
         // initial audio manager status
         audioManager.setSound(optionsModel.isSound());
@@ -47,13 +47,15 @@ public class JUno {
 
         // add observers
         optionsModel.addObserver(optionsView);
+        playersModel.addObserver(playersView);
         // notify initial status
         optionsModel.notifyObservers(new FirstLoadEvent(new JUno()));
 
+        
         // initialize controllers
         MainController mainController = new MainController(mainView, menuView);
         MenuController menuController = new MenuController(mainView, menuView, optionsView, playersView);
         OptionsController optionsController = new OptionsController(optionsModel, mainView, menuView, optionsView);
-        PlayersController playersController = new PlayersController(mainView, menuView, playersView);
+        PlayersController playersController = new PlayersController(playersModel, mainView, menuView, playersView);
     }
 }

@@ -22,8 +22,8 @@ public class OptionsButtonFullScreen extends JToggleButton {
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setIcon(new ImageIcon(getClass().getResource("/images/icons/window.png")));
-        setSelectedIcon(new ImageIcon(getClass().getResource("/images/icons/full-screen.png")));
+        setIcon(new ImageIcon(getClass().getResource("/images/icons/fullscreen-off.png")));
+        setSelectedIcon(new ImageIcon(getClass().getResource("/images/icons/fullscreen-on.png")));
         
         addMouseListener(new MouseAdapter() {
             @Override
