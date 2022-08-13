@@ -12,8 +12,10 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
+
+import it.seba.juno.manger.AudioManager;
 import it.seba.juno.manger.FontManager;
-import it.seba.juno.model.PlayerProfileModel;
+import it.seba.juno.model.PlayersProfileModel;
 
 public class ListPlayers<E extends Object> extends JList<E> {
 
@@ -22,11 +24,11 @@ public class ListPlayers<E extends Object> extends JList<E> {
     private int selectedIndex = -1;
     private int overIndex = -1;
 
-    private final DefaultListModel<PlayerProfileModel> model;
+    private final DefaultListModel<PlayersProfileModel> model;
 
     @SuppressWarnings("unchecked")
     public ListPlayers() {
-        model = new DefaultListModel<PlayerProfileModel>();
+        model = new DefaultListModel<PlayersProfileModel>();
         setModel((ListModel<E>) model);
         setFont(FontManager.getInstance().getCustomFont(22f));
         setPreferredSize(new Dimension(400, 200));
@@ -37,6 +39,7 @@ public class ListPlayers<E extends Object> extends JList<E> {
             public void mousePressed(MouseEvent me) {
                 if (SwingUtilities.isLeftMouseButton(me)) {
                     selectedIndex = locationToIndex(me.getPoint());
+                    AudioManager.getInstance().playSoundEffect("click");
                     repaint();
                 }
             }
@@ -70,7 +73,7 @@ public class ListPlayers<E extends Object> extends JList<E> {
             public Component getListCellRendererComponent(JList<?> jlist, Object o, int index, boolean selected,
                     boolean focus) {
 
-                ListPlayersItem item = new ListPlayersItem(((PlayerProfileModel) o).getName());
+                ListPlayersItem item = new ListPlayersItem(((PlayersProfileModel) o).getName());
                 item.setSelected(selectedIndex == index);
                 item.setOver(overIndex == index);
 
@@ -79,7 +82,7 @@ public class ListPlayers<E extends Object> extends JList<E> {
         };
     }
 
-    public void addItem(PlayerProfileModel element) {
+    public void addItem(PlayersProfileModel element) {
         model.addElement(element);
     }
 

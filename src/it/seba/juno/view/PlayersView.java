@@ -13,9 +13,8 @@ import java.util.EventObject;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import it.seba.juno.JUno;
 import it.seba.juno.manger.AudioManager;
-import it.seba.juno.model.PlayerProfileModel;
+import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.player.BadgePlayed;
 import it.seba.juno.player.BadgeWon;
 import it.seba.juno.util.InterfaceObserver;
@@ -31,7 +30,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
 
     private static final long serialVersionUID = 1L;
 
-    private ListPlayers<PlayerProfileModel> listPlayers;
+    private ListPlayers<PlayersProfileModel> listPlayers;
 
     private MenuButton buttonNew;
     private MenuButton buttonDelete;
@@ -51,7 +50,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
 
     private MenuButton buttonBack;
 
-    public ListPlayers<PlayerProfileModel> getListPlayers() {
+    public ListPlayers<PlayersProfileModel> getListPlayers() {
         return listPlayers;
     }
 
@@ -62,7 +61,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     public MenuButton getButtonDelete() {
         return buttonDelete;
     }
-    
+
     public MenuButton getButtonBack() {
         return buttonBack;
     }
@@ -106,7 +105,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     public BadgeLabel getBadgeWonRed() {
         return badgeWonRed;
     }
-    
+
     public PlayersView() {
 
         AudioManager.getInstance();
@@ -238,36 +237,86 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         super.paintChildren(grphcs);
     }
 
+    private void enbalePlayedBadges(int played) {
+        if (played >= 10) {
+            badgePlayedGreen.setEnabled(true);
+        }
+        if (played >= 20) {
+            badgePlayedBronze.setEnabled(true);
+        }
+        if (played >= 40) {
+            badgePlayedSilver.setEnabled(true);
+        }
+        if (played >= 80) {
+            badgePlayedGold.setEnabled(true);
+        }
+        if (played >= 160) {
+            badgePlayedRed.setEnabled(true);
+        }
+    }
+
+    private void disablePlayedBadges() {
+        badgePlayedGreen.setEnabled(false);
+        badgePlayedBronze.setEnabled(false);
+        badgePlayedSilver.setEnabled(false);
+        badgePlayedGold.setEnabled(false);
+        badgePlayedRed.setEnabled(false);
+    }
+
+    private void enbaleWonBadges(int won) {
+        if (won >= 10) {
+            badgeWonGreen.setEnabled(true);
+        }
+        if (won >= 20) {
+            badgeWonBronze.setEnabled(true);
+        }
+        if (won >= 40) {
+            badgeWonSilver.setEnabled(true);
+        }
+        if (won >= 80) {
+            badgeWonGold.setEnabled(true);
+        }
+        if (won >= 160) {
+            badgeWonRed.setEnabled(true);
+        }
+    }
+
+    private void disableWonBadges() {
+        badgeWonGreen.setEnabled(false);
+        badgeWonBronze.setEnabled(false);
+        badgeWonSilver.setEnabled(false);
+        badgeWonGold.setEnabled(false);
+        badgeWonRed.setEnabled(false);
+    }
+    
     @Override
     public void update(Observable o, EventObject e) {
-        // TODO Auto-generated method stub
+
         Object t = e.getSource();
 
         if (t instanceof ListPlayers) {
-           
-            PlayerProfileModel current = (PlayerProfileModel) listPlayers.getSelectedValue();
-            int played = current.getPlayed();
-            int won = current.getWon();
+
+            PlayersProfileModel current = (PlayersProfileModel) listPlayers.getSelectedValue();
+
+            enbalePlayedBadges(current.getPlayed());
+            enbaleWonBadges(current.getWon());
             
-            if (played >= 10) {
-                badgePlayedGreen.setEnabled(true);
-            }
-            if (played >= 20) {
-                badgePlayedBronze.setEnabled(true);
-            }
-            if (played >= 40) {
-                badgePlayedSilver.setEnabled(true);
-            }
-            if (played >= 80) {
-                badgePlayedGold.setEnabled(true);
-            }
-            if (played >= 160) {
-                badgePlayedRed.setEnabled(true);
-            }
         }
 
-        // update for initial state
-        System.out.println(t);
+        if (t instanceof MenuButton) {
+            if (t == buttonDelete) {
+                
+                int index = listPlayers.getSelectedIndex();
+                
+                if (index != -1) {
+                    listPlayers.removeItem(index);
+                    listPlayers.updateUI();
+                    
+                    disablePlayedBadges();
+                    disableWonBadges();
+                    
+                }   
+            }
+        }
     }
-
 }

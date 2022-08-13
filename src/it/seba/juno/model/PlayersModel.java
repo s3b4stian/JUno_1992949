@@ -7,15 +7,15 @@ import it.seba.juno.util.Observable;
 
 public class PlayersModel extends Observable  {
 
-    PlayerProfileModel currentProfile;
+    PlayersProfileModel currentProfile;
 
-    Map<String, PlayerProfileModel> models;
+    Map<String, PlayersProfileModel> models;
 
     public PlayersModel() {
-        models = new HashMap<String, PlayerProfileModel>();
+        models = new HashMap<String, PlayersProfileModel>();
     }
 
-    public PlayerProfileModel getCurrentProfile() {
+    public PlayersProfileModel getCurrentProfile() {
         return currentProfile;
     }
 
@@ -23,7 +23,7 @@ public class PlayersModel extends Observable  {
         currentProfile = models.get(name);
     }
 
-    public void addPlayer(String name, PlayerProfileModel model) {
+    public void addPlayer(String name, PlayersProfileModel model) {
         models.put(name, model);
     }
 

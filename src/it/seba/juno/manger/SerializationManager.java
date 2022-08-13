@@ -25,15 +25,14 @@ public class SerializationManager {
     }
 
     public SerializationManager() {
-        // get user dir, works on windows, have to be tested on linux and mac
+        // get user Directory, works on windows, have to be tested on Linux and Mac
         userDir = System.getProperty("user.home").replace("\\", "/");
-        // save dirctory
+        // save directory
         jUnoDir = userDir + "/JUno";
         // option file, to save the options
         fileOptions = jUnoDir + "/options.bin";
 
-        // System.out.println(userDir);
-        // System.out.println(jUnoDir);
+        
     }
 
     public void createGamefolder() {

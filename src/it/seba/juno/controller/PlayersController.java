@@ -1,9 +1,11 @@
 package it.seba.juno.controller;
 
+import java.awt.event.ActionEvent;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import it.seba.juno.model.PlayerProfileModel;
+import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.model.PlayersModel;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -15,14 +17,14 @@ public class PlayersController {
     MainView mainView;
     MenuView menuView;
     PlayersView playersView;
-    ListPlayers<PlayerProfileModel> listPlayers;
+    ListPlayers<PlayersProfileModel> listPlayers;
 
     PlayersModel playersModel;
-    
+
     public PlayersController(PlayersModel playersModel, MainView mainView, MenuView menuView, PlayersView playersView) {
-        
+
         this.playersModel = playersModel;
-        
+
         this.mainView = mainView;
         this.menuView = menuView;
         this.playersView = playersView;
@@ -32,21 +34,23 @@ public class PlayersController {
     private void initView() {
         // players list
         listPlayers = playersView.getListPlayers();
-        listPlayers.addItem(new PlayerProfileModel("Sebastian"));
-        listPlayers.addItem(new PlayerProfileModel("Paolo"));
+        listPlayers.addItem(new PlayersProfileModel("Sebastian"));
+        listPlayers.addItem(new PlayersProfileModel("Paolo"));
 
         listPlayers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting() && listPlayers.getSelectedIndex() != -1) {
-                    
-                    loadAction(e, ((PlayerProfileModel) listPlayers.getSelectedValue()).getName());
+
+                    loadAction(e);
                 }
             }
         });
 
         // button back
         playersView.getButtonBack().addActionListener(e -> goBackAction());
-        playersView.getButtonDelete().addActionListener(e -> deleteAction(listPlayers.getSelectedIndex()));
+
+        // button delete
+        playersView.getButtonDelete().addActionListener(e -> deleteAction(e));
     }
 
     public void goBackAction() {
@@ -57,16 +61,19 @@ public class PlayersController {
 
     }
 
-    public void deleteAction(int index) {
-        if (index != -1) {
-            playersView.getListPlayers().removeItem(index);
-            playersView.getListPlayers().updateUI();
+    public void deleteAction(ActionEvent e) {
+        if (listPlayers.getSelectedIndex() != -1) {
+            playersModel.setCurrentProfile(null);
+            playersModel.removePlayer(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
+            playersModel.notifyObservers(e);
         }
-        playersModel.setCurrentProfile(null);
     }
 
-    public void loadAction(ListSelectionEvent e, String name) {
-        playersModel.setCurrentProfile(name);
-        playersModel.notifyObservers(e);
+    public void loadAction(ListSelectionEvent e) {
+
+        if (listPlayers.getSelectedIndex() != -1) {
+            playersModel.setCurrentProfile(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
+            playersModel.notifyObservers(e);
+        }
     }
 }

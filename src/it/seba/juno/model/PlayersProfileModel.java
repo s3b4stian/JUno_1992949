@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerProfileModel implements Serializable {
+public class PlayersProfileModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
 
-    private int played = 20;
-    private int won = 0;
+    private int played = 200;
+    private int won = 50;
 
-    public PlayerProfileModel(String name) {
+    public PlayersProfileModel(String name) {
         this.name = name;
     }
 
