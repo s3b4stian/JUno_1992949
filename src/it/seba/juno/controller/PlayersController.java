@@ -1,11 +1,13 @@
 package it.seba.juno.controller;
 
 import java.awt.event.ActionEvent;
+import java.util.Map;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import it.seba.juno.model.PlayersProfileModel;
+import it.seba.juno.manger.SerializationManager;
 import it.seba.juno.model.PlayersModel;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -34,13 +36,15 @@ public class PlayersController {
     private void initView() {
         // players list
         listPlayers = playersView.getListPlayers();
-        listPlayers.addItem(new PlayersProfileModel("Sebastian"));
-        listPlayers.addItem(new PlayersProfileModel("Paolo"));
+        loadListPlayers();
+        
+        
+        //listPlayers.addItem(new PlayersProfileModel("Sebastian"));
+        //listPlayers.addItem(new PlayersProfileModel("Test Profile"));
 
         listPlayers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting() && listPlayers.getSelectedIndex() != -1) {
-
                     loadAction(e);
                 }
             }
@@ -53,8 +57,28 @@ public class PlayersController {
         playersView.getButtonDelete().addActionListener(e -> deleteAction(e));
     }
 
+    private void loadListPlayers() {
+        Map<String, PlayersProfileModel> players = playersModel.getPlayers();
+
+        // save all profiles
+        for (Map.Entry<String, PlayersProfileModel> entry : players.entrySet()) {
+            listPlayers.addItem(entry.getValue());
+        }
+    }
+    
     public void goBackAction() {
         mainView.setCurrentView(menuView);
+
+        SerializationManager sm = SerializationManager.getInstance();
+        Map<String, PlayersProfileModel> players = playersModel.getPlayers();
+
+        // save all profiles
+        for (Map.Entry<String, PlayersProfileModel> entry : players.entrySet()) {
+            sm.savePlayers(entry.getValue());
+        }
+
+        // save current profile
+        // sm.savePlayers(playersModel.getCurrentProfile());
     }
 
     public void newAction() {

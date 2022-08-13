@@ -5,14 +5,14 @@ import java.util.Map;
 
 import it.seba.juno.util.Observable;
 
-public class PlayersModel extends Observable  {
+public class PlayersModel extends Observable {
 
     PlayersProfileModel currentProfile;
 
-    Map<String, PlayersProfileModel> models;
+    Map<String, PlayersProfileModel> playersProfile;
 
     public PlayersModel() {
-        models = new HashMap<String, PlayersProfileModel>();
+        playersProfile = new HashMap<String, PlayersProfileModel>();
     }
 
     public PlayersProfileModel getCurrentProfile() {
@@ -20,14 +20,19 @@ public class PlayersModel extends Observable  {
     }
 
     public void setCurrentProfile(String name) {
-        currentProfile = models.get(name);
+        currentProfile = playersProfile.get(name);
     }
 
     public void addPlayer(String name, PlayersProfileModel model) {
-        models.put(name, model);
+        playersProfile.put(name, model);
     }
 
     public void removePlayer(String name) {
-        models.remove(name);
+        playersProfile.remove(name);
+    }
+
+    public Map<String, PlayersProfileModel> getPlayers() {
+
+        return playersProfile;
     }
 }

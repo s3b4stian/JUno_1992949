@@ -10,8 +10,8 @@ public class PlayersProfileModel implements Serializable {
 
     private String name;
 
-    private int played = 200;
-    private int won = 50;
+    private int played = 0;
+    private int won = 0;
 
     public PlayersProfileModel(String name) {
         this.name = name;

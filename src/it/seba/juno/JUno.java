@@ -9,6 +9,7 @@ import it.seba.juno.manger.FontManager;
 import it.seba.juno.manger.SerializationManager;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.model.PlayersModel;
+import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.util.FirstLoadEvent;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -34,8 +35,9 @@ public class JUno {
         // initialize models
         // option model, if exists load it from disk
         OptionsModel optionsModel = SerializationManager.loadOptions();
-        PlayersModel playersModel = new PlayersModel();
-
+        // player profiles, if exists load it from disk
+        PlayersModel playersModel = SerializationManager.loadPlayer();
+        
         // initial audio manager status
         audioManager.setSound(optionsModel.isSound());
 

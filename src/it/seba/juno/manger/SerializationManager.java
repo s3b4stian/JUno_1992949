@@ -6,14 +6,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Map;
 
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.model.PlayersModel;
+import it.seba.juno.model.PlayersProfileModel;
 
 public class SerializationManager {
 
     private String userDir;
     private String jUnoDir;
+    private String profilesDir;
     private String fileOptions;
 
     private static SerializationManager instance;
@@ -29,46 +32,87 @@ public class SerializationManager {
         userDir = System.getProperty("user.home").replace("\\", "/");
         // save directory
         jUnoDir = userDir + "/JUno";
+        // profiles directory
+        profilesDir = jUnoDir + "/profiles";
         // option file, to save the options
         fileOptions = jUnoDir + "/options.bin";
-
-        
     }
 
-    public void createGamefolder() {
+    public void createGamefolder(String newDir) {
 
-        File dir = new File(jUnoDir);
+        File dir = new File(newDir);
 
         if (!dir.exists()) {
             dir.mkdir();
         }
     }
 
+    private void serialize(Object o, String fileName) throws IOException {
+        FileOutputStream file = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(file);
+
+        out.writeObject(o);
+        out.flush();
+        out.close();
+
+        file.close();
+    }
+
+    private Object unserialize(String fileName) throws ClassNotFoundException, IOException {
+        FileInputStream file = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(file);
+
+        Object o = in.readObject();
+
+        in.close();
+        file.close();
+
+        return o;
+    }
+
     public void saveOptions(OptionsModel model) {
 
-        createGamefolder();
+        createGamefolder(jUnoDir);
 
         try {
-            FileOutputStream file = new FileOutputStream(fileOptions);
-            ObjectOutputStream out = new ObjectOutputStream(file);
-
-            out.writeObject(model);
-            out.flush();
-            out.close();
-
-            file.close();
-
+            serialize(model, fileOptions);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void savePlayers() {
+    public void savePlayers(PlayersProfileModel model) {
 
+        createGamefolder(profilesDir);
+
+        try {
+            serialize(model, profilesDir + "/" + model.getName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public PlayersModel loadPlayer() {
-        return null;
+        PlayersModel playersModel = new PlayersModel();
+
+        File dir = new File(profilesDir);
+
+        if (dir.exists()) {
+            for (File file : dir.listFiles()) {
+                if (file.isFile()) {
+
+                    try {
+                        PlayersProfileModel playerProfileModel = (PlayersProfileModel) unserialize(profilesDir + "/" + file.getName());
+                        playersModel.addPlayer(playerProfileModel.getName(), playerProfileModel);
+
+                    } catch (ClassNotFoundException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return playersModel;
     }
 
     public OptionsModel loadOptions() {
@@ -77,13 +121,15 @@ public class SerializationManager {
 
         if ((new File(fileOptions)).exists()) {
             try {
-                FileInputStream file = new FileInputStream(fileOptions);
+                /*FileInputStream file = new FileInputStream(fileOptions);
                 ObjectInputStream in = new ObjectInputStream(file);
 
                 optionsModel = (OptionsModel) in.readObject();
 
                 in.close();
-                file.close();
+                file.close();*/
+                
+                optionsModel = (OptionsModel) unserialize(fileOptions);
 
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
