@@ -13,7 +13,7 @@ public class MainView extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();//.getScreenDevices()[0];
 
     private JPanel panel;
 

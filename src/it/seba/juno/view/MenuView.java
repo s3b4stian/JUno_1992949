@@ -10,7 +10,6 @@ import java.awt.RenderingHints;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
 import it.seba.juno.view.component.MenuButton;
@@ -24,7 +23,7 @@ public class MenuView extends JPanel {
     private MenuButton buttonPlayers;
     private MenuButton buttonOptions;
     private MenuButton buttonExit;
-    private JLabel welcomeBanner;
+    //private JLabel welcomeBanner;
 
     public MenuView() {
 

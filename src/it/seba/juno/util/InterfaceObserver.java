@@ -1,6 +1,5 @@
 package it.seba.juno.util;
 
-import java.awt.event.ActionEvent;
 import java.util.EventObject;
 
 /**

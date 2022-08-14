@@ -3,6 +3,7 @@ package it.seba.juno.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.seba.juno.manger.SerializationManager;
 import it.seba.juno.util.Observable;
 
 public class PlayersModel extends Observable {
@@ -34,5 +35,15 @@ public class PlayersModel extends Observable {
     public Map<String, PlayersProfileModel> getPlayers() {
 
         return playersProfile;
+    }
+    
+    public void save() {
+        SerializationManager sm = SerializationManager.getInstance();
+        //Map<String, PlayersProfileModel> players = playersModel.getPlayers();
+
+        // save all profiles
+        for (Map.Entry<String, PlayersProfileModel> entry : playersProfile.entrySet()) {
+            sm.savePlayers(entry.getValue());
+        }
     }
 }

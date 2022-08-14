@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Map;
-
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.model.PlayersModel;
 import it.seba.juno.model.PlayersProfileModel;
@@ -102,7 +100,8 @@ public class SerializationManager {
                 if (file.isFile()) {
 
                     try {
-                        PlayersProfileModel playerProfileModel = (PlayersProfileModel) unserialize(profilesDir + "/" + file.getName());
+                        PlayersProfileModel playerProfileModel = (PlayersProfileModel) unserialize(
+                                profilesDir + "/" + file.getName());
                         playersModel.addPlayer(playerProfileModel.getName(), playerProfileModel);
 
                     } catch (ClassNotFoundException | IOException e) {
@@ -121,14 +120,6 @@ public class SerializationManager {
 
         if ((new File(fileOptions)).exists()) {
             try {
-                /*FileInputStream file = new FileInputStream(fileOptions);
-                ObjectInputStream in = new ObjectInputStream(file);
-
-                optionsModel = (OptionsModel) in.readObject();
-
-                in.close();
-                file.close();*/
-                
                 optionsModel = (OptionsModel) unserialize(fileOptions);
 
             } catch (IOException | ClassNotFoundException e) {

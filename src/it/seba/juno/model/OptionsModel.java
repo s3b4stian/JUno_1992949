@@ -2,6 +2,7 @@ package it.seba.juno.model;
 
 import java.io.Serializable;
 
+import it.seba.juno.manger.SerializationManager;
 import it.seba.juno.util.Observable;
 
 public class OptionsModel extends Observable implements Serializable {
@@ -37,5 +38,9 @@ public class OptionsModel extends Observable implements Serializable {
 
     public void setFullScreen(boolean fullScreen) {
         this.fullScreen = fullScreen;
+    }
+    
+    public void save() {
+        SerializationManager.getInstance().saveOptions(this);
     }
 }

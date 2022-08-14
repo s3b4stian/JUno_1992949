@@ -1,8 +1,6 @@
 package it.seba.juno.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,20 +11,12 @@ import java.awt.RenderingHints;
 import java.util.EventObject;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import it.seba.juno.JUno;
 import it.seba.juno.manger.AudioManager;
-import it.seba.juno.manger.FontManager;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
@@ -76,7 +66,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         buttonFullScreen = new OptionsButtonFullScreen();
         buttonSound = new OptionsButtonSound();
         buttonBack = new MenuButton("Back");
-        
+
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridBagLayout());
 
@@ -137,7 +127,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         gbc.gridy = 6;
         add(buttonSound, gbc);
 
-        // add butto to return to main menu
+        // add button to return to main menu
         gbc.insets = new Insets(20, 10, 0, 10);
         gbc.gridx = 1;
         gbc.gridy = 7;
@@ -151,7 +141,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     public JRadioButton getThreePlayersRadio() {
         return threePlayersRadio;
     }
-    
+
     public JRadioButton getFourPlayersRadio() {
         return fourPlayersRadio;
     }
@@ -159,7 +149,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     public MainView getMainView() {
         return mainView;
     }
-    
+
     public MenuButton getButtonBack() {
         return buttonBack;
     }
@@ -189,17 +179,19 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         Object t = e.getSource();
 
+        OptionsModel model = (OptionsModel) o;
+
         // update for initial state
         if (t instanceof JUno) {
-            if (((OptionsModel) o).isFullScreen()) {
+            if (model.isFullScreen()) {
                 buttonFullScreen.setSelected(true);
             }
 
-            if (((OptionsModel) o).isSound()) {
+            if (model.isSound()) {
                 buttonSound.setSelected(true);
             }
 
-            switch (((OptionsModel) o).getNumberOfPlayer()) {
+            switch (model.getNumberOfPlayer()) {
             case 2:
                 twoPlayersRadio.setSelected(true);
                 break;
@@ -215,7 +207,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         // update for user clicks
         if (t instanceof JToggleButton) {
             if (t == buttonFullScreen) {
-                if (((OptionsModel) o).isFullScreen()) {
+                if (model.isFullScreen()) {
                     mainView.setFullScreen();
                 } else {
                     mainView.setWindow();
@@ -223,7 +215,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
             }
 
             if (t == buttonSound) {
-                if (((OptionsModel) o).isSound()) {
+                if (model.isSound()) {
                     audioManager.setSound(true);
                 } else {
                     audioManager.setSound(false);
