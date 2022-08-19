@@ -12,12 +12,8 @@ public class OptionsButtonFullScreen extends JToggleButton {
 
     private static final long serialVersionUID = 1L;
 
-    //private AudioManager audioManager;
-    
     public OptionsButtonFullScreen() {
         super();
-
-        //audioManager = AudioManager.getInstance();
         
         setFocusPainted(false);
         setBorderPainted(false);

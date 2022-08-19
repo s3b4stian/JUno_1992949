@@ -1,5 +1,6 @@
 package it.seba.juno.model;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +30,8 @@ public class PlayersModel extends Observable {
     }
 
     public void removePlayer(String name) {
+        // delete profile serialized file
+        (new File(SerializationManager.getInstance().getProfilesDir() + "/" + name)).delete();
         playersProfile.remove(name);
     }
 

@@ -49,9 +49,17 @@ public class PlayersController {
 
         // button delete
         playersView.getButtonDelete().addActionListener(e -> deleteAction(e));
-        
+
         // button new
-        playersView.getButtonNew().addActionListener(e -> newAction());
+        playersView.getButtonNew().addActionListener(e -> showNewPlayerModalAction(e));
+        
+        
+        // modal buttons
+        // button confirm new player
+        playersView.getNewPlayerModal().getConfirmButton().addActionListener(e -> confirmNewPlayerModalAction(e));
+        // button cancel new player
+        playersView.getNewPlayerModal().getCancelButton().addActionListener(e -> cancelNewPlayerModalAction(e));
+        
     }
 
     private void loadListPlayers() {
@@ -62,54 +70,28 @@ public class PlayersController {
             listPlayers.addItem(entry.getValue());
         }
     }
-    
+
     public void goBackAction() {
         mainView.setCurrentView(menuView);
         playersModel.save();
     }
 
-    public void newAction() {
-        
-        
-        playersView.internalFrame.setVisible(true);
-        
-        //JInternalFrame internalFrame = new ModalDialog();
-
-       /* internalFrame.setLayout(new FlowLayout());
-        internalFrame.add(new JLabel("I am label"));
-        internalFrame.add(new JButton("Oi button"));    
-        internalFrame.setSize(new Dimension(400,200));
-        //internalFrame.setOpaque(false);
-        internalFrame.setClosable(true);*/
-
-        //internalFrame.pack();
-        //internalFrame.setVisible(true);
-        //playersView.add(internalFrame);
-        
-        /*JDialog msg = new JDialog(mainView, true);
-        
-        MenuButton b = new MenuButton("close");
-
-        b.addActionListener(e -> msg.dispose());
-        
-        
-        msg.add(new JLabel("Test"));
-        msg.add(b);
-        msg.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        msg.setUndecorated(true);
-        msg.setLocationRelativeTo(null);
-        msg.setSize(new Dimension(400,200));
-        //msg.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        msg.setVisible(true);
-        
-        
-        /*JOptionPane opti = new JOptionPane();
-        JOptionPane.showConfirmDialog(mainView.getFrames()[0], "Do you really want to quit?", "QUIT", JOptionPane.YES_NO_OPTION , 
-                JOptionPane.QUESTION_MESSAGE);
-        opti.requestFocusInWindow();*/
-       
+    public void showNewPlayerModalAction(ActionEvent e) {
+        playersModel.notifyObservers(e);
     }
 
+    public void confirmNewPlayerModalAction(ActionEvent e) {
+        String playerName = playersView.getNewPlayerModal().getTextField().getText();
+        PlayersProfileModel newPlayer = new PlayersProfileModel(playerName);
+        playersModel.addPlayer(playerName, newPlayer);
+        listPlayers.addItem(newPlayer);
+        playersModel.notifyObservers(e);
+    }
+    
+    public void cancelNewPlayerModalAction(ActionEvent e) {
+        playersModel.notifyObservers(e);
+    }
+    
     public void deleteAction(ActionEvent e) {
         if (listPlayers.getSelectedIndex() != -1) {
             playersModel.setCurrentProfile(null);

@@ -12,10 +12,11 @@ import it.seba.juno.model.PlayersProfileModel;
 
 public class SerializationManager {
 
-    private String userDir;
-    private String jUnoDir;
-    private String profilesDir;
-    private String fileOptions;
+    private final String userDir;
+    private final String jUnoDir;
+    private final String profilesDir;
+    
+    private final String fileOptions;
 
     private static SerializationManager instance;
 
@@ -36,6 +37,10 @@ public class SerializationManager {
         fileOptions = jUnoDir + "/options.bin";
     }
 
+    public String getProfilesDir() {
+        return profilesDir;
+    }
+    
     public void createGamefolder(String newDir) {
 
         File dir = new File(newDir);

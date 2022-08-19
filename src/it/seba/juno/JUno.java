@@ -53,7 +53,6 @@ public class JUno {
         // notify initial status
         optionsModel.notifyObservers(new FirstLoadEvent(new JUno()));
 
-        
         // initialize controllers
         MainController mainController = new MainController(mainView, menuView);
         MenuController menuController = new MenuController(mainView, menuView, optionsView, playersView);

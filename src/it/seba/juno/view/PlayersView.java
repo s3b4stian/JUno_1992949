@@ -1,8 +1,6 @@
 package it.seba.juno.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,28 +8,23 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.geom.Area;
-import java.awt.geom.RoundRectangle2D;
 import java.util.EventObject;
 
-import javax.swing.JButton;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.manger.AudioManager;
-import it.seba.juno.manger.FontManager;
 import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.player.BadgePlayed;
 import it.seba.juno.player.BadgeWon;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.BadgeLabel;
+import it.seba.juno.view.component.DialogButton;
 import it.seba.juno.view.component.ListPlayers;
 import it.seba.juno.view.component.MainLabel;
 import it.seba.juno.view.component.MenuButton;
+import it.seba.juno.view.component.NewPlayerModal;
 import it.seba.juno.view.component.SectionLabel;
 import it.seba.juno.view.component.SubSectionLabel;
 
@@ -56,6 +49,8 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     private BadgeLabel badgeWonSilver;
     private BadgeLabel badgeWonGold;
     private BadgeLabel badgeWonRed;
+
+    private NewPlayerModal newPlayerModal;
 
     private MenuButton buttonBack;
 
@@ -115,6 +110,10 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         return badgeWonRed;
     }
 
+    public NewPlayerModal getNewPlayerModal() {
+        return newPlayerModal;
+    }
+
     public PlayersView() {
 
         AudioManager.getInstance();
@@ -136,6 +135,8 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         badgeWonSilver = new BadgeLabel(BadgeWon.SILVER);
         badgeWonGold = new BadgeLabel(BadgeWon.GOLD);
         badgeWonRed = new BadgeLabel(BadgeWon.RED);
+
+        newPlayerModal = new NewPlayerModal();
 
         buttonBack = new MenuButton("Back");
 
@@ -169,14 +170,6 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         gbc.gridy = 2;
         add(listPlayers, gbc);
 
-        /*t = new JTextField("enter the text", 24);
-        //t.setVisible(false);
-        
-        buttonNew.addActionListener(e -> {t.setVisible(true);t.repaint();});
-        gbc.gridx = 1;
-        gbc.gridy = 7;
-        add(t, gbc);*/
-        
         // add badges title
         gbc.gridwidth = 6;
         gbc.gridx = 0;
@@ -229,63 +222,30 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         gbc.gridy = 6;
         add(badgeWonRed, gbc);
 
-        
-        JTextField textField = new JTextField("Player Name",16);
-        textField.setFont(FontManager.getInstance().getCustomFont(22f));
-        textField.setOpaque(false);
-        textField.setBorder(null);
-        textField.setForeground(new Color(255,255,255));
-        
-        internalFrame = new JPanel() {
-            @Override
-            protected void paintChildren(Graphics grphcs) {
-                Graphics2D g2 = (Graphics2D) grphcs;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                // diagonal gradient as paint
-                g2.setPaint(new GradientPaint(0, getHeight(), Color.decode("#009FFD"), getWidth(), 0, Color.decode("#2A2A72")));
-                // fill the panel
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
-                //g2.fillRect(0, 0, getWidth(), getHeight());
-
-                super.paintChildren(grphcs);
-            }
-        };
-        
-        //internalFrame.setSize(new Dimension(200,100));
-        internalFrame.repaint();
-        internalFrame.setLayout(new FlowLayout());
-        internalFrame.add(textField);
-        internalFrame.add(new JButton("V"));
-        internalFrame.add(new JButton("X"));
-        internalFrame.setBorder(null);
-        //((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
-        //internalFrame.pack();
-        internalFrame.setOpaque(false);
-        //internalFrame.setBackground(new Color(255,255,255));
-        internalFrame.setVisible(false);
-        
-        
-        
-        // add button to return to main menu
+        // ad modal to set new player name
         gbc.insets = new Insets(20, 10, 0, 10);
         gbc.gridwidth = 3;
         gbc.gridx = 1;
         gbc.gridy = 7;
-        add(internalFrame, gbc);
+        add(newPlayerModal, gbc);
+
+        // add button to return to main menu
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 7;
         add(buttonBack, gbc);
+
+        // new player button
         gbc.gridx = 4;
         gbc.gridy = 7;
         add(buttonNew, gbc);
+
+        // delete player button
         gbc.gridx = 5;
         gbc.gridy = 7;
         add(buttonDelete, gbc);
     }
 
-    public JPanel internalFrame;
-    
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -379,6 +339,22 @@ public class PlayersView extends JPanel implements InterfaceObserver {
             if (t == buttonDelete) {
                 deletePlayer();
             }
+            
+            if (t == buttonNew) {
+                newPlayerModal.setVisible(true);
+            }
+        }
+        
+        if (t instanceof DialogButton) {
+            if (t == newPlayerModal.getConfirmButton() || t == newPlayerModal.getCancelButton()) {
+                newPlayerModal.setVisible(false);
+                newPlayerModal.getTextField().setText("Player Name");
+            }
+            
+            /*if () {
+                newPlayerModal.setVisible(false);
+                newPlayerModal.getTextField().setText("Player Name");
+            }*/
         }
     }
 }
