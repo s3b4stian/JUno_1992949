@@ -22,11 +22,8 @@ import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.MainLabel;
 import it.seba.juno.view.component.MenuButton;
-import it.seba.juno.view.component.OptionsButtonFullScreen;
-import it.seba.juno.view.component.OptionsButtonSound;
-import it.seba.juno.view.component.OptionsRadioFourPlayers;
-import it.seba.juno.view.component.OptionsRadioThreePlayers;
-import it.seba.juno.view.component.OptionsRadioTwoPlayers;
+import it.seba.juno.view.component.OptionsButtonToggle;
+import it.seba.juno.view.component.OptionsRadioPlayers;
 import it.seba.juno.view.component.SectionLabel;
 
 public class OptionsView extends JPanel implements InterfaceObserver {
@@ -53,9 +50,9 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         audioManager = AudioManager.getInstance();
 
         // interactive components
-        twoPlayersRadio = new OptionsRadioTwoPlayers();
-        threePlayersRadio = new OptionsRadioThreePlayers();
-        fourPlayersRadio = new OptionsRadioFourPlayers();
+        twoPlayersRadio = new OptionsRadioPlayers(OptionsRadioPlayers.OptionRadioType.TWO);
+        threePlayersRadio = new OptionsRadioPlayers(OptionsRadioPlayers.OptionRadioType.THREE);
+        fourPlayersRadio = new OptionsRadioPlayers(OptionsRadioPlayers.OptionRadioType.FOUR);
 
         // group the radio buttons.
         ButtonGroup group = new ButtonGroup();
@@ -63,8 +60,8 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         group.add(threePlayersRadio);
         group.add(fourPlayersRadio);
 
-        buttonFullScreen = new OptionsButtonFullScreen();
-        buttonSound = new OptionsButtonSound();
+        buttonFullScreen = new OptionsButtonToggle(OptionsButtonToggle.OptionButtonType.FULLSCREEN);
+        buttonSound = new OptionsButtonToggle(OptionsButtonToggle.OptionButtonType.SOUND);
         buttonBack = new MenuButton("Back");
 
         setBorder(new EmptyBorder(10, 10, 10, 10));

@@ -48,18 +48,22 @@ public class PlayersController {
         playersView.getButtonBack().addActionListener(e -> goBackAction());
 
         // button delete
-        playersView.getButtonDelete().addActionListener(e -> deleteAction(e));
+        playersView.getButtonDelete().addActionListener(e -> showDeleteModalAction(e));
 
         // button new
         playersView.getButtonNew().addActionListener(e -> showNewPlayerModalAction(e));
-        
-        
+
         // modal buttons
         // button confirm new player
         playersView.getNewPlayerModal().getConfirmButton().addActionListener(e -> confirmNewPlayerModalAction(e));
         // button cancel new player
         playersView.getNewPlayerModal().getCancelButton().addActionListener(e -> cancelNewPlayerModalAction(e));
-        
+
+        // button confirm delete player
+        playersView.getDeleteModal().getConfirmButton().addActionListener(e -> confirmDeleteModalAction(e));
+        // button cancel delete player
+        playersView.getDeleteModal().getCancelButton().addActionListener(e -> cancelDeleteModalAction(e));
+
     }
 
     private void loadListPlayers() {
@@ -87,17 +91,25 @@ public class PlayersController {
         listPlayers.addItem(newPlayer);
         playersModel.notifyObservers(e);
     }
-    
+
     public void cancelNewPlayerModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
     }
-    
-    public void deleteAction(ActionEvent e) {
+
+    public void showDeleteModalAction(ActionEvent e) {
+        playersModel.notifyObservers(e);
+    }
+
+    public void confirmDeleteModalAction(ActionEvent e) {
         if (listPlayers.getSelectedIndex() != -1) {
             playersModel.setCurrentProfile(null);
             playersModel.removePlayer(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
             playersModel.notifyObservers(e);
         }
+    }
+
+    public void cancelDeleteModalAction(ActionEvent e) {
+        playersModel.notifyObservers(e);
     }
 
     public void loadAction(ListSelectionEvent e) {

@@ -20,6 +20,7 @@ import it.seba.juno.player.BadgeWon;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.BadgeLabel;
+import it.seba.juno.view.component.DeleteModal;
 import it.seba.juno.view.component.DialogButton;
 import it.seba.juno.view.component.ListPlayers;
 import it.seba.juno.view.component.MainLabel;
@@ -51,6 +52,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     private BadgeLabel badgeWonRed;
 
     private NewPlayerModal newPlayerModal;
+    private DeleteModal deleteModal;
 
     private MenuButton buttonBack;
 
@@ -114,6 +116,10 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         return newPlayerModal;
     }
 
+    public DeleteModal getDeleteModal() {
+        return deleteModal;
+    }
+
     public PlayersView() {
 
         AudioManager.getInstance();
@@ -137,6 +143,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         badgeWonRed = new BadgeLabel(BadgeWon.RED);
 
         newPlayerModal = new NewPlayerModal();
+        deleteModal = new DeleteModal();
 
         buttonBack = new MenuButton("Back");
 
@@ -228,6 +235,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         gbc.gridx = 1;
         gbc.gridy = 7;
         add(newPlayerModal, gbc);
+        add(deleteModal, gbc);
 
         // add button to return to main menu
         gbc.gridwidth = 1;
@@ -337,24 +345,33 @@ public class PlayersView extends JPanel implements InterfaceObserver {
 
         if (t instanceof MenuButton) {
             if (t == buttonDelete) {
-                deletePlayer();
+                if (listPlayers.getSelectedIndex() != -1) {
+                    newPlayerModal.setVisible(false);
+                    deleteModal.getTextLabel().setText("Delete " + listPlayers.getSelectedValue().getName() + " Profile?");
+                    deleteModal.setVisible(true);
+                }
             }
-            
+
             if (t == buttonNew) {
+                deleteModal.setVisible(false);
                 newPlayerModal.setVisible(true);
             }
         }
-        
+
         if (t instanceof DialogButton) {
             if (t == newPlayerModal.getConfirmButton() || t == newPlayerModal.getCancelButton()) {
                 newPlayerModal.setVisible(false);
                 newPlayerModal.getTextField().setText("Player Name");
             }
+
+            if (t == deleteModal.getCancelButton()) {
+                deleteModal.setVisible(false);
+            }
             
-            /*if () {
-                newPlayerModal.setVisible(false);
-                newPlayerModal.getTextField().setText("Player Name");
-            }*/
+            if (t == deleteModal.getConfirmButton()) {
+                deletePlayer();
+                deleteModal.setVisible(false);
+            }
         }
     }
 }

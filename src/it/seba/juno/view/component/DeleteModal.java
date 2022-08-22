@@ -9,23 +9,23 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class NewPlayerModal extends JPanel {
+public class DeleteModal extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private TextFieldNewPlayerModal textField;
+    private SubSectionLabel textLabel;
     private DialogButton confirmButton;
     private DialogButton cancelButton;
 
-    public NewPlayerModal() {
+    public DeleteModal() {
         super();
 
-        textField = new TextFieldNewPlayerModal();
+        textLabel = new SubSectionLabel();
         confirmButton = new DialogButton(DialogButton.DialogButtonType.CONFIRM);
         cancelButton = new DialogButton(DialogButton.DialogButtonType.CANCEL);
 
         setLayout(new FlowLayout());
-        add(textField);
+        add(textLabel);
         add(confirmButton);
         add(cancelButton);
         setBorder(null);
@@ -33,8 +33,8 @@ public class NewPlayerModal extends JPanel {
         setVisible(false);
     }
 
-    public TextFieldNewPlayerModal getTextField() {
-        return textField;
+    public SubSectionLabel getTextLabel() {
+        return textLabel;
     }
 
     public DialogButton getConfirmButton() {

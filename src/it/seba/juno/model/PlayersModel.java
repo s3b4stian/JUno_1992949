@@ -32,17 +32,16 @@ public class PlayersModel extends Observable {
     public void removePlayer(String name) {
         // delete profile serialized file
         (new File(SerializationManager.getInstance().getProfilesDir() + "/" + name)).delete();
+        // remove from map
         playersProfile.remove(name);
     }
 
     public Map<String, PlayersProfileModel> getPlayers() {
-
         return playersProfile;
     }
-    
+
     public void save() {
         SerializationManager sm = SerializationManager.getInstance();
-        //Map<String, PlayersProfileModel> players = playersModel.getPlayers();
 
         // save all profiles
         for (Map.Entry<String, PlayersProfileModel> entry : playersProfile.entrySet()) {

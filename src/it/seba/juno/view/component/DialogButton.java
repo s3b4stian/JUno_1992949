@@ -34,9 +34,9 @@ public class DialogButton extends JButton {
     public DialogButton(DialogButtonType t) {
         super();
 
-        this.type = t;
-        this.icon = new ImageIcon(getClass().getResource("/images/icons/" + type.getStringIcon() + ".png"));
-        this.iconHover = new ImageIcon(getClass().getResource("/images/icons/" + type.getStringIcon() + "-hover.png"));
+        type = t;
+        icon = new ImageIcon(getClass().getResource("/images/icons/" + type.getStringIcon() + ".png"));
+        iconHover = new ImageIcon(getClass().getResource("/images/icons/" + type.getStringIcon() + "-hover.png"));
 
         setFocusPainted(false);
         setBorderPainted(false);
