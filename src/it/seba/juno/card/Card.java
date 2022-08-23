@@ -1,10 +1,8 @@
 package it.seba.juno.card;
 
 /**
- * Interface Card
- * <p>
- * Indentify a playing card
- * </p>
+ * Abstraction of a Card, Indentify a playing card, this is a void interface
+ * used only to tag an object as card.
  * 
  * @author Sebastian Rapetti
  *

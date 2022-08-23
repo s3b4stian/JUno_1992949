@@ -7,10 +7,16 @@ import it.seba.juno.card.UnoCard;
 import it.seba.juno.card.UnoColor;
 import it.seba.juno.card.UnoValue;
 
+/**
+ * Utility class to generate all cards needed in a Uno game deck.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class UnoDeckSimpleFactory {
 
     /**
-     * Returns a ready to use deck of Uno cards.
+     * Returns a ready to use deck of UnoCard.
      * 
      * @return
      */

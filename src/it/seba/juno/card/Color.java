@@ -1,10 +1,8 @@
 package it.seba.juno.card;
 
 /**
- * Interface Color
- * <p>
- * Identify a color of a card
- * </p>
+ * Abstraction of a Card Color, implemented as generic to have the possibility
+ * to choose the type of the value to represent the color.
  * 
  * @author Sebastian Rapetti
  *
@@ -12,5 +10,10 @@ package it.seba.juno.card;
  */
 public interface Color<T> {
 
+    /**
+     * Return the color code.
+     * 
+     * @return The color code, type as implemented.
+     */
     T getColorCode();
 }

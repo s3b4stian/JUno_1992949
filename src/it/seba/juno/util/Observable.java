@@ -45,7 +45,7 @@ public class Observable {
     /**
      * Notify to all Observers.
      *
-     * @param s
+     * @param e
      */
     public void notifyObservers(EventObject e) {
         observers.forEach(o -> o.update(this, e));

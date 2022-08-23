@@ -1,10 +1,7 @@
 package it.seba.juno.card;
 
 /**
- * UnoCard
- * <p>
- * A card for the game UNO, this type of card has a value and may have a color
- * </p>
+ * UnoCard, card for the game UNO, this type of card has a value and may have a color
  * 
  * @author Sebastian Rapetti
  * 
@@ -19,7 +16,7 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
     /**
      * Class Constructor.
      * 
-     * @param value Value of the card from UnoValue enum type
+     * @param value Value of the card from UnoValue Enum type
      */
     public UnoCard(UnoValue value) {
         this(value, null);
@@ -29,8 +26,8 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
     /**
      * Class Constructor.
      * 
-     * @param value Value of the card from UnoValue enum type
-     * @param color Color of the card from UnoColor enum type
+     * @param value Value of the card from UnoValue Enum type
+     * @param color Color of the card from UnoColor Enum type
      */
     public UnoCard(UnoValue value, UnoColor color) {
         this.value = value;
@@ -43,7 +40,7 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
      * 
      * @param card Card to compare
      * 
-     * @return true if cards are equals, false otherwise
+     * @return True if cards are equals, false otherwise
      */
     public boolean equals(UnoCard card) {
         // check for the same object in memory
@@ -124,7 +121,7 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
      * </p>
      * 
      * <p>
-     * Return a string representation of the Uno Card
+     * Return a string representation of the UnoCard
      * </p>
      * 
      */

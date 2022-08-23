@@ -20,8 +20,9 @@ public class JUno {
 
     public static void main(String[] args) {
 
-        SerializationManager SerializationManager = new SerializationManager();
-        
+        // initialize serialization manager
+        SerializationManager serializationManager = SerializationManager.getInstance();
+
         // initialize audio manager
         AudioManager audioManager = AudioManager.getInstance();
         // load sounds
@@ -34,10 +35,10 @@ public class JUno {
 
         // initialize models
         // option model, if exists load it from disk
-        OptionsModel optionsModel = SerializationManager.loadOptions();
-        // player profiles, if exists load it from disk
-        PlayersModel playersModel = SerializationManager.loadPlayer();
-        
+        OptionsModel optionsModel = serializationManager.loadOptions();
+        // player profiles, if exists load them from disk
+        PlayersModel playersModel = serializationManager.loadPlayer();
+
         // initial audio manager status
         audioManager.setSound(optionsModel.isSound());
 

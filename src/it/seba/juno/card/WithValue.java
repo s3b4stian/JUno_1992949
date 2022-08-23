@@ -1,10 +1,7 @@
 package it.seba.juno.card;
 
 /**
- * Interface WithValue
- * <p>
- * Used to say that a card has a value
- * </p>
+ * Used to say that a card has a value.
  * 
  * @author Sebastian Rapetti
  *

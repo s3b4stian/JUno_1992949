@@ -12,6 +12,14 @@ import it.seba.juno.view.MenuView;
 import it.seba.juno.view.PlayersView;
 import it.seba.juno.view.component.ListPlayers;
 
+/**
+ * Controls both the {@link it.seba.juno.view.PlayersView} and the
+ * {@link it.seba.juno.model.PlayersModel} of the program, it assigns actions to
+ * the {@link it.seba.juno.view.PlayersView} components.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class PlayersController {
 
     MainView mainView;
@@ -21,6 +29,14 @@ public class PlayersController {
 
     PlayersModel playersModel;
 
+    /**
+     * Class Constructor.
+     * 
+     * @param playersModel the player model, contains the data about players.
+     * @param mainView     the main view, used to host all others view.
+     * @param menuView     the menu view, show the main menu.
+     * @param playersView  the players view, show players.
+     */
     public PlayersController(PlayersModel playersModel, MainView mainView, MenuView menuView, PlayersView playersView) {
 
         this.playersModel = playersModel;
@@ -28,9 +44,13 @@ public class PlayersController {
         this.mainView = mainView;
         this.menuView = menuView;
         this.playersView = playersView;
+
         initView();
     }
 
+    /**
+     * Init actions in view.
+     */
     private void initView() {
         // players list
         listPlayers = playersView.getListPlayers();
@@ -66,6 +86,9 @@ public class PlayersController {
 
     }
 
+    /**
+     * Load players from model to view JList component.
+     */
     private void loadListPlayers() {
         Map<String, PlayersProfileModel> players = playersModel.getPlayers();
 
@@ -75,15 +98,25 @@ public class PlayersController {
         }
     }
 
+    /**
+     * Action for the back button, return to main menu.
+     */
     public void goBackAction() {
         mainView.setCurrentView(menuView);
         playersModel.save();
     }
 
+    /**
+     * Action for the new button, show the new player dialog.
+     */
     public void showNewPlayerModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
     }
 
+    /**
+     * Action for the confirm button in new player dialog, create new player and
+     * hide dialog.
+     */
     public void confirmNewPlayerModalAction(ActionEvent e) {
         String playerName = playersView.getNewPlayerModal().getTextField().getText();
         PlayersProfileModel newPlayer = new PlayersProfileModel(playerName);
@@ -92,14 +125,24 @@ public class PlayersController {
         playersModel.notifyObservers(e);
     }
 
+    /**
+     * Action for the cancel button in new player dialog, hide dialog.
+     */
     public void cancelNewPlayerModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
     }
 
+    /**
+     * Action for the delete button, show the delete player dialog.
+     */
     public void showDeleteModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
     }
 
+    /**
+     * Action for the confirm button in delete player dialog, delete selected player
+     * and hide dialog.
+     */
     public void confirmDeleteModalAction(ActionEvent e) {
         if (listPlayers.getSelectedIndex() != -1) {
             playersModel.setCurrentProfile(null);
@@ -108,12 +151,17 @@ public class PlayersController {
         }
     }
 
+    /**
+     * Action for the cancel button in delete player dialog, hide dialog.
+     */
     public void cancelDeleteModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
     }
 
+    /**
+     * Action for the players list, load the player profile of the selected player.
+     */
     public void loadAction(ListSelectionEvent e) {
-
         if (listPlayers.getSelectedIndex() != -1) {
             playersModel.setCurrentProfile(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
             playersModel.notifyObservers(e);

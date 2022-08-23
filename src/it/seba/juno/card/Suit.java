@@ -1,10 +1,8 @@
 package it.seba.juno.card;
 
 /**
- * Interface Suit
- * <p>
- * Identify a suit of a card
- * </p>
+ * Abstraction of a Card Suit, implemented as generic to have the possibility to
+ * choose the type of the value to represent the suit.
  * 
  * @author Sebastian Rapetti
  *
@@ -12,5 +10,10 @@ package it.seba.juno.card;
  */
 public interface Suit<T> {
 
-    T getSeedCode();
+    /**
+     * Return the suit code.
+     * 
+     * @return The suit code, type as implemented.
+     */
+    T getSuitCode();
 }

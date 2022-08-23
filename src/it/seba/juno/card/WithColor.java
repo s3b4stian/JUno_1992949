@@ -1,10 +1,7 @@
 package it.seba.juno.card;
 
 /**
- * Interface WithColor
- * <p>
- * Used to say that a card has a color
- * </p>
+ * Used to say that a card has a color.
  * 
  * @author Sebastian Rapetti
  *
