@@ -4,32 +4,70 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
+/**
+ * All players in a Uno match.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class UnoPlayers implements Iterable<Player> {
 
     // direction default clockwise
     private boolean clockwise = true;
     private ArrayDeque<Player> players;
 
+    /**
+     * Class Constructor.
+     */
     public UnoPlayers() {
         players = new ArrayDeque<Player>();
     }
 
+    /**
+     * Returns the order of play, the order change when a player drops the reverse
+     * card.
+     * 
+     * @return true if clockwise, false if anti-clockwise.
+     */
     public boolean getOrderOfPlay() {
         return clockwise;
     }
 
+    /**
+     * Add a player for the next match, this method should be used before the start
+     * of a match.
+     * 
+     * @param player the player to add.
+     */
     public void add(Player player) {
         players.offer(player);
     }
 
+    /**
+     * Returns the number of players in a match.
+     * 
+     * @return the number of players.
+     */
     public int number() {
         return players.size();
     }
 
+    /**
+     * Performs an action on every player.
+     * 
+     * <p>
+     * <b>Official documentation</b><br/>
+     * {@inheritDoc}
+     * </p>
+     */
     public void forEach(Consumer<? super Player> c) {
         players.forEach(c);
     }
 
+    /**
+     * Invert the direction of play, from clockwise to anti-clockwise and vice
+     * versa.
+     */
     public void switchDirection() {
 
         clockwise = clockwise ? false : true;
@@ -51,6 +89,12 @@ public class UnoPlayers implements Iterable<Player> {
         tmp = null;
     }
 
+    /**
+     * A way to iterate over players, every time the next player, the for cycle that
+     * use this iterator have to be stopped manually.
+     * 
+     * @return iterator to iterate over players.
+     */
     @Override
     public Iterator<Player> iterator() {
         return new Iterator<Player>() {

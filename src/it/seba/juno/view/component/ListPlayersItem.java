@@ -28,24 +28,16 @@ public class ListPlayersItem extends JPanel {
         label.setFont(FontManager.getInstance().getCustomFont(24f));
         label.setForeground(new Color(255, 255, 255));
         label.setIcon(new ImageIcon(getClass().getResource("/images/icons/list-item.png")));
-        
+
         GroupLayout layout = new GroupLayout(this);
 
         setLayout(layout);
 
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(
-                        layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(label)
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        )
-                );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(label, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                );
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup().addGap(10, 10, 10).addComponent(label)
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(label,
+                GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE));
 
         setOpaque(false);
         add(label);
@@ -56,7 +48,7 @@ public class ListPlayersItem extends JPanel {
         if (selected || over) {
             Graphics2D g2 = (Graphics2D) grphcs;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
+
             if (selected) {
                 g2.setColor(new Color(255, 255, 255, 60));
                 label.setIcon(new ImageIcon(getClass().getResource("/images/icons/list-item-selected.png")));

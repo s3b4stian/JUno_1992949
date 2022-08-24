@@ -66,7 +66,7 @@ public class MenuButton extends JButton {
             }
         });
     }
-    
+
     public MenuButton() {
         this("");
     }

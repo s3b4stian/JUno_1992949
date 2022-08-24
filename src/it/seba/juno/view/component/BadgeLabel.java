@@ -1,6 +1,5 @@
 package it.seba.juno.view.component;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -22,7 +21,7 @@ public class BadgeLabel extends JLabel {
         super();
         ImageIcon icon = new ImageIcon(getClass().getResource("/images/badges/" + badge));
         ImageIcon disabledIcon = new ImageIcon(getClass().getResource("/images/badges/" + BadgePlayed.NONE));
-        
+
         initIcons(icon, disabledIcon);
     }
 

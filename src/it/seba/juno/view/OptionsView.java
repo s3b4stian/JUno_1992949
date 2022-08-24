@@ -26,6 +26,13 @@ import it.seba.juno.view.component.OptionsButtonToggle;
 import it.seba.juno.view.component.OptionsRadioPlayers;
 import it.seba.juno.view.component.SectionLabel;
 
+/**
+ * The options of the game, permit to manage audio, screen and players for the
+ * game.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class OptionsView extends JPanel implements InterfaceObserver {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +50,12 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
     private AudioManager audioManager;
 
+    /**
+     * Class Constructor.
+     * 
+     * @param mainView the main view, used to manage both full-screen and window
+     *                 mode.
+     */
     public OptionsView(MainView mainView) {
 
         this.mainView = mainView;
@@ -75,7 +88,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         // non interactive components
         // created on add call
-        
+
         // add option title
         gbc.gridwidth = 3;
         gbc.gridx = 0;
@@ -106,7 +119,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         gbc.gridy = 3;
         add(new SectionLabel("Screen"), gbc);
 
-        // add button for fullscreen/window
+        // add button for full-screen/window
         gbc.gridwidth = 1;
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -131,34 +144,75 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         add(buttonBack, gbc);
     }
 
+    /**
+     * Returns a reference to the "two players radio button" of the options, used
+     * mainly to set the action performed from the radio button. The action is
+     * assigned to the radio button at controller level.
+     * 
+     * @return the radio button reference.
+     */
     public JRadioButton getTwoPlayersRadio() {
         return twoPlayersRadio;
     }
 
+    /**
+     * Returns a reference to the "three players radio button" of the options, used
+     * mainly to set the action performed from the radio button. The action is
+     * assigned to the radio button at controller level.
+     * 
+     * @return the radio button reference.
+     */
     public JRadioButton getThreePlayersRadio() {
         return threePlayersRadio;
     }
 
+    /**
+     * Returns a reference to the "four players radio button" of the options, used
+     * mainly to set the action performed from the radio button. The action is
+     * assigned to the radio button at controller level.
+     * 
+     * @return the radio button reference.
+     */
     public JRadioButton getFourPlayersRadio() {
         return fourPlayersRadio;
     }
 
-    public MainView getMainView() {
-        return mainView;
-    }
-
+    /**
+     * Returns a reference to the "back button" of the options, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
     public MenuButton getButtonBack() {
         return buttonBack;
     }
 
+    /**
+     * Returns a reference to the "full-screen/windows mode toggle button" of the
+     * options, used mainly to set the action performed from the toggle button. The
+     * action is assigned to the toggle button at controller level.
+     * 
+     * @return the toggle button reference.
+     */
     public JToggleButton getButtonFullScreen() {
         return buttonFullScreen;
     }
 
+    /**
+     * Returns a reference to the "sound toggle button" of the options, used mainly
+     * to set the action performed from the toggle button. The action is assigned to
+     * the toggle button at controller level.
+     * 
+     * @return the toggle button reference.
+     */
     public JToggleButton getButtonSound() {
         return buttonSound;
     }
 
+    /**
+     * Draw the panel background as diagonal gradient.
+     */
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -171,6 +225,12 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         super.paintChildren(grphcs);
     }
 
+    /**
+     * Update this view when the model had a change.
+     * 
+     * @param o the observable that changed his state.
+     * @param e the event object that triggered the change.
+     */
     @Override
     public void update(Observable o, EventObject e) {
 
@@ -180,14 +240,16 @@ public class OptionsView extends JPanel implements InterfaceObserver {
 
         // update for initial state
         if (t instanceof JUno) {
+            // set full-screen
             if (model.isFullScreen()) {
                 buttonFullScreen.setSelected(true);
             }
-
+            // set sound
             if (model.isSound()) {
                 buttonSound.setSelected(true);
             }
 
+            // set the number of players
             switch (model.getNumberOfPlayer()) {
             case 2:
                 twoPlayersRadio.setSelected(true);

@@ -15,8 +15,7 @@ public class DialogButton extends JButton {
     private final DialogButtonType type;
     private final ImageIcon icon;
     private final ImageIcon iconHover;
-    
-    
+
     public enum DialogButtonType {
         CANCEL("cancel"), CONFIRM("confirm");
 
@@ -41,7 +40,7 @@ public class DialogButton extends JButton {
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setMargin(new Insets(-1,0,-1,0));
+        setMargin(new Insets(-1, 0, -1, 0));
         setIcon(icon);
 
         addMouseListener(new MouseAdapter() {

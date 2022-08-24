@@ -15,7 +15,9 @@ import it.seba.juno.deck.DiscardPile;
 public class ValueDropStrategy extends AbstractDropStrategy {
 
     /**
-     * {@inheritDoc}
+     * Class Constructor.
+     * 
+     * @param dPile reference to discard pile, the place where to drop cards.
      */
     public ValueDropStrategy(DiscardPile dPile) {
         super(dPile);

@@ -16,16 +16,16 @@ public class Observable {
     private List<InterfaceObserver> observers;
 
     /**
-     * Class Constructor
+     * Class Constructor.
      */
     public Observable() {
         observers = new ArrayList<InterfaceObserver>();
     }
 
     /**
-     * Add an observer.
+     * Add an Observer.
      * 
-     * @param o
+     * @param o the object to be added to observers.
      */
     public void addObserver(InterfaceObserver o) {
         if (!observers.contains(o)) {
@@ -34,9 +34,9 @@ public class Observable {
     }
 
     /**
-     * Delete an Obeserver.
+     * Delete an Observer.
      * 
-     * @param o
+     * @param o the object to be deleted from observers.
      */
     public void deleteObserver(InterfaceObserver o) {
         observers.remove(o);
@@ -45,7 +45,7 @@ public class Observable {
     /**
      * Notify to all Observers.
      *
-     * @param e
+     * @param e the event that triggered the notify.
      */
     public void notifyObservers(EventObject e) {
         observers.forEach(o -> o.update(this, e));

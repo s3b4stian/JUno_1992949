@@ -16,7 +16,8 @@ import it.seba.juno.card.UnoColor;
 public interface ColorStrategy {
 
     /**
-     * Return the new color for the discard pile, implemented in concrete strategies.
+     * Return the new color for the discard pile, implemented in concrete
+     * strategies.
      * 
      * @return the new color.
      */

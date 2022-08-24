@@ -1,7 +1,8 @@
 package it.seba.juno.card;
 
 /**
- * UnoCard, card for the game UNO, this type of card has a value and may have a color
+ * UnoCard, card for the game UNO, this type of card has a value and may have a
+ * color
  * 
  * @author Sebastian Rapetti
  * 

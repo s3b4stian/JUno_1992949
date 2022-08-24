@@ -6,8 +6,7 @@ import javax.swing.JLabel;
 
 import it.seba.juno.manger.FontManager;
 
-public class SubSectionLabel extends JLabel{
-
+public class SubSectionLabel extends JLabel {
 
     private static final long serialVersionUID = 1L;
 

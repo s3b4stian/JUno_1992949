@@ -14,22 +14,29 @@ import javax.swing.ImageIcon;
 
 import it.seba.juno.view.component.MenuButton;
 
+/**
+ * The main menu of the game, permit to explore all other game sections.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class MenuView extends JPanel {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5350734895926530482L;
 
-    private MenuButton buttonQuick;
-    private MenuButton buttonCarrer;
+    // all menu buttons
+    private MenuButton buttonPlay;
     private MenuButton buttonPlayers;
     private MenuButton buttonOptions;
     private MenuButton buttonExit;
-    //private JLabel welcomeBanner;
 
+    /**
+     * Class Constructor.
+     */
     public MenuView() {
 
         // interactive components
-        buttonQuick = new MenuButton("Quick Play");
-        buttonCarrer = new MenuButton("Tournament");
+        buttonPlay = new MenuButton("Play");
         buttonPlayers = new MenuButton("Players");
         buttonOptions = new MenuButton("Options");
         buttonExit = new MenuButton("Exit");
@@ -49,8 +56,7 @@ public class MenuView extends JPanel {
 
         JPanel buttons = new JPanel(new GridBagLayout());
         buttons.setOpaque(false);
-        buttons.add(buttonQuick, gbc);
-        buttons.add(buttonCarrer, gbc);
+        buttons.add(buttonPlay, gbc);
         buttons.add(buttonPlayers, gbc);
         buttons.add(buttonOptions, gbc);
         buttons.add(buttonExit, gbc);
@@ -59,26 +65,53 @@ public class MenuView extends JPanel {
         add(buttons, gbc);
     }
 
-    public MenuButton getButtonQuick() {
-        return buttonQuick;
+    /**
+     * Returns a reference to the "play button" of the main menu, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
+    public MenuButton getButtonPlay() {
+        return buttonPlay;
     }
 
-    public MenuButton getButtonCarrer() {
-        return buttonCarrer;
-    }
-
+    /**
+     * Returns a reference to the "players button" of the main menu, used mainly to
+     * set the action performed from the button. The action is assigned to the
+     * button at controller level.
+     * 
+     * @return the button reference.
+     */
     public MenuButton getButtonPlayers() {
         return buttonPlayers;
     }
 
+    /**
+     * Returns a reference to the "options button" of the main menu, used mainly to
+     * set the action performed from the button. The action is assigned to the
+     * button at controller level.
+     * 
+     * @return the button reference.
+     */
     public MenuButton getButtonOptions() {
         return buttonOptions;
     }
 
+    /**
+     * Returns a reference to the "exit button" of the main menu, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
     public MenuButton getButtonExit() {
         return buttonExit;
     }
 
+    /**
+     * Draw the panel background as diagonal gradient.
+     */
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;

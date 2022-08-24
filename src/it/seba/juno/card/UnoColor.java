@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * The colors in Uno Game, implements the interface Color using a String for
- * the color code.
+ * The colors in Uno Game, implements the interface Color using a String for the
+ * color code.
  * 
  * @author Sebastian Rapetti
  *

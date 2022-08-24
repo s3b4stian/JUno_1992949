@@ -13,7 +13,6 @@ import java.util.EventObject;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import it.seba.juno.manger.AudioManager;
 import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.player.BadgePlayed;
 import it.seba.juno.player.BadgeWon;
@@ -29,6 +28,12 @@ import it.seba.juno.view.component.NewPlayerModal;
 import it.seba.juno.view.component.SectionLabel;
 import it.seba.juno.view.component.SubSectionLabel;
 
+/**
+ * Players of the game, permit to manage players profiles.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class PlayersView extends JPanel implements InterfaceObserver {
 
     private static final long serialVersionUID = 1L;
@@ -56,73 +61,10 @@ public class PlayersView extends JPanel implements InterfaceObserver {
 
     private MenuButton buttonBack;
 
-    public ListPlayers<PlayersProfileModel> getListPlayers() {
-        return listPlayers;
-    }
-
-    public MenuButton getButtonNew() {
-        return buttonNew;
-    }
-
-    public MenuButton getButtonDelete() {
-        return buttonDelete;
-    }
-
-    public MenuButton getButtonBack() {
-        return buttonBack;
-    }
-
-    public BadgeLabel getBadgePlayedGreen() {
-        return badgePlayedGreen;
-    }
-
-    public BadgeLabel getBadgePlayedBronze() {
-        return badgePlayedBronze;
-    }
-
-    public BadgeLabel getBadgePlayedSilver() {
-        return badgePlayedSilver;
-    }
-
-    public BadgeLabel getBadgePlayedGold() {
-        return badgePlayedGold;
-    }
-
-    public BadgeLabel getBadgePlayedRed() {
-        return badgePlayedRed;
-    }
-
-    public BadgeLabel getBadgeWonGreen() {
-        return badgeWonGreen;
-    }
-
-    public BadgeLabel getBadgeWonBronze() {
-        return badgeWonBronze;
-    }
-
-    public BadgeLabel getBadgeWonSilver() {
-        return badgeWonSilver;
-    }
-
-    public BadgeLabel getBadgeWonGold() {
-        return badgeWonGold;
-    }
-
-    public BadgeLabel getBadgeWonRed() {
-        return badgeWonRed;
-    }
-
-    public NewPlayerModal getNewPlayerModal() {
-        return newPlayerModal;
-    }
-
-    public DeleteModal getDeleteModal() {
-        return deleteModal;
-    }
-
+    /**
+     * Class Constructor.
+     */
     public PlayersView() {
-
-        AudioManager.getInstance();
 
         // interactive components
         listPlayers = new ListPlayers<>();
@@ -181,7 +123,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         gbc.gridwidth = 6;
         gbc.gridx = 0;
         gbc.gridy = 4;
-        add(new SectionLabel("Profile Badges Earned"), gbc);
+        add(new SectionLabel("Badges Earned"), gbc);
 
         // matches played
         gbc.anchor = GridBagConstraints.WEST;
@@ -254,6 +196,75 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         add(buttonDelete, gbc);
     }
 
+    /**
+     * Returns a reference to the list of the players, used mainly to set the action
+     * performed on the elements of the list. The action is assigned to every
+     * element at controller level.
+     * 
+     * @return the list reference.
+     */
+    public ListPlayers<PlayersProfileModel> getListPlayers() {
+        return listPlayers;
+    }
+
+    /**
+     * Returns a reference to the "new button" of the players, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
+    public MenuButton getButtonNew() {
+        return buttonNew;
+    }
+
+    /**
+     * Returns a reference to the "delete button" of the players, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
+    public MenuButton getButtonDelete() {
+        return buttonDelete;
+    }
+
+    /**
+     * Returns a reference to the "back button" of the players, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
+    public MenuButton getButtonBack() {
+        return buttonBack;
+    }
+
+    /**
+     * Returns a reference to the "new player custom JPanel" of the players, used
+     * mainly to set the action performed from the buttons inside this panel. The
+     * action is assigned to the buttons at controller level.
+     * 
+     * @return the custom JPanel reference.
+     */
+    public NewPlayerModal getNewPlayerModal() {
+        return newPlayerModal;
+    }
+
+    /**
+     * Returns a reference to the "delete player custom JPanel" of the players, used
+     * mainly to set the action performed from the buttons inside this panel. The
+     * action is assigned to the buttons at controller level.
+     * 
+     * @return the custom JPanel reference.
+     */
+    public DeleteModal getDeleteModal() {
+        return deleteModal;
+    }
+
+    /**
+     * Draw the panel background as diagonal gradient.
+     */
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
@@ -266,6 +277,11 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         super.paintChildren(grphcs);
     }
 
+    /**
+     * Enable played badges.
+     * 
+     * @param played the number of played matches.
+     */
     private void enbalePlayedBadges(int played) {
         if (played >= 10) {
             badgePlayedGreen.setEnabled(true);
@@ -284,6 +300,9 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         }
     }
 
+    /**
+     * Disable all played badges.
+     */
     private void disablePlayedBadges() {
         badgePlayedGreen.setEnabled(false);
         badgePlayedBronze.setEnabled(false);
@@ -292,6 +311,11 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         badgePlayedRed.setEnabled(false);
     }
 
+    /**
+     * Enable won badges.
+     * 
+     * @param won the number of won matches.
+     */
     private void enbaleWonBadges(int won) {
         if (won >= 10) {
             badgeWonGreen.setEnabled(true);
@@ -310,6 +334,9 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         }
     }
 
+    /**
+     * Disable all won badges.
+     */
     private void disableWonBadges() {
         badgeWonGreen.setEnabled(false);
         badgeWonBronze.setEnabled(false);
@@ -318,6 +345,9 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         badgeWonRed.setEnabled(false);
     }
 
+    /**
+     * Delete a player from the JList of players.
+     */
     private void deletePlayer() {
         int index = listPlayers.getSelectedIndex();
 
@@ -330,6 +360,12 @@ public class PlayersView extends JPanel implements InterfaceObserver {
         }
     }
 
+    /**
+     * Update this view when the model had a change.
+     * 
+     * @param o the observable that changed his state.
+     * @param e the event object that triggered the change.
+     */
     @Override
     public void update(Observable o, EventObject e) {
 
@@ -337,37 +373,53 @@ public class PlayersView extends JPanel implements InterfaceObserver {
 
         if (t instanceof ListPlayers) {
 
+            // get the current selected player
             PlayersProfileModel current = (PlayersProfileModel) listPlayers.getSelectedValue();
 
+            // reset all badges
+            disablePlayedBadges();
+            disableWonBadges();
+
+            // enable badges based on player statistics
             enbalePlayedBadges(current.getPlayed());
             enbaleWonBadges(current.getWon());
         }
 
         if (t instanceof MenuButton) {
             if (t == buttonDelete) {
+                // if there is a valid selection in JList
                 if (listPlayers.getSelectedIndex() != -1) {
+                    // disable new player modal
                     newPlayerModal.setVisible(false);
-                    deleteModal.getTextLabel().setText("Delete " + listPlayers.getSelectedValue().getName() + " Profile?");
+                    // make the delete modal visible and valid for the selected player
+                    deleteModal.getTextLabel()
+                            .setText("Delete " + listPlayers.getSelectedValue().getName() + " Profile?");
                     deleteModal.setVisible(true);
                 }
             }
 
             if (t == buttonNew) {
+                // disable delete modal
                 deleteModal.setVisible(false);
+                // enable new player modal
                 newPlayerModal.setVisible(true);
             }
         }
 
         if (t instanceof DialogButton) {
+            // reset new player modal, the pressed button doesn't matter
             if (t == newPlayerModal.getConfirmButton() || t == newPlayerModal.getCancelButton()) {
                 newPlayerModal.setVisible(false);
                 newPlayerModal.getTextField().setText("Player Name");
             }
 
+            // hide delete modal when the cancel button is pressed
             if (t == deleteModal.getCancelButton()) {
                 deleteModal.setVisible(false);
             }
-            
+
+            // delete the player from the JList and hide delete modal when confirm button is
+            // pressed
             if (t == deleteModal.getConfirmButton()) {
                 deletePlayer();
                 deleteModal.setVisible(false);

@@ -9,23 +9,41 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
+/**
+ * The main view of the application, provide a way to change the current view,
+ * to resize and to go full-screen or to window.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class MainView extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();//.getScreenDevices()[0];
+    static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
     private JPanel panel;
 
-    public void setCurrentView(JComponent com) {
+    /**
+     * Change the current view.
+     * 
+     * @param component the component will be the new view.
+     */
+    public void setCurrentView(JComponent component) {
         panel.removeAll();
-        panel.add(com);
+        panel.add(component);
         panel.repaint();
         panel.revalidate();
     }
 
+    /**
+     * Class Constructor.
+     * 
+     * @param isFullScreen define if the application must start in full-screen mode
+     *                     (true) or in windows mode (false).
+     */
     public MainView(boolean isFullScreen) {
-
+        // parent constructor
         super("JUno");
 
         // init main panel
@@ -49,13 +67,21 @@ public class MainView extends JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/images/cards/deck_1.png")).getImage());
 
         setLocationRelativeTo(null);
+        // current panel is a void panel, every view is loaded inside the private JPanel
+        // of this class by the proper controller.
         add(panel);
     }
 
+    /**
+     * Set the application in full-screen mode.
+     */
     public void setFullScreen() {
         device.setFullScreenWindow(this);
     }
 
+    /**
+     * Set the application in window mode.
+     */
     public void setWindow() {
         device.setFullScreenWindow(null);
         setSize(1200, 800);

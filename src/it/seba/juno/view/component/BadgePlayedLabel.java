@@ -12,13 +12,15 @@ public class BadgePlayedLabel extends JLabel {
 
     public BadgePlayedLabel(BadgePlayed badge) {
         super();
-        
-        Icon icon = new ImageIcon((new ImageIcon(getClass().getResource("/images/badges/" + badge))).getImage().getScaledInstance(96, 72, java.awt.Image.SCALE_SMOOTH));
+
+        Icon icon = new ImageIcon((new ImageIcon(getClass().getResource("/images/badges/" + badge))).getImage()
+                .getScaledInstance(96, 72, java.awt.Image.SCALE_SMOOTH));
         setIcon(icon);
-        
-        Icon disabledIcon = new ImageIcon((new ImageIcon(getClass().getResource("/images/badges/" + BadgePlayed.NONE))).getImage().getScaledInstance(96, 72, java.awt.Image.SCALE_SMOOTH));
+
+        Icon disabledIcon = new ImageIcon((new ImageIcon(getClass().getResource("/images/badges/" + BadgePlayed.NONE)))
+                .getImage().getScaledInstance(96, 72, java.awt.Image.SCALE_SMOOTH));
         setDisabledIcon(disabledIcon);
-        
+
         setEnabled(false);
     }
 }

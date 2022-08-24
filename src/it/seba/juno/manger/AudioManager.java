@@ -21,7 +21,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * Provide a way to play sound in game, started from code present in UniTelma,
  * implemented using singleton pattern.
  *
- * <p>All sound tracks should be placed in resources/sound folder</p>
+ * <p>
+ * All sound tracks should be placed in resources/sound folder
+ * </p>
  *
  * @author Sebastian Rapetti
  *
