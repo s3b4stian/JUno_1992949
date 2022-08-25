@@ -32,13 +32,14 @@ public class MenuController {
         this.menuView = menuView;
         this.optionsView = optionsView;
         this.playersView = playersView;
-        initView();
+
+        initActions();
     }
 
     /**
      * Init actions in view.
      */
-    private void initView() {
+    private void initActions() {
         // button exit
         menuView.getButtonExit().addActionListener(e -> exitAction());
 

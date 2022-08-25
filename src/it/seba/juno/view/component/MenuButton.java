@@ -14,41 +14,82 @@ import javax.swing.border.EmptyBorder;
 import it.seba.juno.manger.AudioManager;
 import it.seba.juno.manger.FontManager;
 
+/**
+ * General button used in game views.
+ *
+ * @author Sebastian Rapetti
+ *
+ */
 public class MenuButton extends JButton {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7781413891725517198L;
 
+    /**
+     * Background color.
+     */
     private final Color background = new Color(255, 138, 48);
-    private final Color backgroundHover = new Color(198, 86, 0);
+
+    /**
+     * Background color on mouse over.
+     */
+    private final Color backgroundOver = new Color(198, 86, 0);
+
+    /**
+     * Background color on mouse click.
+     */
     private final Color backgroundPress = new Color(255, 161, 90);
+
+    /**
+     * Text color of the button.
+     */
     private final Color foreground = Color.WHITE;
 
+    /**
+     * Default background color.
+     */
     private Color currentBackground;
-    private Color currentBackgroundHover;
 
+    /**
+     * Default background color on mouse over.
+     */
+    private Color currentBackgroundOver;
+
+    /**
+     * Class Constructor, default text of the button is void.
+     */
+    public MenuButton() {
+        this("");
+    }
+
+    /**
+     * Class Constructor.
+     *
+     * @param text the default text for the button.
+     */
     public MenuButton(String text) {
         super(text);
 
         currentBackground = background;
-        currentBackgroundHover = background;
+        currentBackgroundOver = background;
 
+        // set button properties
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(8, 32, 8, 32));
         setForeground(foreground);
         setFocusPainted(false);
-
         setFont(FontManager.getInstance().getCustomFont(22f));
 
+        // adding behavior for interaction with mouse
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
-                currentBackgroundHover = backgroundHover;
+                currentBackgroundOver = backgroundOver;
                 repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-                currentBackgroundHover = background;
+                currentBackgroundOver = background;
                 repaint();
             }
 
@@ -67,10 +108,9 @@ public class MenuButton extends JButton {
         });
     }
 
-    public MenuButton() {
-        this("");
-    }
-
+    /**
+     * Draw the button background.
+     */
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs.create();
@@ -88,10 +128,10 @@ public class MenuButton extends JButton {
 
         g2.fill(area);
 
-        // rounded rectangle 3px less higher
+        // 3px border for mouse over, obtained removing part of the original rectangle
         area.subtract(new Area(new RoundRectangle2D.Double(x, y, width, height - 3, 10, 10)));
         // visible only when mouse is over
-        g2.setColor(currentBackgroundHover);
+        g2.setColor(currentBackgroundOver);
 
         g2.fill(area);
         g2.dispose();

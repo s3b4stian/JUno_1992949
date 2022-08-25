@@ -35,19 +35,49 @@ import it.seba.juno.view.component.SectionLabel;
  */
 public class OptionsView extends JPanel implements InterfaceObserver {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1494283430703728423L;
 
+    /**
+     * Two players radio button, when selected the human player play against one npc
+     * player.
+     */
     private JRadioButton twoPlayersRadio;
+
+    /**
+     * Three players radio button, when selected the human player play against two
+     * npc player.
+     */
     private JRadioButton threePlayersRadio;
+
+    /**
+     * Four players radio button, when selected the human player play against three
+     * npc player.
+     */
     private JRadioButton fourPlayersRadio;
 
+    /**
+     * Full screen toggle button, when selected the game go full-screen.
+     */
     private JToggleButton buttonFullScreen;
+
+    /**
+     * Sound toggle button, when selected the sound is on.
+     */
     private JToggleButton buttonSound;
 
+    /**
+     * Back button, returns to main menu view.
+     */
     private MenuButton buttonBack;
 
+    /**
+     * The main view, to set screen mode.
+     */
     private MainView mainView;
 
+    /**
+     * Audio manager, to play sounds.
+     */
     private AudioManager audioManager;
 
     /**

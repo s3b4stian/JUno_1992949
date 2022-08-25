@@ -25,9 +25,24 @@ public class MenuView extends JPanel {
     private static final long serialVersionUID = 5350734895926530482L;
 
     // all menu buttons
+    /**
+     * Play button, go to play a match.
+     */
     private MenuButton buttonPlay;
+
+    /**
+     * Players button, go to players view.
+     */
     private MenuButton buttonPlayers;
+
+    /**
+     * Options button, got to options view
+     */
     private MenuButton buttonOptions;
+
+    /**
+     * Exit button, terminate the game.
+     */
     private MenuButton buttonExit;
 
     /**

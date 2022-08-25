@@ -45,13 +45,13 @@ public class PlayersController {
         this.menuView = menuView;
         this.playersView = playersView;
 
-        initView();
+        initActions();
     }
 
     /**
      * Init actions in view.
      */
-    private void initView() {
+    private void initActions() {
         // players list
         listPlayers = playersView.getListPlayers();
         loadListPlayers();
@@ -108,6 +108,8 @@ public class PlayersController {
 
     /**
      * Action for the new button, show the new player dialog.
+     * 
+     * @param e the component triggered the event.
      */
     public void showNewPlayerModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
@@ -116,6 +118,8 @@ public class PlayersController {
     /**
      * Action for the confirm button in new player dialog, create new player and
      * hide dialog.
+     * 
+     * @param e the component triggered the event.
      */
     public void confirmNewPlayerModalAction(ActionEvent e) {
         String playerName = playersView.getNewPlayerModal().getTextField().getText();
@@ -127,6 +131,8 @@ public class PlayersController {
 
     /**
      * Action for the cancel button in new player dialog, hide dialog.
+     * 
+     * @param e the component triggered the event.
      */
     public void cancelNewPlayerModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
@@ -134,6 +140,8 @@ public class PlayersController {
 
     /**
      * Action for the delete button, show the delete player dialog.
+     * 
+     * @param e the component triggered the event.
      */
     public void showDeleteModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
@@ -142,6 +150,8 @@ public class PlayersController {
     /**
      * Action for the confirm button in delete player dialog, delete selected player
      * and hide dialog.
+     * 
+     * @param e the component triggered the event.
      */
     public void confirmDeleteModalAction(ActionEvent e) {
         if (listPlayers.getSelectedIndex() != -1) {
@@ -153,6 +163,8 @@ public class PlayersController {
 
     /**
      * Action for the cancel button in delete player dialog, hide dialog.
+     * 
+     * @param e the component triggered the event.
      */
     public void cancelDeleteModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
@@ -160,6 +172,8 @@ public class PlayersController {
 
     /**
      * Action for the players list, load the player profile of the selected player.
+     * 
+     * @param e the component triggered the event.
      */
     public void loadAction(ListSelectionEvent e) {
         if (listPlayers.getSelectedIndex() != -1) {

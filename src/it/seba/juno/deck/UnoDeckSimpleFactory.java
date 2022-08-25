@@ -18,7 +18,7 @@ public class UnoDeckSimpleFactory {
     /**
      * Returns a ready to use deck of UnoCard.
      * 
-     * @return
+     * @return a ready to use deck.
      */
     public UnoDeck makeUnoDeck() {
 

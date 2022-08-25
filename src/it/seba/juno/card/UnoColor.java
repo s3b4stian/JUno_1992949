@@ -12,7 +12,25 @@ import java.util.Collections;
  *
  */
 public enum UnoColor implements Color<String> {
-    BLUE("#0000ff"), RED("#ff0000"), GREEN("#00ff00"), YELLOW("#ffff00");
+    /**
+     * Blue cards or discard pile color.
+     */
+    BLUE("#0000ff"),
+
+    /**
+     * Red cards or discard pile color.
+     */
+    RED("#ff0000"),
+
+    /**
+     * Green cards or discard pile color.
+     */
+    GREEN("#00ff00"),
+
+    /**
+     * Yellow cards or discard pile color.
+     */
+    YELLOW("#ffff00");
 
     private final String value;
 

@@ -15,8 +15,19 @@ public class OptionsModel extends Observable implements Serializable {
 
     private static final long serialVersionUID = -4928065349983814513L;
 
+    /**
+     * Number of players of a match.
+     */
     private int numberOfPlayer = 3;
+
+    /**
+     * Screen mode, true full-screen, false window.
+     */
     private boolean fullScreen = false;
+
+    /**
+     * Sound, true on, false off.
+     */
     private boolean sound = true;
 
     /**

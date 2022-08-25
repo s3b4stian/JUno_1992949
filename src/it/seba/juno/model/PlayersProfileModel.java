@@ -12,9 +12,19 @@ public class PlayersProfileModel implements Serializable {
 
     private static final long serialVersionUID = -4125686735413583911L;
 
+    /**
+     * The name of the player.
+     */
     private String name;
 
+    /**
+     * Matches played.
+     */
     private int played = 0;
+
+    /**
+     * Matches won.
+     */
     private int won = 0;
 
     /**

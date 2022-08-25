@@ -20,8 +20,14 @@ public class MainView extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Default graphics device, used to switch from window to full-screen mode.
+     */
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
+    /**
+     * The main panel, host all other views.
+     */
     private JPanel panel;
 
     /**

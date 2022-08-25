@@ -9,8 +9,82 @@ package it.seba.juno.card;
  */
 public enum UnoValue implements Value<Integer> {
 
-    ZERO(0), ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGTH(8), NINE(9), SKIP(10), REVERSE(20),
-    DRAW_TWO(40), WILD(100), WILD_DRAW_FOUR(200);
+    /**
+     * Zero card.
+     */
+    ZERO(0),
+
+    /**
+     * One card.
+     */
+    ONE(1),
+
+    /**
+     * Two card.
+     */
+    TWO(2),
+
+    /**
+     * Three card.
+     */
+    THREE(3),
+
+    /**
+     * Four card.
+     */
+    FOUR(4),
+
+    /**
+     * Five card.
+     */
+    FIVE(5),
+
+    /**
+     * Six card.
+     */
+    SIX(6),
+
+    /**
+     * Seven card.
+     */
+    SEVEN(7),
+
+    /**
+     * Eigth card.
+     */
+    EIGTH(8),
+
+    /**
+     * Nine card.
+     */
+    NINE(9),
+
+    /**
+     * Skip card, when dropped next player skip the turn.
+     */
+    SKIP(10),
+
+    /**
+     * Reverse card, when dropped change the order of play.
+     */
+    REVERSE(20),
+
+    /**
+     * Draw Two card, when dropped force the next player to draw two cards from
+     * deck.
+     */
+    DRAW_TWO(40),
+
+    /**
+     * Wild card, when dropped the player choose the new color for the drop pile.
+     */
+    WILD(100),
+
+    /**
+     * Wild card, when dropped the player choose the new color for the drop pile and
+     * force the next players to draw four cards from deck.
+     */
+    WILD_DRAW_FOUR(200);
 
     private final Integer value;
 

@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.model.PlayersProfileModel;
-import it.seba.juno.player.BadgePlayed;
-import it.seba.juno.player.BadgeWon;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.BadgeLabel;
+import it.seba.juno.view.component.BadgePlayed;
+import it.seba.juno.view.component.BadgeWon;
 import it.seba.juno.view.component.DeleteModal;
 import it.seba.juno.view.component.DialogButton;
 import it.seba.juno.view.component.ListPlayers;
@@ -36,29 +36,86 @@ import it.seba.juno.view.component.SubSectionLabel;
  */
 public class PlayersView extends JPanel implements InterfaceObserver {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3697221185201242552L;
 
+    /**
+     * The list of players.
+     */
     private ListPlayers<PlayersProfileModel> listPlayers;
 
+    /**
+     * New button, show modal to create new player.
+     */
     private MenuButton buttonNew;
+
+    /**
+     * Delete button, show modal to delete new player.
+     */
     private MenuButton buttonDelete;
 
+    /**
+     * Badge for played matches, green.
+     */
     private BadgeLabel badgePlayedGreen;
 
+    /**
+     * Badge for played matches, bronze.
+     */
     private BadgeLabel badgePlayedBronze;
+
+    /**
+     * Badge for played matches, silver.
+     */
     private BadgeLabel badgePlayedSilver;
+
+    /**
+     * Badge for played matches, gold.
+     */
     private BadgeLabel badgePlayedGold;
+
+    /**
+     * Badge for played matches, red.
+     */
     private BadgeLabel badgePlayedRed;
 
+    /**
+     * Badge for victories, green.
+     */
     private BadgeLabel badgeWonGreen;
+
+    /**
+     * Badge for victories, bronze.
+     */
     private BadgeLabel badgeWonBronze;
+
+    /**
+     * Badge for victories, silver.
+     */
     private BadgeLabel badgeWonSilver;
+
+    /**
+     * Badge for victories, gold.
+     */
     private BadgeLabel badgeWonGold;
+
+    /**
+     * Badge for victories, red.
+     */
     private BadgeLabel badgeWonRed;
 
+    /**
+     * The new player modal component.
+     */
     private NewPlayerModal newPlayerModal;
+
+    /**
+     * The delete player modal component.
+     */
     private DeleteModal deleteModal;
 
+    /**
+     * Back button, returns to main menu view.
+     */
     private MenuButton buttonBack;
 
     /**

@@ -40,13 +40,13 @@ public class OptionsController {
         this.menuView = menuView;
         this.optionsView = optionsView;
 
-        initView();
+        initActions();
     }
 
     /**
      * Init actions in view.
      */
-    private void initView() {
+    private void initActions() {
         // button back
         optionsView.getButtonBack().addActionListener(e -> goBackAction());
 
@@ -111,6 +111,8 @@ public class OptionsController {
 
     /**
      * Action for the screen mode toggle button, set the game to full-screen.
+     * 
+     * @param e the item event that indicate if the button is selected or not.
      */
     public void goFullScreenAction(ItemEvent e) {
         optionsModel.setFullScreen(true);
@@ -119,6 +121,8 @@ public class OptionsController {
 
     /**
      * Action for the screen mode toggle button, set the game to window.
+     * 
+     * @param e the item event that indicate if the button is selected or not.
      */
     public void goWindowAction(ItemEvent e) {
         optionsModel.setFullScreen(false);
@@ -127,6 +131,8 @@ public class OptionsController {
 
     /**
      * Action for the sound toggle button, enable the sound.
+     * 
+     * @param e the item event that indicate if the button is selected or not.
      */
     public void soundOnAction(ItemEvent e) {
         optionsModel.setSound(true);
@@ -135,6 +141,8 @@ public class OptionsController {
 
     /**
      * Action for the sound toggle button, disable the sound.
+     * 
+     * @param e the item event that indicate if the button is selected or not.
      */
     public void soundOffAction(ItemEvent e) {
         optionsModel.setSound(false);
