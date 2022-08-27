@@ -1,5 +1,6 @@
 package it.seba.juno.controller;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -18,11 +19,11 @@ import it.seba.juno.view.OptionsView;
  */
 public class OptionsController {
 
-    MainView mainView;
-    MenuView menuView;
-    OptionsView optionsView;
+    private MainView mainView;
+    private MenuView menuView;
+    private OptionsView optionsView;
 
-    OptionsModel optionsModel;
+    private OptionsModel optionsModel;
 
     /**
      * Class Constructor.
@@ -75,30 +76,39 @@ public class OptionsController {
         });
 
         // buttons for players
-        optionsView.getTwoPlayersRadio().addActionListener(e -> setTwoPlayersAction());
-        optionsView.getThreePlayersRadio().addActionListener(e -> setThreePlayersAction());
-        optionsView.getFourPlayersRadio().addActionListener(e -> setFourPlayersAction());
+        optionsView.getTwoPlayersRadio().addActionListener(e -> setTwoPlayersAction(e));
+        optionsView.getThreePlayersRadio().addActionListener(e -> setThreePlayersAction(e));
+        optionsView.getFourPlayersRadio().addActionListener(e -> setFourPlayersAction(e));
     }
 
     /**
      * Action for the players radio button, set a two players game.
+     * 
+     * @param e the component triggered the event.
      */
-    public void setTwoPlayersAction() {
+    public void setTwoPlayersAction(ActionEvent e) {
         optionsModel.setNumberOfPlayer(2);
+        optionsModel.notifyObservers(e);
     }
 
     /**
      * Action for the players radio button, set a three players game.
+     * 
+     * @param e the component triggered the event.
      */
-    public void setThreePlayersAction() {
+    public void setThreePlayersAction(ActionEvent e) {
         optionsModel.setNumberOfPlayer(3);
+        optionsModel.notifyObservers(e);
     }
 
     /**
      * Action for the players radio button, set a four players game.
+     * 
+     * @param e the component triggered the event.
      */
-    public void setFourPlayersAction() {
+    public void setFourPlayersAction(ActionEvent e) {
         optionsModel.setNumberOfPlayer(4);
+        optionsModel.notifyObservers(e);
     }
 
     /**

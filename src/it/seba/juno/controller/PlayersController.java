@@ -22,12 +22,13 @@ import it.seba.juno.view.component.ListPlayers;
  */
 public class PlayersController {
 
-    MainView mainView;
-    MenuView menuView;
-    PlayersView playersView;
-    ListPlayers<PlayersProfileModel> listPlayers;
+    private MainView mainView;
+    private MenuView menuView;
+    private PlayersView playersView;
 
-    PlayersModel playersModel;
+    private ListPlayers<PlayersProfileModel> listPlayers;
+
+    private PlayersModel playersModel;
 
     /**
      * Class Constructor.

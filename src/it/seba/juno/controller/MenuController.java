@@ -1,5 +1,6 @@
 package it.seba.juno.controller;
 
+import it.seba.juno.view.GameView;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
 import it.seba.juno.view.OptionsView;
@@ -14,10 +15,11 @@ import it.seba.juno.view.PlayersView;
  */
 public class MenuController {
 
-    MainView mainView;
-    MenuView menuView;
-    OptionsView optionsView;
-    PlayersView playersView;
+    private MainView mainView;
+    private MenuView menuView;
+    private OptionsView optionsView;
+    private PlayersView playersView;
+    private GameView gameView;
 
     /**
      * Class Constructor.
@@ -27,11 +29,13 @@ public class MenuController {
      * @param optionsView the options view, show the application options
      * @param playersView the players view, manage players
      */
-    public MenuController(MainView mainView, MenuView menuView, OptionsView optionsView, PlayersView playersView) {
+    public MenuController(MainView mainView, MenuView menuView, OptionsView optionsView, PlayersView playersView,
+            GameView gameView) {
         this.mainView = mainView;
         this.menuView = menuView;
         this.optionsView = optionsView;
         this.playersView = playersView;
+        this.gameView = gameView;
 
         initActions();
     }
@@ -40,21 +44,33 @@ public class MenuController {
      * Init actions in view.
      */
     private void initActions() {
-        // button exit
-        menuView.getButtonExit().addActionListener(e -> exitAction());
+
+        // button play
+        menuView.getButtonPlay().addActionListener(e -> goGameAction());
+
+        // button players
+        menuView.getButtonPlayers().addActionListener(e -> goPlayersAction());
 
         // button options
         menuView.getButtonOptions().addActionListener(e -> goOptionsAction());
 
-        // button players
-        menuView.getButtonPlayers().addActionListener(e -> goPlayersAction());
+        // button exit
+        menuView.getButtonExit().addActionListener(e -> exitAction());
+
     }
 
     /**
-     * Action for the exit button, terminate the game.
+     * Action for the play button, switch current view to game view
      */
-    public void exitAction() {
-        System.exit(0);
+    public void goGameAction() {
+        mainView.setCurrentView(gameView);
+    }
+
+    /**
+     * Action for the players button, switch current view to players view
+     */
+    public void goPlayersAction() {
+        mainView.setCurrentView(playersView);
     }
 
     /**
@@ -65,9 +81,9 @@ public class MenuController {
     }
 
     /**
-     * Action for the players button, switch current view to players view
+     * Action for the exit button, terminate the game.
      */
-    public void goPlayersAction() {
-        mainView.setCurrentView(playersView);
+    public void exitAction() {
+        System.exit(0);
     }
 }

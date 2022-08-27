@@ -90,7 +90,7 @@ public class MainView extends JFrame {
      */
     public void setWindow() {
         device.setFullScreenWindow(null);
-        setSize(1200, 800);
-        setMinimumSize(new Dimension(1200, 800));
+        setSize(1152, 864);
+        setMinimumSize(new Dimension(1152, 864));
     }
 }
