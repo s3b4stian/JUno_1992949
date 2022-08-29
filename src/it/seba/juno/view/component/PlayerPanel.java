@@ -15,8 +15,11 @@ public class PlayerPanel extends JLayeredPane {
 
     private static final long serialVersionUID = 3885628453899889822L;
 
-    public PlayerPanel(Dimension dimension) {
-        // setMaximumSize(dimension);
+    private boolean landscape;
+
+    public PlayerPanel(Dimension dimension, boolean landscape) {
+        this.landscape = landscape;
+
         setMinimumSize(dimension);
         setPreferredSize(dimension);
         setOpaque(false);
@@ -55,8 +58,16 @@ public class PlayerPanel extends JLayeredPane {
         }
 
         for (Component comp : getComponents()) {
-            Point point = new Point(4 + (i++ * space), 6);
-            ((PlayerCardButton) comp).setOrigin(point);
+
+            Point point = null;
+
+            if (landscape) {
+                point = new Point(6, 4 + (i++ * space));
+                comp.setBounds(point.x, point.y, 128, 85);
+            } else {
+                point = new Point(4 + (i++ * space), 6);
+                comp.setBounds(point.x, point.y, 85, 128);
+            }
         }
     }
 

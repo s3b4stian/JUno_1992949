@@ -1,5 +1,7 @@
 package it.seba.juno.controller;
 
+import it.seba.juno.event.ResetGameEvent;
+import it.seba.juno.model.GameModel;
 import it.seba.juno.view.GameView;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -21,16 +23,23 @@ public class MenuController {
     private PlayersView playersView;
     private GameView gameView;
 
+    private GameModel gameModel;
+
     /**
      * Class Constructor.
      * 
+     * @param gameModel   the game model, used to reset the game view if there is
+     *                    any change in options
      * @param mainView    the main view, used to host all others view.
      * @param menuView    the menu view, show the main menu.
      * @param optionsView the options view, show the application options
      * @param playersView the players view, manage players
      */
-    public MenuController(MainView mainView, MenuView menuView, OptionsView optionsView, PlayersView playersView,
-            GameView gameView) {
+
+    public MenuController(GameModel gameModel, MainView mainView, MenuView menuView, OptionsView optionsView,
+            PlayersView playersView, GameView gameView) {
+
+        this.gameModel = gameModel;
         this.mainView = mainView;
         this.menuView = menuView;
         this.optionsView = optionsView;
@@ -63,6 +72,11 @@ public class MenuController {
      * Action for the play button, switch current view to game view
      */
     public void goGameAction() {
+        if (gameModel.needReset()) {
+            gameModel.reset();
+            gameModel.notifyObservers(new ResetGameEvent(this));
+        }
+
         mainView.setCurrentView(gameView);
     }
 

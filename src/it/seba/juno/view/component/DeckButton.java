@@ -52,6 +52,7 @@ public class DeckButton extends JButton {
         setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
         setIcon(icon);
+        setEnabled(false);
 
         // adding behavior for interaction with mouse
         addMouseListener(new MouseAdapter() {

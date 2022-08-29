@@ -1,4 +1,4 @@
-package it.seba.juno.util;
+package it.seba.juno.event;
 
 import java.util.EventObject;
 

@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import it.seba.juno.JUno;
+import it.seba.juno.event.FirstLoadEvent;
 import it.seba.juno.manger.AudioManager;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.util.InterfaceObserver;
@@ -269,7 +270,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
         OptionsModel model = (OptionsModel) o;
 
         // update for initial state
-        if (t instanceof JUno) {
+        if (e instanceof FirstLoadEvent) {
             // set full-screen
             if (model.isFullScreen()) {
                 buttonFullScreen.setSelected(true);

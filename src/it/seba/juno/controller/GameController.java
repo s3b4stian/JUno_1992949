@@ -2,12 +2,9 @@ package it.seba.juno.controller;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
-import it.seba.juno.JUno;
+import it.seba.juno.event.ResetGameEvent;
 import it.seba.juno.model.GameModel;
-import it.seba.juno.util.FirstLoadEvent;
 import it.seba.juno.view.GameView;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
@@ -30,8 +27,6 @@ public class GameController {
         this.gameView = gameView;
 
         initActions();
-        // dealCardsToPlayers();
-        dropFirstCardToPileAction();
     }
 
     /**
@@ -45,35 +40,40 @@ public class GameController {
         gameView.getButtonUno().addActionListener(e -> sayUnoAction(e));
 
         gameView.getButtonDeck().addActionListener(e -> drawCard(e));
+
+        gameView.getButtonStart().addActionListener(e -> startGame(e));
+
+        gameView.getButtonRestart().addActionListener(e -> restartGame(new ResetGameEvent(this)));
     }
 
     public void drawCard(ActionEvent e) {
         gameModel.notifyObservers(e);
-
-        // gameView.getPanelSouth().getComponents();
 
         for (Component comp : gameView.getPanelSouth().getComponents()) {
             ((PlayerCardButton) comp).addActionListener(f -> dropCardToPileAction(f));
         }
     }
 
-    public void dropCardToPileAction(ActionEvent e) {
-        // gameModel.dropPlayerCardToPileAction();
-        // System.out.println("click card");
+    public void restartGame(ResetGameEvent e) {
+        gameModel.reset();
+        gameModel.notifyObservers(e);
+        // gameModel.dealCardsToPlayers();
+        // gameModel.dropFirstCardToPileAction();
+        // gameModel.notifyObservers(e);
+    }
+
+    public void startGame(ActionEvent e) {
+        gameModel.dealCardsToPlayers();
+        gameModel.dropFirstCardToPileAction();
         gameModel.notifyObservers(e);
     }
 
-    public void dropFirstCardToPileAction() {
-        gameModel.dropFirstCardToPileAction();
-        gameModel.notifyObservers(new FirstLoadEvent(this));
-    }
-
-    public void dealCardsToPlayers() {
-        gameModel.dealCardsToPlayers();
-        gameModel.notifyObservers(new FirstLoadEvent(this));
+    public void dropCardToPileAction(ActionEvent e) {
+        gameModel.notifyObservers(e);
     }
 
     public void sayUnoAction(ActionEvent e) {
+        gameModel.next();
         gameModel.notifyObservers(e);
     }
 

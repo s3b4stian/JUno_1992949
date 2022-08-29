@@ -43,6 +43,18 @@ public class UnoPlayers implements Iterable<Player> {
         players.offer(player);
     }
 
+    public void setDealer(int index) {
+        System.out.println(index);
+
+        for (int i = 0; i < index; i++) {
+            // Player p = players.poll();
+            // System.out.println(index + " " + p.getName());
+            // players.offer(p);
+        }
+
+        // players.push(players.pop());
+    }
+
     /**
      * Returns the number of players in a match.
      * 

@@ -19,10 +19,15 @@ import it.seba.juno.card.UnoCard;
 import it.seba.juno.card.UnoColor;
 import it.seba.juno.card.UnoValue;
 import it.seba.juno.controller.GameController;
+import it.seba.juno.event.ResetGameEvent;
 import it.seba.juno.manger.AudioManager;
 import it.seba.juno.model.GameModel;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.model.PlayersProfileModel;
+import it.seba.juno.player.HumanPlayer;
+import it.seba.juno.player.NpcPlayer;
+import it.seba.juno.player.Player;
+import it.seba.juno.player.UnoPlayers;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
 import it.seba.juno.view.component.DealerLabel;
@@ -35,6 +40,7 @@ import it.seba.juno.view.component.MenuButton;
 import it.seba.juno.view.component.OptionsRadioPlayers;
 import it.seba.juno.view.component.OrderOfPlayLabel;
 import it.seba.juno.view.component.PlayerCardButton;
+import it.seba.juno.view.component.PlayerCardLabel;
 import it.seba.juno.view.component.PlayerLabel;
 import it.seba.juno.view.component.PlayerPanel;
 import it.seba.juno.view.component.SaidUnoLabel;
@@ -64,6 +70,12 @@ public class GameView extends JPanel implements InterfaceObserver {
 
     private DeckButton buttonDeck;
     private MenuButton buttonUno;
+    private MenuButton buttonStart;
+    private MenuButton buttonRestart;
+
+    public MenuButton getButtonRestart() {
+        return buttonRestart;
+    }
 
     /**
      * Back button, returns to main menu view.
@@ -97,10 +109,10 @@ public class GameView extends JPanel implements InterfaceObserver {
         Dimension panelHorizontal = new Dimension(480, 140);
         Dimension panelVertical = new Dimension(140, 480);
 
-        panelWest = new PlayerPanel(panelVertical);
-        panelNorth = new PlayerPanel(panelHorizontal);
-        panelSouth = new PlayerPanel(new Dimension(480, 140));
-        panelEast = new PlayerPanel(panelVertical);
+        panelWest = new PlayerPanel(panelVertical, true);
+        panelNorth = new PlayerPanel(panelHorizontal, false);
+        panelSouth = new PlayerPanel(panelHorizontal, false);
+        panelEast = new PlayerPanel(panelVertical, true);
 
         panelDeck = new DeckPanel(new Dimension(136, 171));
         panelDiscardPile = new DeckPanel(new Dimension(136, 171));
@@ -118,6 +130,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         panelDiscardPile.add(discardPile, gbc);
 
         buttonUno = new MenuButton("Uno");
+        buttonUno.setVisible(false);
         discardPileColor = new DiscardPileColorLabel();
 
         saidUno = new SaidUnoLabel();
@@ -126,6 +139,8 @@ public class GameView extends JPanel implements InterfaceObserver {
         orderOfPlay = new OrderOfPlayLabel();
 
         buttonBack = new MenuButton("Back");
+        buttonStart = new MenuButton("Start");
+        buttonRestart = new MenuButton("Restart");
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -286,6 +301,15 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.weighty = 0.1;
         add(discardPileColor, gbc);
 
+        // button start
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(buttonStart, gbc);
+        add(buttonRestart, gbc);
+
         // button back
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -328,6 +352,10 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.weighty = 0.1;
         gbc.weighty = 0.1;
         add(orderOfPlay, gbc);
+    }
+
+    public MenuButton getButtonStart() {
+        return buttonStart;
     }
 
     public PlayerPanel getPanelSouth() {
@@ -405,7 +433,6 @@ public class GameView extends JPanel implements InterfaceObserver {
 
     private void setDiscardPile(UnoCard topCard) {
         if (topCard.hasColor()) {
-
             setDiscardPileColor(topCard.getColor());
         }
 
@@ -430,6 +457,49 @@ public class GameView extends JPanel implements InterfaceObserver {
         }
     }
 
+    private void setDealer(int d) {
+
+        switch (d) {
+        case 0:
+            dealer.setDealerSouth();
+            break;
+        case 1:
+            dealer.setDealerEast();
+            break;
+        case 2:
+            dealer.setDealerNorth();
+            break;
+        case 3:
+            dealer.setDealerWest();
+            break;
+        }
+    }
+
+    private void dealCards(UnoPlayers players) {
+        players.forEach(p -> {
+            for (UnoCard c : p.getCards()) {
+
+                if (p instanceof HumanPlayer) {
+                    panelSouth.add(new PlayerCardButton(c));
+                }
+
+                if (p instanceof NpcPlayer) {
+                    if (p.getName().equals("NPC-East")) {
+                        panelEast.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST));
+                    }
+
+                    if (p.getName().equals("NPC-North")) {
+                        panelNorth.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH));
+                    }
+
+                    if (p.getName().equals("NPC-West")) {
+                        panelWest.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST));
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     public void update(Observable o, EventObject e) {
 
@@ -440,6 +510,27 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         // System.out.println(e);
 
+        if (e instanceof ResetGameEvent) {
+            buttonUno.setVisible(false);
+            buttonStart.setVisible(true);
+            buttonRestart.setVisible(false);
+
+            discardPileColor.setEnabled(false);
+            discardPile.setIcon(null);
+
+            dealer.setDealerDisabled();
+
+            panelNorth.removeAll();
+            panelSouth.removeAll();
+            panelEast.removeAll();
+            panelWest.removeAll();
+
+            panelNorth.repaint();
+            panelSouth.repaint();
+            panelEast.repaint();
+            panelWest.repaint();
+        }
+
         if (o instanceof OptionsModel) {
             optionModel = (OptionsModel) o;
         } else if (o instanceof GameModel) {
@@ -447,12 +538,19 @@ public class GameView extends JPanel implements InterfaceObserver {
         }
 
         // set discard pile first card
-        if (t instanceof GameController) {
+        if (t instanceof MenuButton && t == buttonStart) {
+            setDealer(gameModel.getDealer());
+            dealCards(gameModel.getPlayers());
             setDiscardPile(gameModel.discardPileTopCard());
+
+            buttonUno.setVisible(true);
+            buttonStart.setVisible(false);
+            buttonRestart.setVisible(true);
+
+            System.out.println(gameModel.getCurrentPlayer().getName());
         }
 
         if (t instanceof PlayerCardButton) {
-
             setDiscardPile(((PlayerCardButton) t).getCard());
             panelSouth.remove(((PlayerCardButton) t));
             panelSouth.repaint();
@@ -460,7 +558,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         if (t instanceof DeckButton) {
             // new PlayerCardButton(
-            panelSouth.add(new PlayerCardButton(gameModel.dealCard()));
+            // panelSouth.add(new PlayerCardButton(gameModel.dealCard()));
             // setDiscardPile(gameModel.discardPileTopCard());
         }
 
@@ -468,6 +566,8 @@ public class GameView extends JPanel implements InterfaceObserver {
         if (t instanceof JUno || t instanceof OptionsRadioPlayers) {
             disablePlayerPanel();
             enablePlayerPanel(optionModel.getNumberOfPlayer());
+
+            buttonRestart.setVisible(false);
         }
 
         // player name
@@ -478,6 +578,9 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         // player clicked to uno button
         if (t instanceof MenuButton && t == buttonUno) {
+
+            System.out.println(gameModel.getCurrentPlayer().getName());
+
             saidUno.setSaidSouth();
         }
     }

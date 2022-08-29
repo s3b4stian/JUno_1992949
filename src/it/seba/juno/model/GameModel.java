@@ -1,6 +1,6 @@
 package it.seba.juno.model;
 
-import java.security.SecureRandom;
+import java.util.Random;
 
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.deck.DiscardPile;
@@ -20,38 +20,72 @@ import it.seba.juno.util.Observable;
 
 public class GameModel extends Observable {
 
-    boolean skipped = true;
-    boolean first = true;
+    private boolean skipped = true;
+    private boolean first = true;
 
-    UnoDeck deck;
-    DiscardPile discardPile;
-    UnoPlayers players;
-    Player dealer;
+    private OptionsModel options;
 
-    public GameModel(int numberOfPlayer) {
+    private UnoDeck deck;
+    private DiscardPile discardPile;
+    private UnoPlayers players;
 
-        players = new UnoPlayers();
+    private int dealer;
+
+    private Player currentPlayer;
+
+    private int numberOfPlayer;
+
+    public GameModel(OptionsModel options) {
+
+        this.options = options;
+        // init model using reset method
+        reset();
+    }
+
+    public UnoPlayers getPlayers() {
+        return players;
+    }
+
+    public void reset() {
         deck = new UnoDeckSimpleFactory().makeUnoDeck();
         discardPile = new DiscardPile();
 
-        setNumberOfPlayers(numberOfPlayer);
+        setNumberOfPlayers();
+        randomDealer();
+        next();
     }
 
-    public void setNumberOfPlayers(int numberOfPlayer) {
+    public boolean needReset() {
+        return options.getNumberOfPlayer() != numberOfPlayer;
+    }
+
+    public void setNumberOfPlayers() {
+
+        numberOfPlayer = options.getNumberOfPlayer();
+
+        players = new UnoPlayers();
 
         // default 2 players, minimum to play
-        players.add(new HumanPlayer(""));
-        players.add(new NpcPlayer("NPC-East", getDropStrategy(), getColorStrategy()));
+        players.add(new HumanPlayer("Human"));
+
+        // add fourth player
+        if (numberOfPlayer == 4) {
+            players.add(new NpcPlayer("NPC-West", getDropStrategy(), getColorStrategy()));
+            players.add(new NpcPlayer("NPC-North", getDropStrategy(), getColorStrategy()));
+
+        }
 
         // add third player
         if (numberOfPlayer == 3) {
             players.add(new NpcPlayer("NPC-North", getDropStrategy(), getColorStrategy()));
         }
 
-        // add fourth player
-        if (numberOfPlayer == 4) {
-            players.add(new NpcPlayer("NPC-West", getDropStrategy(), getColorStrategy()));
-        }
+        players.add(new NpcPlayer("NPC-East", getDropStrategy(), getColorStrategy()));
+    }
+
+    private void randomDealer() {
+        dealer = (int) (Math.random() * (numberOfPlayer - 0));
+        players.setDealer(dealer);
     }
 
     private DropStrategy getDropStrategy() {
@@ -81,6 +115,19 @@ public class GameModel extends Observable {
 
     public UnoCard discardPileTopCard() {
         return discardPile.getTopCard();
+    }
+
+    public int getDealer() {
+        return dealer;
+    }
+
+    public void next() {
+        currentPlayer = players.iterator().next();
+    }
+
+    public Player getCurrentPlayer() {
+
+        return currentPlayer;
     }
 
     public UnoCard dealCard() {

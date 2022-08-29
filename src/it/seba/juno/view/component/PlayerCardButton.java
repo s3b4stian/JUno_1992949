@@ -11,12 +11,6 @@ import javax.swing.JButton;
 import it.seba.juno.card.UnoCard;
 import it.seba.juno.manger.AudioManager;
 
-/**
- * Button for deck, draw a card from deck.
- * 
- * @author Sebastian Rapetti
- *
- */
 public class PlayerCardButton extends JButton {
 
     private static final long serialVersionUID = 6752631190852368100L;
@@ -34,18 +28,6 @@ public class PlayerCardButton extends JButton {
 
     public UnoCard getCard() {
         return card;
-    }
-
-    // private final ImageIcon iconHover;
-    private Point origin;
-
-    public Point getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(Point origin) {
-        this.origin = origin;
-        setBounds(origin.x, origin.y, 85, 128);
     }
 
     /**
