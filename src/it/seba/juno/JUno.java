@@ -53,7 +53,7 @@ public class JUno {
         // player profiles, if exists load them from disk
         PlayersModel playersModel = serializationManager.loadPlayer();
         // game model
-        GameModel gameModel = new GameModel();
+        GameModel gameModel = new GameModel(optionsModel.getNumberOfPlayer());
 
         // initial audio manager status
         audioManager.setSound(optionsModel.isSound());
@@ -69,6 +69,8 @@ public class JUno {
         optionsModel.addObserver(optionsView);
         optionsModel.addObserver(gameView);
         playersModel.addObserver(playersView);
+        playersModel.addObserver(gameView);
+        gameModel.addObserver(gameView);
         // notify initial status
         optionsModel.notifyObservers(new FirstLoadEvent(new JUno()));
 

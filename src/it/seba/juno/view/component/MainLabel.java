@@ -12,7 +12,7 @@ import it.seba.juno.manger.FontManager;
  * @author Sebastian Rapetti
  *
  */
-public class MainLabel extends JLabel {
+public class MainLabel extends AbstractTextLabel {
 
     private static final long serialVersionUID = -6258378281134430686L;
 
@@ -29,8 +29,6 @@ public class MainLabel extends JLabel {
      * @param text the default text of the label.
      */
     public MainLabel(String text) {
-        super(text);
-        setFont(FontManager.getInstance().getCustomFont(72f));
-        setForeground(new Color(255, 255, 255));
+        super(text, 72f);
     }
 }

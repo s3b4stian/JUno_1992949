@@ -12,7 +12,7 @@ import it.seba.juno.manger.FontManager;
  * @author Sebastian Rapetti
  *
  */
-public class SectionLabel extends JLabel {
+public class SectionLabel extends AbstractTextLabel {
 
     private static final long serialVersionUID = -188287675781778913L;
 
@@ -29,8 +29,6 @@ public class SectionLabel extends JLabel {
      * @param text the default text of the label.
      */
     public SectionLabel(String text) {
-        super(text);
-        setFont(FontManager.getInstance().getCustomFont(36f));
-        setForeground(new Color(255, 255, 255));
+        super(text, 36f);
     }
 }

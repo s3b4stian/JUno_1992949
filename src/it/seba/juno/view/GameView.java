@@ -7,47 +7,63 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.util.EventObject;
-
 import javax.swing.Box.Filler;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.JUno;
+import it.seba.juno.card.UnoCard;
+import it.seba.juno.card.UnoColor;
+import it.seba.juno.card.UnoValue;
+import it.seba.juno.controller.GameController;
 import it.seba.juno.manger.AudioManager;
 import it.seba.juno.model.GameModel;
 import it.seba.juno.model.OptionsModel;
+import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.util.InterfaceObserver;
 import it.seba.juno.util.Observable;
+import it.seba.juno.view.component.DealerLabel;
+import it.seba.juno.view.component.DeckButton;
+import it.seba.juno.view.component.DeckPanel;
 import it.seba.juno.view.component.DiscardPileColorLabel;
+import it.seba.juno.view.component.DiscardPileLabel;
+import it.seba.juno.view.component.ListPlayers;
 import it.seba.juno.view.component.MenuButton;
 import it.seba.juno.view.component.OptionsRadioPlayers;
+import it.seba.juno.view.component.OrderOfPlayLabel;
+import it.seba.juno.view.component.PlayerCardButton;
+import it.seba.juno.view.component.PlayerLabel;
 import it.seba.juno.view.component.PlayerPanel;
+import it.seba.juno.view.component.SaidUnoLabel;
 
 public class GameView extends JPanel implements InterfaceObserver {
 
     private static final long serialVersionUID = 5048154536202885401L;
 
-    private JButton buttonUno;
-    private JLabel dealer;
+    private DealerLabel dealer;
 
     private DiscardPileColorLabel discardPileColor;
+    private DiscardPileLabel discardPile;
 
-    private JLabel orderOfPlay;
+    private OrderOfPlayLabel orderOfPlay;
 
-    private PlayerPanel panelDeck;
-    private PlayerPanel panelDiscardPile;
+    private DeckPanel panelDeck;
+    private DeckPanel panelDiscardPile;
+
     private PlayerPanel panelEast;
     private PlayerPanel panelNorth;
     private PlayerPanel panelSouth;
+
     private PlayerPanel panelWest;
 
-    private JLabel playerName;
-    private JLabel saidUno;
-    // private javax.swing.JPanel jPanel7;
+    private PlayerLabel playerName;
+    private SaidUnoLabel saidUno;
+
+    private DeckButton buttonDeck;
+    private MenuButton buttonUno;
 
     /**
      * Back button, returns to main menu view.
@@ -59,7 +75,7 @@ public class GameView extends JPanel implements InterfaceObserver {
      */
     private AudioManager audioManager;
 
-    private int numberOfPlayers;
+    // private int numberOfPlayers;
 
     public GameView() {
 
@@ -78,34 +94,49 @@ public class GameView extends JPanel implements InterfaceObserver {
         Filler fillerOuterWest = new Filler(fillerDimension, fillerDimension, fillerDimension);
         Filler fillerOuterEast = new Filler(fillerDimension, fillerDimension, fillerDimension);
 
-        panelWest = new PlayerPanel(new Dimension(140, 480));
-        panelNorth = new PlayerPanel(new Dimension(480, 140));
+        Dimension panelHorizontal = new Dimension(480, 140);
+        Dimension panelVertical = new Dimension(140, 480);
+
+        panelWest = new PlayerPanel(panelVertical);
+        panelNorth = new PlayerPanel(panelHorizontal);
         panelSouth = new PlayerPanel(new Dimension(480, 140));
-        panelEast = new PlayerPanel(new Dimension(140, 480));
+        panelEast = new PlayerPanel(panelVertical);
 
-        panelDeck = new PlayerPanel(new Dimension(140, 200));
-        panelDiscardPile = new PlayerPanel(new Dimension(140, 200));
+        panelDeck = new DeckPanel(new Dimension(136, 171));
+        panelDiscardPile = new DeckPanel(new Dimension(136, 171));
 
-        buttonUno = new JButton();
+        buttonDeck = new DeckButton();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelDeck.add(buttonDeck, gbc);
+
+        discardPile = new DiscardPileLabel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelDiscardPile.add(discardPile, gbc);
+
+        buttonUno = new MenuButton("Uno");
         discardPileColor = new DiscardPileColorLabel();
 
-        saidUno = new JLabel();
-        playerName = new JLabel();
-        dealer = new JLabel();
-        orderOfPlay = new JLabel();
+        saidUno = new SaidUnoLabel();
+        playerName = new PlayerLabel();
+        dealer = new DealerLabel();
+        orderOfPlay = new OrderOfPlayLabel();
 
         buttonBack = new MenuButton("Back");
 
         setLayout(new java.awt.GridBagLayout());
 
         fillerInnerNorth.setOpaque(false);
-        GridBagConstraints gbc = new GridBagConstraints();
+        gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 3;
         gbc.gridwidth = 9;
         gbc.gridheight = 2;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 0.7;
+        gbc.weighty = 0.9;
         add(fillerInnerNorth, gbc);
 
         fillerInnerSouth.setOpaque(false);
@@ -114,7 +145,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 8;
         gbc.gridwidth = 9;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 0.7;
+        gbc.weighty = 0.9;
         add(fillerInnerSouth, gbc);
 
         fillerInnerWest.setOpaque(false);
@@ -179,7 +210,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.gridheight = 7;
-        gbc.fill = GridBagConstraints.BOTH;
+        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelWest, gbc);
@@ -190,7 +221,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 1;
         gbc.gridwidth = 9;
         gbc.gridheight = 2;
-        gbc.fill = GridBagConstraints.BOTH;
+        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelNorth, gbc);
@@ -201,7 +232,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 10;
         gbc.gridwidth = 9;
         gbc.gridheight = 2;
-        gbc.fill = GridBagConstraints.BOTH;
+        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelSouth, gbc);
@@ -212,7 +243,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.gridheight = 7;
-        gbc.fill = GridBagConstraints.BOTH;
+        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelEast, gbc);
@@ -236,7 +267,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         add(panelDiscardPile, gbc);
 
         // buttons and labels
-        buttonUno.setText("jButton1");
+        // uno button
         gbc = new GridBagConstraints();
         gbc.gridx = 12;
         gbc.gridy = 10;
@@ -245,14 +276,17 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.insets = new Insets(4, 4, 4, 4);
         add(buttonUno, gbc);
 
-        discardPileColor.setRed();
+        // discard pile color
+        // discardPileColor.setRed();
         gbc = new GridBagConstraints();
         gbc.gridx = 9;
         gbc.gridy = 5;
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.weighty = 0.1;
+        gbc.weighty = 0.1;
         add(discardPileColor, gbc);
 
+        // button back
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 11;
@@ -260,14 +294,16 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.anchor = GridBagConstraints.CENTER;
         add(buttonBack, gbc);
 
-        saidUno.setText("jLabel2");
+        // said uno label
         gbc = new GridBagConstraints();
         gbc.gridx = 9;
         gbc.gridy = 7;
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.weighty = 0.1;
+        gbc.weighty = 0.1;
         add(saidUno, gbc);
 
+        // player name label
         playerName.setText("Player");
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
@@ -275,21 +311,49 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridwidth = 9;
         add(playerName, gbc);
 
-        dealer.setText("jLabel8");
+        // dealer icon
         gbc = new GridBagConstraints();
         gbc.gridx = 6;
         gbc.gridy = 7;
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.weighty = 0.1;
+        gbc.weighty = 0.1;
         add(dealer, gbc);
 
-        orderOfPlay.setText("jLabel8");
+        // order of play icon
         gbc = new GridBagConstraints();
         gbc.gridx = 6;
         gbc.gridy = 5;
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.weighty = 0.1;
+        gbc.weighty = 0.1;
         add(orderOfPlay, gbc);
+    }
+
+    public PlayerPanel getPanelSouth() {
+        return panelSouth;
+    }
+
+    /**
+     * Returns a reference to the "said uno button" of the options, used mainly to
+     * set the action performed from the button. The action is assigned to the
+     * button at controller level.
+     * 
+     * @return the button reference.
+     */
+    public MenuButton getButtonUno() {
+        return buttonUno;
+    }
+
+    /**
+     * Returns a reference to the "deck button" of the options, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return the button reference.
+     */
+    public DeckButton getButtonDeck() {
+        return buttonDeck;
     }
 
     /**
@@ -318,6 +382,54 @@ public class GameView extends JPanel implements InterfaceObserver {
         super.paintChildren(grphcs);
     }
 
+    private void disablePlayerPanel() {
+        panelSouth.setEnabled(false);
+        panelEast.setEnabled(false);
+        panelNorth.setEnabled(false);
+        panelWest.setEnabled(false);
+    }
+
+    private void enablePlayerPanel(int numberOfPlayers) {
+        panelSouth.setEnabled(true);
+        panelEast.setEnabled(true);
+
+        if (numberOfPlayers == 3) {
+            this.panelNorth.setEnabled(true);
+        }
+
+        if (numberOfPlayers == 4) {
+            this.panelNorth.setEnabled(true);
+            this.panelWest.setEnabled(true);
+        }
+    }
+
+    private void setDiscardPile(UnoCard topCard) {
+        if (topCard.hasColor()) {
+
+            setDiscardPileColor(topCard.getColor());
+        }
+
+        discardPile.setCard(topCard);
+    }
+
+    private void setDiscardPileColor(UnoColor color) {
+        discardPileColor.setEnabled(true);
+        switch (color) {
+        case BLUE:
+            discardPileColor.setBlue();
+            break;
+        case RED:
+            discardPileColor.setRed();
+            break;
+        case GREEN:
+            discardPileColor.setGreen();
+            break;
+        case YELLOW:
+            discardPileColor.setYellow();
+            break;
+        }
+    }
+
     @Override
     public void update(Observable o, EventObject e) {
 
@@ -326,17 +438,47 @@ public class GameView extends JPanel implements InterfaceObserver {
         OptionsModel optionModel = null;
         GameModel gameModel = null;
 
+        // System.out.println(e);
+
         if (o instanceof OptionsModel) {
             optionModel = (OptionsModel) o;
         } else if (o instanceof GameModel) {
             gameModel = (GameModel) o;
         }
 
+        // set discard pile first card
+        if (t instanceof GameController) {
+            setDiscardPile(gameModel.discardPileTopCard());
+        }
+
+        if (t instanceof PlayerCardButton) {
+
+            setDiscardPile(((PlayerCardButton) t).getCard());
+            panelSouth.remove(((PlayerCardButton) t));
+            panelSouth.repaint();
+        }
+
+        if (t instanceof DeckButton) {
+            // new PlayerCardButton(
+            panelSouth.add(new PlayerCardButton(gameModel.dealCard()));
+            // setDiscardPile(gameModel.discardPileTopCard());
+        }
+
         // update for initial state
         if (t instanceof JUno || t instanceof OptionsRadioPlayers) {
-            this.numberOfPlayers = optionModel.getNumberOfPlayer();
+            disablePlayerPanel();
+            enablePlayerPanel(optionModel.getNumberOfPlayer());
+        }
 
-            // System.out.println(numberOfPlayers);
+        // player name
+        if (t instanceof ListPlayers) {
+            PlayersProfileModel model = (PlayersProfileModel) ((ListPlayers<?>) t).getSelectedValue();
+            playerName.setText(model.getName());
+        }
+
+        // player clicked to uno button
+        if (t instanceof MenuButton && t == buttonUno) {
+            saidUno.setSaidSouth();
         }
     }
 }

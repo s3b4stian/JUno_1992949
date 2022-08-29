@@ -17,6 +17,9 @@ public class DiscardPileColorLabel extends JLabel {
         iconBlue = new ImageIcon(getClass().getResource("/images/icons/discard-blue.png"));
         iconYellow = new ImageIcon(getClass().getResource("/images/icons/discard-yellow.png"));
         iconGreen = new ImageIcon(getClass().getResource("/images/icons/discard-green.png"));
+
+        setDisabledIcon(new ImageIcon(getClass().getResource("/images/icons/discard-disabled.png")));
+        setEnabled(false);
     }
 
     public void setRed() {
@@ -31,7 +34,7 @@ public class DiscardPileColorLabel extends JLabel {
         setIcon(iconYellow);
     }
 
-    public void setGreeb() {
+    public void setGreen() {
         setIcon(iconGreen);
     }
 }

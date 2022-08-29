@@ -12,14 +12,14 @@ import it.seba.juno.manger.FontManager;
  * @author Sebastian Rapetti
  *
  */
-public class SubSectionLabel extends AbstractTextLabel {
+public class PlayerLabel extends AbstractTextLabel {
 
     private static final long serialVersionUID = -4345709972401152190L;
 
     /**
      * Class Constructor, default text of the label is void.
      */
-    public SubSectionLabel() {
+    public PlayerLabel() {
         this("");
     }
 
@@ -28,7 +28,7 @@ public class SubSectionLabel extends AbstractTextLabel {
      * 
      * @param text the default text of the label.
      */
-    public SubSectionLabel(String text) {
-        super(text, 24f);
+    public PlayerLabel(String text) {
+        super(text, 20f);
     }
 }
