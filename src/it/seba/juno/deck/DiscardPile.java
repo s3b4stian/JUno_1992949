@@ -57,32 +57,26 @@ public class DiscardPile {
 
         // same color and value
         // same object
-        if (topCard.equals(card)) {
-            return true;
-        }
+        /*
+         * if (topCard.equals(card)) { return true; }
+         * 
+         * // special case when the top card is a wild if (card.hasColor() &&
+         * currentColor != null && currentColor.equals(card.getColor())) { return true;
+         * }
+         * 
+         * // both have a color if (!(topCard.hasColor() && card.hasColor())) { return
+         * false; }
+         * 
+         * // same color if (topCard.getColor().equals(card.getColor()) ||
+         * currentColor.equals(card.getColor())) { return true; }
+         * 
+         * // same value if (topCard.getValue().equals(card.getValue())) { return true;
+         * }
+         * 
+         * // card not match return false;
+         */
 
-        // special case when the top card is a wild
-        if (card.hasColor() && currentColor != null && currentColor.equals(card.getColor())) {
-            return true;
-        }
-
-        // both have a color
-        if (!(topCard.hasColor() && card.hasColor())) {
-            return false;
-        }
-
-        // same color
-        if (topCard.getColor().equals(card.getColor()) || currentColor.equals(card.getColor())) {
-            return true;
-        }
-
-        // same value
-        if (topCard.getValue().equals(card.getValue())) {
-            return true;
-        }
-
-        // card not match
-        return false;
+        return cardMatchColor(card) || cardMatchValue(card);
     }
 
     /**

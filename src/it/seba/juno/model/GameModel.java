@@ -252,6 +252,16 @@ public class GameModel extends Observable {
         }
     }
 
+    public boolean droppable(UnoCard card) {
+
+        if (discardPile.cardMatch(card)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
     public UnoColor discardPileColor() {
         return discardPile.getCurrentColor();
     }
@@ -290,6 +300,15 @@ public class GameModel extends Observable {
 
     public UnoCard dealCard() {
         return deck.dealCard();
+    }
+
+    public boolean isOneCard() {
+        if (currentPlayer.getCardsNumber() == 1) {
+            System.out.println(currentPlayer.getName() + " have one card, say UNO");
+            return true;
+        }
+        return false;
+
     }
 
     public boolean isWinner() {

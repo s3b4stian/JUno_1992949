@@ -14,13 +14,13 @@ public class DealCardListener implements ActionListener {
     private static int time;
     private Component card;
     private PlayerPanel panel;
-    
+
     public DealCardListener(PlayerPanel panel, Component card) {
         DealCardListener.time += 100;
         this.panel = panel;
         this.card = card;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         panel.add(card);
@@ -32,11 +32,11 @@ public class DealCardListener implements ActionListener {
         timer.setRepeats(false);
         timer.start();
     }
-    
+
     public static void resetTimer() {
         DealCardListener.time = 0;
     }
-    
+
     public static int getTime() {
         return DealCardListener.time;
     }

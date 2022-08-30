@@ -530,7 +530,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
     private void dealCards(UnoPlayers players) {
         System.out.println("Deal Cards");
-        players.forEach(p-> {
+        players.forEach(p -> {
             for (UnoCard c : p.getCards()) {
 
                 if (p instanceof HumanPlayer) {
@@ -539,20 +539,23 @@ public class GameView extends JPanel implements InterfaceObserver {
 
                 if (p instanceof NpcPlayer) {
                     if (p.getName().equals("NPC-East")) {
-                        (new DealCardListener(panelEast, new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST))).startTimer();
+                        (new DealCardListener(panelEast,
+                                new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST))).startTimer();
                     }
 
                     if (p.getName().equals("NPC-North")) {
-                        (new DealCardListener(panelNorth, new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH))).startTimer();
+                        (new DealCardListener(panelNorth,
+                                new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH))).startTimer();
                     }
 
                     if (p.getName().equals("NPC-West")) {
-                        (new DealCardListener(panelWest, new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST))).startTimer();
+                        (new DealCardListener(panelWest,
+                                new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST))).startTimer();
                     }
                 }
             }
         });
-        
+
         DealCardListener.resetTimer();
     }
 
@@ -620,7 +623,21 @@ public class GameView extends JPanel implements InterfaceObserver {
         panelWest.repaint();
     }
 
-    
+    private void playerSaidUno(Player p) {
+        if (p instanceof NpcPlayer) {
+            if (p.getName().equals("NPC-East")) {
+                saidUno.setSaidEast();
+            }
+
+            if (p.getName().equals("NPC-North")) {
+                saidUno.setSaidNorth();
+            }
+
+            if (p.getName().equals("NPC-West")) {
+                saidUno.setSaidWest();
+            }
+        }
+    }
 
     @Override
     public void update(Observable o, EventObject e) {
@@ -663,9 +680,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         // ready on current player to start
         if (t instanceof MenuButton && t == buttonStart) {
             setDealer(gameModel.getDealer());
-
             dealCards(gameModel.getPlayers());
-
             setDiscardPile(gameModel.discardPileTopCard());
 
             buttonUno.setVisible(true);
@@ -675,11 +690,10 @@ public class GameView extends JPanel implements InterfaceObserver {
             Player currentPlayer = gameModel.getCurrentPlayer();
             setCurrentPlayer(currentPlayer);
 
-            if (gameModel.getOrderOfPlay()) {
-                orderOfPlay.setClockwise();
-            } else {
-                orderOfPlay.setAnticlockwise();
-            }
+            /*
+             * if (gameModel.getOrderOfPlay()) { orderOfPlay.setClockwise(); } else {
+             * orderOfPlay.setAnticlockwise(); }
+             */
 
             // Player nextPlayer = gameModel.getNextPlayer();
             // setNextPlayer(nextPlayer);
@@ -688,18 +702,23 @@ public class GameView extends JPanel implements InterfaceObserver {
         if (e instanceof NextPlayerEvent) {
 
             Player nextPlayer = gameModel.getNextPlayer();
+            Player currentPlayer = gameModel.getCurrentPlayer();
+
             setNextPlayer(nextPlayer);
 
             setDiscardPile(gameModel.discardPileTopCard());
-            repaintNpcCards(gameModel.getCurrentPlayer());
-
             setDiscardPileColor(gameModel.discardPileColor());
 
-            /*if (gameModel.getOrderOfPlay()) {
-                orderOfPlay.setClockwise();
-            } else {
-                orderOfPlay.setAnticlockwise();
-            }*/
+            repaintNpcCards(currentPlayer);
+
+            if (gameModel.isOneCard()) {
+                playerSaidUno(currentPlayer);
+            }
+
+            /*
+             * if (gameModel.getOrderOfPlay()) { orderOfPlay.setClockwise(); } else {
+             * orderOfPlay.setAnticlockwise(); }
+             */
 
             // dealCards(gameModel.getPlayers());
             // repaintPlayerPanels();
@@ -715,11 +734,10 @@ public class GameView extends JPanel implements InterfaceObserver {
             panelSouth.remove(((PlayerCardButton) t));
             panelSouth.repaint();
 
-            /*if (gameModel.getOrderOfPlay()) {
-                orderOfPlay.setClockwise();
-            } else {
-                orderOfPlay.setAnticlockwise();
-            }*/
+            /*
+             * if (gameModel.getOrderOfPlay()) { orderOfPlay.setClockwise(); } else {
+             * orderOfPlay.setAnticlockwise(); }
+             */
         }
 
         if (t instanceof DeckButton) {

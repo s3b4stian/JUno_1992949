@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import it.seba.juno.card.UnoCard;
 import it.seba.juno.event.NextPlayerEvent;
 import it.seba.juno.event.ResetGameEvent;
 import it.seba.juno.model.GameModel;
@@ -58,16 +59,16 @@ public class GameController {
             button.removeActionListener(action);
         }
     }
-    
+
     public void removeEventToHumanPlayer() {
         for (Component comp : gameView.getPanelSouth().getComponents()) {
             removeActionListenersToHumanPlayer((PlayerCardButton) comp);
         }
     }
-    
+
     public void addEventToHumanPlayer() {
         for (Component comp : gameView.getPanelSouth().getComponents()) {
-            
+
             removeActionListenersToHumanPlayer((PlayerCardButton) comp);
 
             ((PlayerCardButton) comp).addActionListener(f -> dropCardToPileAction(f));
@@ -77,7 +78,7 @@ public class GameController {
     public void drawCard(ActionEvent e) {
         // gameModel.notifyObservers(e);
 
-        //addEventToHumanPlayer();
+        // addEventToHumanPlayer();
     }
 
     public void restartGame(ResetGameEvent e) {
@@ -96,11 +97,11 @@ public class GameController {
     }
 
     public void nextPlayer() {
-        // gameModel.getCurrentPlayer();
+
         if (gameModel.getNextPlayer() instanceof HumanPlayer) {
             addEventToHumanPlayer();
         }
-        
+
         if (gameModel.currentTopCardWildDrawFour()) {
             gameModel.notifyObservers(new NextPlayerEvent(this));
             gameModel.next();
@@ -138,29 +139,30 @@ public class GameController {
         gameModel.next();
 
         System.out.println("next:" + gameModel.getCurrentPlayer().getName());
-        
-        //addEventToHumanPlayer();
 
         if (gameModel.getCurrentPlayer() instanceof HumanPlayer) {
             addEventToHumanPlayer();
         }
-        // if (gameModel.getCurrentPlayer().isNpc()) {
-        // nextPlayer();
-        // }
     }
 
     public void dropCardToPileAction(ActionEvent e) {
 
         System.out.println("Click on human card");
-        
+
         Object t = e.getSource();
 
-        gameModel.dropCardHuman(((PlayerCardButton) t).getCard());
-        gameModel.notifyObservers(e);
-        gameModel.next();
-        System.out.println("next:" + gameModel.getCurrentPlayer().getName());
-        
-        //nextPlayer();
+        UnoCard card = ((PlayerCardButton) t).getCard();
+
+        if (gameModel.droppable(card)) {
+            removeEventToHumanPlayer();
+            gameModel.dropCardHuman(((PlayerCardButton) t).getCard());
+            gameModel.notifyObservers(e);
+            gameModel.next();
+            System.out.println("next:" + gameModel.getCurrentPlayer().getName());
+            return;
+        }
+
+        System.out.println(card + " not droppable");
     }
 
     public void sayUnoAction(ActionEvent e) {

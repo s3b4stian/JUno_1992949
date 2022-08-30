@@ -16,11 +16,11 @@ public class PlayerPanel extends JLayeredPane {
     private static final long serialVersionUID = 3885628453899889822L;
 
     private static int layer;
-    
+
     private boolean landscape;
 
     private boolean currentPlayer;
-    
+
     public boolean isCurrentPlayer() {
         return currentPlayer;
     }
@@ -103,7 +103,7 @@ public class PlayerPanel extends JLayeredPane {
             g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.0f), getWidth(), 0,
                     new Color(1.0f, 0.54f, 0.22f, 1.0f)));
         }
-        
+
         // fill the panel
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 
