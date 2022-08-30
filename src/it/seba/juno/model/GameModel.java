@@ -244,9 +244,9 @@ public class GameModel extends Observable {
         }
 
         if (dropped instanceof UnoCard) {
-            
+
             this.dropped = true;
-            
+
             if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
                     || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
 
@@ -254,8 +254,6 @@ public class GameModel extends Observable {
                 discardPile.setCurrentColor(((NpcChangeColorAction) currentPlayer).changeColor());
             }
         }
-        
-        
     }
 
     public void dropFirstCardToPileAction() {

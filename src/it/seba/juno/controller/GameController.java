@@ -23,7 +23,8 @@ import it.seba.juno.view.GameView;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
 import it.seba.juno.view.component.PlayerCardButton;
-import it.seba.juno.view.component.listener.EventToHumanCard;
+import it.seba.juno.view.component.listener.CurrentPlayerMoveListener;
+import it.seba.juno.view.component.listener.EventToHumanCardListener;
 
 public class GameController {
 
@@ -60,7 +61,7 @@ public class GameController {
 
         gameView.getButtonRestart().addActionListener(e -> restartGame(new ResetGameEvent(this)));
 
-        gameView.getButtonNext().addActionListener(e -> currentPlayerMove());
+       // gameView.getButtonNext().addActionListener(e -> currentPlayerMove());
     }
 
     private void removeActionListenersToHumanPlayer(PlayerCardButton button) {
@@ -96,7 +97,8 @@ public class GameController {
         addEventToHumanPlayer();
         // if new card isn't droppable player move
         if (gameModel.currentPlayerCannotDrop()) {
-            currentPlayerMove();
+            gameModel.next();
+            (new CurrentPlayerMoveListener(gameView, this)).startTimer();
         }
     }
 
@@ -111,17 +113,27 @@ public class GameController {
         gameModel.notifyObservers(e);
 
         if (gameModel.getCurrentPlayer().isHuman()) {
-            (new EventToHumanCard(gameView, this)).startTimer();
+            (new EventToHumanCardListener(gameView, this)).startTimer();
+        } else {
+            (new CurrentPlayerMoveListener(gameView, this)).startTimer();
+            GameView.resetTimer();
         }
     }
 
     public void currentPlayerMove() {
 
-        if (gameModel.getNextPlayer().isHuman()) {
+        if (gameModel.getCurrentPlayer().isHuman()) {
             addEventToHumanPlayer();
+            return;
         }
+        
+        //if (gameModel.getNextPlayer().isHuman()) {
+        //    addEventToHumanPlayer();
+        //}
 
-        if (gameModel.currentTopCardSkip()) {
+        
+        
+        /*if (gameModel.currentTopCardSkip()) {
             removeEventToHumanPlayer();
             gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
             gameModel.next();
@@ -140,9 +152,9 @@ public class GameController {
             removeEventToHumanPlayer();
             gameModel.notifyObservers(new CurrentPlayerDrawFourCardEvent(this));
             gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
-            gameModel.next();;
+            gameModel.next();
             return;
-        }
+        }*/
 
         // npc player action
         if (gameModel.getCurrentPlayer().isNpc()) {
@@ -168,6 +180,7 @@ public class GameController {
             gameModel.notifyObservers(new CurrentPlayerHaveOneCardEvent(this));
         }
 
+        // npc is the winner
         if (gameModel.isWinner()) {
             gameModel.notifyObservers(new CurrentPlayerWinnerEvent(this));
             removeEventToHumanPlayer();
@@ -175,16 +188,11 @@ public class GameController {
         }
 
         gameModel.currentTopCardReverse();
-
         gameModel.notifyObservers(new CurrentPlayerMoveEvent(this));
-
         gameModel.next();
 
-        if (gameModel.getCurrentPlayer().isHuman()) {
-            addEventToHumanPlayer();
-        }
-
-        if (gameModel.currentTopCardSkip()) {
+        (new CurrentPlayerMoveListener(gameView, this)).startTimer();
+        /*if (gameModel.currentTopCardSkip()) {
             gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
             gameModel.next();
             if (gameModel.getCurrentPlayer().isNpc()) {
@@ -208,7 +216,7 @@ public class GameController {
             if (gameModel.getCurrentPlayer().isNpc()) {
                 removeEventToHumanPlayer();
             }
-        }
+        }*/
 
     }
 
@@ -219,13 +227,25 @@ public class GameController {
         UnoCard card = ((PlayerCardButton) t).getCard();
 
         if (gameModel.droppable(card)) {
+            
             removeEventToHumanPlayer();
             gameModel.dropCardHuman(card);
-            // gameModel.notifyObservers(new CurrentPlayerDropEvent(this));
             gameModel.notifyObservers(new HumanDropEvent(t));
+            
+            // human is the winner
+            if (gameModel.isWinner()) {
+                gameModel.notifyObservers(new CurrentPlayerWinnerEvent(this));
+                removeEventToHumanPlayer();
+                return;
+            }
+            
+        
             gameModel.next();
+            
+            // reset time for the case when the player move as first
+            GameView.resetTimer();
 
-            currentPlayerMove();
+            (new CurrentPlayerMoveListener(gameView, this)).startTimer();
         }
     }
 

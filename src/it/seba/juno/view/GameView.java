@@ -67,6 +67,7 @@ import it.seba.juno.view.component.PlayerPanel;
 import it.seba.juno.view.component.SaidUnoLabel;
 import it.seba.juno.view.component.listener.DealCardListener;
 import it.seba.juno.view.component.listener.DiscardPileListener;
+import it.seba.juno.view.component.listener.DropCardListener;
 
 public class GameView extends JPanel implements InterfaceObserver {
 
@@ -79,6 +80,7 @@ public class GameView extends JPanel implements InterfaceObserver {
     }
 
     public static int getTime() {
+        System.out.println(GameView.time);
         GameView.time += 100;
         return GameView.time;
     }
@@ -90,8 +92,8 @@ public class GameView extends JPanel implements InterfaceObserver {
 
     private OrderOfPlayLabel orderOfPlay;
 
-    private JTextArea LogTextArea;
-    private JScrollPane LogTextAreaScrollPane;
+    private JTextArea logTextArea;
+    private JScrollPane logTextAreaScrollPane;
 
     private DeckPanel panelDeck;
     private DeckPanel panelDiscardPile;
@@ -111,11 +113,11 @@ public class GameView extends JPanel implements InterfaceObserver {
     private MenuButton buttonStart;
     private MenuButton buttonRestart;
 
-    private MenuButton buttonNext;
+    // private MenuButton buttonNext;
 
-    public MenuButton getButtonNext() {
-        return buttonNext;
-    }
+    // public MenuButton getButtonNext() {
+    // return buttonNext;
+    // }
 
     public MenuButton getButtonRestart() {
         return buttonRestart;
@@ -186,11 +188,11 @@ public class GameView extends JPanel implements InterfaceObserver {
         buttonBack = new MenuButton("Back");
         buttonStart = new MenuButton("Start");
         buttonRestart = new MenuButton("Restart");
-        buttonNext = new MenuButton("Move");
-        buttonNext.setVisible(false);
-        
-        LogTextAreaScrollPane = new JScrollPane();
-        LogTextArea = new JTextArea();
+        // buttonNext = new MenuButton("Move");
+        // buttonNext.setVisible(false);
+
+        logTextAreaScrollPane = new JScrollPane();
+        logTextArea = new JTextArea();
 
         setLayout(new GridBagLayout());
 
@@ -269,29 +271,29 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.weightx = 0.5;
         add(fillerOuterEast, gbc);
 
-        LogTextAreaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        LogTextAreaScrollPane.setBorder(null);
-        LogTextAreaScrollPane.setHorizontalScrollBar(null);
-        LogTextAreaScrollPane.setOpaque(false);
-        LogTextAreaScrollPane.setPreferredSize(new Dimension(0, 0));
-        LogTextAreaScrollPane.setRequestFocusEnabled(false);
-        LogTextAreaScrollPane.setAutoscrolls(true);
-        LogTextAreaScrollPane.getViewport().setOpaque(false);
+        logTextAreaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        logTextAreaScrollPane.setBorder(null);
+        logTextAreaScrollPane.setHorizontalScrollBar(null);
+        logTextAreaScrollPane.setOpaque(false);
+        logTextAreaScrollPane.setPreferredSize(new Dimension(0, 0));
+        logTextAreaScrollPane.setRequestFocusEnabled(false);
+        logTextAreaScrollPane.setAutoscrolls(true);
+        logTextAreaScrollPane.getViewport().setOpaque(false);
 
-        LogTextArea.setColumns(20);
-        LogTextArea.setRows(20);
-        LogTextArea.setTabSize(4);
-        LogTextArea.setBorder(null);
-        LogTextArea.setFocusable(false);
-        LogTextArea.setOpaque(false);
-        LogTextArea.setRequestFocusEnabled(false);
-        LogTextArea.setForeground(Color.WHITE);
-        LogTextArea.setLineWrap(true);
-        LogTextArea.setAutoscrolls(true);
+        logTextArea.setColumns(20);
+        logTextArea.setRows(20);
+        logTextArea.setTabSize(4);
+        logTextArea.setBorder(null);
+        logTextArea.setFocusable(false);
+        logTextArea.setOpaque(false);
+        logTextArea.setRequestFocusEnabled(false);
+        logTextArea.setForeground(Color.WHITE);
+        logTextArea.setLineWrap(true);
+        logTextArea.setAutoscrolls(true);
         // LogTextArea.setMargin(new Insets(4,4,4,4));
         // ((DefaultCaret)
         // LogTextArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        LogTextAreaScrollPane.setViewportView(LogTextArea);
+        logTextAreaScrollPane.setViewportView(logTextArea);
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -299,7 +301,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridheight = 9;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
-        add(LogTextAreaScrollPane, gbc);
+        add(logTextAreaScrollPane, gbc);
 
         // panel west
         gbc = new GridBagConstraints();
@@ -392,13 +394,11 @@ public class GameView extends JPanel implements InterfaceObserver {
         add(buttonRestart, gbc);
 
         // button next
-        gbc = new GridBagConstraints();
-        gbc.gridx = 12;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        add(buttonNext, gbc);
+        /*
+         * gbc = new GridBagConstraints(); gbc.gridx = 12; gbc.gridy = 1; gbc.gridwidth
+         * = 2; gbc.gridheight = 2; gbc.anchor = GridBagConstraints.CENTER;
+         * add(buttonNext, gbc);
+         */
 
         // button back
         gbc = new GridBagConstraints();
@@ -586,6 +586,7 @@ public class GameView extends JPanel implements InterfaceObserver {
             panelEast.removeAll();
             for (UnoCard c : p.getCards()) {
                 panelEast.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST));
+
             }
         }
 
@@ -601,18 +602,125 @@ public class GameView extends JPanel implements InterfaceObserver {
             panelWest.removeAll();
             for (UnoCard c : p.getCards()) {
                 panelWest.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST));
+
             }
         }
     }
 
+    private void drawNpcCard(Player p) {
+
+        // qui non fare il set discard pile
+        if (p.getName().equals("NPC-East")) {
+
+            System.out.println(p.getCardsNumber() + " east " + panelEast.getComponentCount());
+            int i = 0;
+            int limit = panelEast.getComponentCount();
+            boolean drawAndDrop = false;
+            if (p.getCardsNumber() == limit) {
+                limit--;
+                drawAndDrop = true;
+            }
+
+            for (UnoCard c : p.getCards()) {
+                panelEast.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST));
+
+                if (i > limit) {
+                    (new DealCardListener(panelEast, new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST)))
+                            .startTimer();
+                }
+                /// aggiornare il listener per non fare il set discard pile in questo caso
+                // fare due listener
+                if (drawAndDrop) {
+                    (new DropCardListener(this, panelEast,
+                            new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST))).startTimer();
+                }
+
+                i++;
+            }
+        }
+
+        if (p.getName().equals("NPC-North")) {
+            System.out.println(p.getCardsNumber() + " north " + panelNorth.getComponentCount());
+
+            int i = 0;
+            int limit = panelNorth.getComponentCount();
+            boolean drawAndDrop = false;
+            if (p.getCardsNumber() == limit) {
+                limit--;
+                drawAndDrop = true;
+            }
+
+            for (UnoCard c : p.getCards()) {
+                panelNorth.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH));
+
+                if (i > limit) {
+                    (new DealCardListener(panelNorth,
+                            new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH))).startTimer();
+                }
+
+                if (drawAndDrop) {
+                    (new DropCardListener(this, panelNorth,
+                            new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH))).startTimer();
+                }
+
+                i++;
+            }
+        }
+
+        if (p.getName().equals("NPC-West")) {
+            System.out.println(p.getCardsNumber() + " west " + panelWest.getComponentCount());
+            int i = 0;
+            int limit = panelNorth.getComponentCount();
+            boolean drawAndDrop = false;
+            if (p.getCardsNumber() == limit) {
+                limit--;
+                drawAndDrop = true;
+            }
+            for (UnoCard c : p.getCards()) {
+                panelWest.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST));
+                if (i > limit) {
+                    (new DealCardListener(panelWest, new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST)))
+                            .startTimer();
+
+                }
+
+                if (drawAndDrop) {
+                    (new DropCardListener(this, panelWest,
+                            new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST))).startTimer();
+                }
+                i++;
+            }
+        }
+    }
+
+    private void dropNpcCard(Player p, UnoCard card) {
+
+        // fare il set discard pile
+        if (p.getName().equals("NPC-East")) {
+            (new DropCardListener(this, panelEast, new PlayerCardLabel(card, PlayerCardLabel.PlayerCardLabelType.EAST)))
+                    .startTimer();
+        }
+
+        if (p.getName().equals("NPC-North")) {
+
+            (new DropCardListener(this, panelNorth,
+                    new PlayerCardLabel(card, PlayerCardLabel.PlayerCardLabelType.NORTH))).startTimer();
+        }
+
+        if (p.getName().equals("NPC-West")) {
+            (new DropCardListener(this, panelWest, new PlayerCardLabel(card, PlayerCardLabel.PlayerCardLabelType.WEST)))
+                    .startTimer();
+        }
+
+        // setDiscardPile(gameModel.discardPileTopCard());
+        // setDiscardPileColor(gameModel.discardPileColor());
+    }
+
     private void log(String text) {
-        LogTextArea.append(text + "\n");
+        logTextArea.append(text + "\n");
     }
 
     private void dealCards(UnoPlayers players, UnoCard topCard) {
-
-        
-        //System.out.println("Deal Cards");
 
         players.forEach(p -> {
             for (UnoCard c : p.getCards()) {
@@ -642,9 +750,6 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         // make discard pile visible once cards dealt
         (new DiscardPileListener(this, topCard)).startTimer();
-
-        // reset timer for further use
-        GameView.resetTimer();
     }
 
     private void resetCurrentPlayer() {
@@ -739,8 +844,8 @@ public class GameView extends JPanel implements InterfaceObserver {
             buttonUno.setVisible(false);
             buttonStart.setVisible(true);
             buttonRestart.setVisible(false);
-            buttonNext.setVisible(false);
-            
+            // buttonNext.setVisible(false);
+
             discardPileColor.setEnabled(false);
             discardPile.setIcon(null);
 
@@ -750,6 +855,8 @@ public class GameView extends JPanel implements InterfaceObserver {
             panelSouth.removeAll();
             panelEast.removeAll();
             panelWest.removeAll();
+
+            logTextArea.setText("");
 
             resetCurrentPlayer();
 
@@ -770,26 +877,25 @@ public class GameView extends JPanel implements InterfaceObserver {
         if (e instanceof StartGameEvent) {
 
             log("Deal Cards");
-            
+
             setDealer(gameModel.getDealer());
             dealCards(gameModel.getPlayers(), gameModel.discardPileTopCard());
 
             buttonUno.setVisible(true);
             buttonStart.setVisible(false);
             buttonRestart.setVisible(true);
-            buttonNext.setVisible(true);
-            
+
             Player currentPlayer = gameModel.getCurrentPlayer();
             setCurrentPlayer(currentPlayer);
 
-            log("Game Ready, " + currentPlayer.getName() + " move");
+            log(currentPlayer.getName() + " will move first");
         }
 
         if (e instanceof CurrentPlayerWinnerEvent) {
             Player currentPlayer = gameModel.getCurrentPlayer();
             log(currentPlayer.getName() + " is the winner");
-            
-            buttonNext.setVisible(false);
+
+            // buttonNext.setVisible(false);
             buttonUno.setVisible(false);
         }
 
@@ -797,6 +903,16 @@ public class GameView extends JPanel implements InterfaceObserver {
             Player currentPlayer = gameModel.getCurrentPlayer();
 
             log(currentPlayer.getName() + " changed color to " + gameModel.discardPileColor());
+        }
+
+        if (e instanceof CurrentPlayerDrawOneCardEvent) {
+            Player currentPlayer = gameModel.getCurrentPlayer();
+
+            log(currentPlayer.getName() + " drawn 1 card");
+
+            drawNpcCard(currentPlayer);
+
+            repaintNpcCards(currentPlayer);
         }
 
         if (e instanceof CurrentPlayerDrawTwoCardEvent) {
@@ -834,17 +950,12 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             log(currentPlayer.getName() + " dropped " + gameModel.discardPileTopCard());
 
-            setDiscardPile(gameModel.discardPileTopCard());
-            setDiscardPileColor(gameModel.discardPileColor());
+            // qui fare il set discard pile
+            dropNpcCard(currentPlayer, gameModel.discardPileTopCard());
 
-            repaintNpcCards(currentPlayer);
-        }
-
-        if (e instanceof CurrentPlayerDrawOneCardEvent) {
-            // Player nextPlayer = gameModel.getNextPlayer();
-            Player currentPlayer = gameModel.getCurrentPlayer();
-
-            log(currentPlayer.getName() + " drawn 1 card");
+            // (new DiscardPileListener(this, gameModel.discardPileTopCard())).startTimer();
+            // setDiscardPile(gameModel.discardPileTopCard());
+            // setDiscardPileColor(gameModel.discardPileColor());
 
             repaintNpcCards(currentPlayer);
         }
@@ -862,7 +973,7 @@ public class GameView extends JPanel implements InterfaceObserver {
             log(currentPlayer.getName() + " moved");
             log(nextPlayer.getName() + " will move");
             log("- skipped status " + gameModel.getSkipped());
-            
+
             buttonDeck.setEnabled(false);
 
             if (!nextPlayer.isNpc()) {
@@ -885,12 +996,12 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             panelSouth.remove(((PlayerCardButton) t));
             panelSouth.repaint();
-            
+
             log(currentPlayer.getName() + " dropped " + gameModel.discardPileTopCard());
             log(currentPlayer.getName() + " moved");
             log(nextPlayer.getName() + " will move");
             log("skipped status " + gameModel.getSkipped());
-            
+
             setNextPlayer(nextPlayer);
 
         }

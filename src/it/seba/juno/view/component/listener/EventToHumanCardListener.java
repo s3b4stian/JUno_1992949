@@ -10,32 +10,28 @@ import it.seba.juno.controller.GameController;
 import it.seba.juno.view.GameView;
 import it.seba.juno.view.component.PlayerCardButton;
 
-public class EventToHumanCard implements ActionListener {
+public class EventToHumanCardListener implements ActionListener {
 
     private GameView gameView;
     private GameController gameController;
     private Timer timer;
 
-    public EventToHumanCard(GameView gameView, GameController gameController) {
+    public EventToHumanCardListener(GameView gameView, GameController gameController) {
         this.gameView = gameView;
         this.gameController = gameController;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        System.out.println("Events");
         for (Component comp : gameView.getPanelSouth().getComponents()) {
             ((PlayerCardButton) comp).addActionListener(f -> gameController.dropCardToPileAction(f));
         }
 
         timer.stop();
-        // System.out.println(DealCardListener.getTime());
     }
 
     public void startTimer() {
-        // System.out.println(DealCardListener.getTime());
-        timer = new Timer(3000, this);
+        timer = new Timer(GameView.getTime() + 500, this);
         timer.setRepeats(false);
         timer.start();
     }
