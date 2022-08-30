@@ -16,6 +16,10 @@ public class UnoPlayers implements Iterable<Player> {
     private boolean clockwise = true;
     private ArrayDeque<Player> players;
 
+    public ArrayDeque<Player> getPlayers() {
+        return players;
+    }
+
     /**
      * Class Constructor.
      */
@@ -44,15 +48,18 @@ public class UnoPlayers implements Iterable<Player> {
     }
 
     public void setDealer(int index) {
-        System.out.println(index);
-
-        for (int i = 0; i < index; i++) {
-            // Player p = players.poll();
-            // System.out.println(index + " " + p.getName());
-            // players.offer(p);
+        int c = index + 1;
+        
+        if (index == players.size() - 1) {
+            c = 0;
         }
+        
+        //System.out.println("0 -> " + index + " -> " + c);
+        
+        for (int i = 0; i < c; i++) {
 
-        // players.push(players.pop());
+            players.offer(players.poll());
+        }
     }
 
     /**
@@ -86,6 +93,8 @@ public class UnoPlayers implements Iterable<Player> {
 
         ArrayDeque<Player> tmp = new ArrayDeque<Player>();
 
+        //System.out.println(players);
+        
         for (int i = 1; i < players.size(); i++) {
             players.offer(players.poll());
         }
@@ -98,9 +107,15 @@ public class UnoPlayers implements Iterable<Player> {
             players.offer(tmp.pop());
         }
 
+        //System.out.println(players);
+        
         tmp = null;
     }
 
+    public Player nextPlayer() {
+       return players.peek();
+    }
+    
     /**
      * A way to iterate over players, every time the next player, the for cycle that
      * use this iterator have to be stopped manually.

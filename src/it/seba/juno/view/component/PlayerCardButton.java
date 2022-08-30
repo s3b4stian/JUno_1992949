@@ -1,5 +1,6 @@
 package it.seba.juno.view.component;
 
+import java.awt.Component;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -20,12 +21,13 @@ public class PlayerCardButton extends JButton {
      */
     private final ImageIcon icon;
 
-    /**
-     * Button image icon on mouse over.
-     */
 
+    //private PlayerPanel parentPanel;
+    
     private UnoCard card;
 
+    //private int zOrder;
+    
     public UnoCard getCard() {
         return card;
     }
@@ -33,11 +35,13 @@ public class PlayerCardButton extends JButton {
     /**
      * Class Constructor.
      */
-    public PlayerCardButton(UnoCard card) {
+    public PlayerCardButton(UnoCard card/*, PlayerPanel parentPanel*/) {
         super();
 
+        
         this.card = card;
-
+        //this.parentPanel = parentPanel;
+        
         String filename = "card_" + card.getValue();
 
         if (card.hasColor()) {
@@ -58,12 +62,14 @@ public class PlayerCardButton extends JButton {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
+                //moveToFront();
+                //parentPanel.moveToFront(this);
                 // setBounds(origin.x, origin.y - 4, 85, 128);
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-                // setBounds(origin.x, origin.y, 85, 128);
+                //moveBack();
             }
 
             @Override
@@ -72,4 +78,13 @@ public class PlayerCardButton extends JButton {
             }
         });
     }
+    
+    /*private void moveToFront() {
+        zOrder = parentPanel.getComponentZOrder(this);
+        parentPanel.moveToFront(this);
+    }
+
+    private void moveBack() {
+        parentPanel.setComponentZOrder(this, zOrder);
+    }*/
 }

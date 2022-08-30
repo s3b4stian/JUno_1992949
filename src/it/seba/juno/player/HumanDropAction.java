@@ -18,4 +18,6 @@ public interface HumanDropAction extends PlayerAction {
      * @return the card at index passed as argument.
      */
     UnoCard dropCard(int index);
+    
+    UnoCard dropCard(UnoCard card);
 }

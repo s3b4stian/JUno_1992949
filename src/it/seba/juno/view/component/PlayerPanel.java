@@ -15,7 +15,19 @@ public class PlayerPanel extends JLayeredPane {
 
     private static final long serialVersionUID = 3885628453899889822L;
 
+    private static int layer;
+    
     private boolean landscape;
+
+    private boolean currentPlayer;
+    
+    public boolean isCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(boolean currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 
     public PlayerPanel(Dimension dimension, boolean landscape) {
         this.landscape = landscape;
@@ -31,6 +43,8 @@ public class PlayerPanel extends JLayeredPane {
     public Component add(Component comp) {
 
         super.add(comp);
+
+        moveToFront(comp);
         fitCards();
 
         return comp;
@@ -81,10 +95,15 @@ public class PlayerPanel extends JLayeredPane {
                 new Color(1.0f, 1.0f, 1.0f, 0.08f)));
 
         if (isEnabled()) {
-            g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.3f), getWidth(), 0,
+            g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.1f), getWidth(), 0,
                     new Color(1.0f, 1.0f, 1.0f, 0.5f)));
         }
 
+        if (currentPlayer) {
+            g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.0f), getWidth(), 0,
+                    new Color(1.0f, 0.54f, 0.22f, 1.0f)));
+        }
+        
         // fill the panel
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 
