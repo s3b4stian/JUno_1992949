@@ -39,17 +39,16 @@ public class HumanPlayer extends AbstractPlayer implements HumanDropAction {
      */
     public UnoCard dropCard(UnoCard card) {
 
-        // if (cards.size() <= index) {
-        // return null;
-        // }
-
-        // UnoCard removed = cards.get(index);
         cards.remove(card);
 
-        System.out.println(card);
-        System.out.println(cards);
-
         return card;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isHuman() {
+        return true;
     }
 
     /**

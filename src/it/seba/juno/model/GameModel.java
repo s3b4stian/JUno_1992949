@@ -23,7 +23,16 @@ import it.seba.juno.util.Observable;
 
 public class GameModel extends Observable {
 
-    private boolean skipped = true;
+    private boolean drawn = false;
+    private boolean dropped = false;
+    private boolean changeColor = false;
+    
+    private int skipped = 2;
+    
+    public int getSkipped() {
+        return skipped;
+    }
+
     private boolean first = true;
 
     private OptionsModel options;
@@ -59,9 +68,9 @@ public class GameModel extends Observable {
 
         currentPlayer = players.iterator().next();
         nextPlayer = players.nextPlayer();
-
-        System.out.println(currentPlayer.getName() + " first move");
-
+        
+        first = true;
+        skipped = 2;
     }
 
     public boolean needReset() {
@@ -114,15 +123,39 @@ public class GameModel extends Observable {
         return new RandomColorStrategy();
     }
 
+    public boolean nextPlayerCannotDrop() {
+        
+        for (UnoCard card : nextPlayer.getCards()) {
+            if (discardPile.cardMatch(card)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public boolean currentPlayerCannotDrop() {
+        
+        for (UnoCard card : currentPlayer.getCards()) {
+            if (discardPile.cardMatch(card)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    public void drawOneCard() {
+        currentPlayer.takeCard(deck.dealCard());
+    }
+    
     public boolean currentTopCardDrawTwo() {
-        if (skipped && discardPile.getTopCard().getValue().equals(UnoValue.DRAW_TWO)) {
-            currentPlayer.takeCard(deck.dealCard());
-            currentPlayer.takeCard(deck.dealCard());
-
-            System.out.println(currentPlayer.getName() + " take 2 cards and skip turn");
+        if (skipped > 1 && discardPile.getTopCard().getValue().equals(UnoValue.DRAW_TWO)) {
+            drawOneCard();
+            drawOneCard();
 
             // skip turn
-            skipped = false;
+            skipped = 0;
             return true;
         }
 
@@ -130,32 +163,30 @@ public class GameModel extends Observable {
     }
 
     public boolean currentTopCardSkip() {
-        if (skipped && discardPile.getTopCard().getValue().equals(UnoValue.SKIP)) {
-
-            System.out.println(currentPlayer.getName() + " skip turn");
+        if (skipped > 1 && discardPile.getTopCard().getValue().equals(UnoValue.SKIP)) {
 
             // skip turn
-            skipped = false;
+            skipped = 0;
             return true;
         }
 
         return false;
     }
+    
+    
+    
+    
 
     public boolean currentTopCardWildDrawFour() {
 
-        // System.out.println("skipped:" + skipped);
-
-        if (skipped && discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
-            currentPlayer.takeCard(deck.dealCard());
-            currentPlayer.takeCard(deck.dealCard());
-            currentPlayer.takeCard(deck.dealCard());
-            currentPlayer.takeCard(deck.dealCard());
-
-            System.out.println(currentPlayer.getName() + " take 4 cards and skip turn");
+        if (skipped > 1 && discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
+            drawOneCard();
+            drawOneCard();
+            drawOneCard();
+            drawOneCard();
 
             // skip turn
-            skipped = false;
+            skipped = 0;
             return true;
         }
 
@@ -163,81 +194,68 @@ public class GameModel extends Observable {
     }
 
     public void currentTopCardReverse() {
-
-        /*
-         * players.forEach(p -> { System.out.println("order before: " + p.getName());
-         * });
-         */
-
         if (discardPile.getTopCard().getValue().equals(UnoValue.REVERSE)) {
             // players.switchDirection();
         }
-
-        /*
-         * players.forEach(p -> { System.out.println("order after: " + p.getName()); });
-         */
     }
 
     public void currentTopCardWild() {
         // if first card in discard is WILD at the first round, player choose the color
         if (first && discardPile.getTopCard().getValue().equals(UnoValue.WILD)) {
 
-            UnoColor curentColor = ((NpcChangeColorAction) currentPlayer).changeColor();
+            if (currentPlayer instanceof NpcPlayer) {
 
-            discardPile.setCurrentColor(curentColor);
+                UnoColor curentColor = ((NpcChangeColorAction) currentPlayer).changeColor();
 
-            System.out.println("First card WILD " + currentPlayer.getName() + " change color to: " + curentColor);
+                discardPile.setCurrentColor(curentColor);
+            }
         }
     }
 
     public void dropCardHuman(UnoCard card) {
-        System.out.println(currentPlayer);
-        System.out.println(currentPlayer.getCardsNumber());
+        skipped++;
 
         if (currentPlayer instanceof HumanPlayer) {
-            System.out.println(card);
             discardPile.dropToPile(((HumanDropAction) currentPlayer).dropCard(card));
         }
-
-        System.out.println(currentPlayer.getCardsNumber());
     }
 
     public void dropCardNpc() {
+        skipped++;
+        
         // discardPile.
         UnoCard dropped = ((NpcDropAction) currentPlayer).dropCard();
 
         if (dropped == null) {
-            System.out.println(currentPlayer.getName() + " take one card ");
-
+            
+            this.drawn = true;
             currentPlayer.takeCard(deck.dealCard());
 
+            // try to drop the drawn card
             dropped = ((NpcDropAction) currentPlayer).dropCard();
 
             if (dropped instanceof UnoCard) {
                 discardPile.dropToPile(dropped);
-
-                System.out.println(currentPlayer.getName() + " dropped " + dropped);
             }
 
         } else {
 
             discardPile.dropToPile(dropped);
-
-            System.out.println(currentPlayer.getName() + " dropped " + dropped);
-
         }
 
         if (dropped instanceof UnoCard) {
+            
+            this.dropped = true;
+            
             if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
                     || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
 
-                UnoColor curentColor = ((NpcChangeColorAction) currentPlayer).changeColor();
-
-                discardPile.setCurrentColor(curentColor);
-
-                System.out.println(currentPlayer.getName() + " change color to: " + curentColor);
+                this.changeColor = true;
+                discardPile.setCurrentColor(((NpcChangeColorAction) currentPlayer).changeColor());
             }
         }
+        
+        
     }
 
     public void dropFirstCardToPileAction() {
@@ -280,18 +298,32 @@ public class GameModel extends Observable {
 
     public void next() {
         currentPlayer = players.iterator().next();
-        // currentPlayer = players.iterator().next();
         nextPlayer = players.nextPlayer();
 
         first = false;
+        drawn = false;
+        dropped = false;
+        changeColor = false;
+        
+        skipped++;
     }
 
     public Player getNextPlayer() {
         return nextPlayer;
     }
 
-    public void setSkippedTrue() {
-        skipped = true;
+    public boolean isFirst() {
+        return first;
+    }
+    
+    /*public void resetStatus() {
+        drawn = false;
+        dropped = false;
+        changeColor = false;
+    }*/
+    
+    public void resetSkipped() {
+        //skipped = 0;
     }
 
     public Player getCurrentPlayer() {
@@ -304,7 +336,6 @@ public class GameModel extends Observable {
 
     public boolean isOneCard() {
         if (currentPlayer.getCardsNumber() == 1) {
-            System.out.println(currentPlayer.getName() + " have one card, say UNO");
             return true;
         }
         return false;
@@ -313,7 +344,6 @@ public class GameModel extends Observable {
 
     public boolean isWinner() {
         if (currentPlayer.isWinner()) {
-            System.out.println(currentPlayer.getName() + " is the Winner");
             return true;
         }
         return false;
@@ -325,5 +355,17 @@ public class GameModel extends Observable {
                 p.takeCard(deck.dealCard());
             }
         });
+    }
+
+    public boolean isDropped() {
+        return dropped;
+    }
+
+    public boolean isChangeColor() {
+        return changeColor;
+    }
+
+    public boolean isDrawn() {
+        return drawn;
     }
 }

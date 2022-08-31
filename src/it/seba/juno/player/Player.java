@@ -55,9 +55,16 @@ public interface Player {
     public List<UnoCard> getCards();
 
     /**
-     * Returns the type of the player, npc or human.
+     * Returns the type of the player, npc.
      * 
      * @return true if npc, false if human.
      */
     public boolean isNpc();
+    
+    /**
+     * Returns the type of the player, human.
+     * 
+     * @return true if human, false if npc.
+     */
+    public boolean isHuman();
 }

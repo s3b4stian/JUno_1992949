@@ -36,6 +36,13 @@ public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChang
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isHuman() {
+        return false;
+    }
+    
     @Override
     public UnoCard dropCard() {
         return dropStrategy.dropCard();

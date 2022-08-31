@@ -2,16 +2,16 @@ package it.seba.juno.event;
 
 import java.util.EventObject;
 
-public class NextPlayerEvent extends EventObject {
+public class CurrentPlayerHaveOneCardEvent extends EventObject {
 
-    private static final long serialVersionUID = 1529693571164673010L;
+    private static final long serialVersionUID = -6924750505071234036L;
 
     /**
      * Class Constructor.
      * 
      * @param source the object that triggered this event.
      */
-    public NextPlayerEvent(Object source) {
+    public CurrentPlayerHaveOneCardEvent(Object source) {
         super(source);
     }
 }

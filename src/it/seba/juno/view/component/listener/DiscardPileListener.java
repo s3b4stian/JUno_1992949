@@ -1,28 +1,28 @@
 package it.seba.juno.view.component.listener;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import it.seba.juno.card.UnoCard;
 import it.seba.juno.view.GameView;
-import it.seba.juno.view.component.PlayerPanel;
 
-public class DealCardListener implements ActionListener {
+public class DiscardPileListener implements ActionListener {
 
     private Timer timer;
-    private Component card;
-    private PlayerPanel panel;
+    private UnoCard card;
+    private GameView view;
 
-    public DealCardListener(PlayerPanel panel, Component card) {
-        this.panel = panel;
+    public DiscardPileListener(GameView view, UnoCard card) {
+        this.view = view;
         this.card = card;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        panel.add(card);
+        view.setDiscardPile(card);
+        view.setDiscardPileColor(card.getColor());
         timer.stop();
     }
 
