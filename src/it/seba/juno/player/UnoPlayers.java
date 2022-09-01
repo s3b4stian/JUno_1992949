@@ -92,9 +92,9 @@ public class UnoPlayers implements Iterable<Player> {
 
         // System.out.println(players);
 
-        // for (int i = 1; i < players.size(); i++) {
-        players.offer(players.poll());
-        // }
+        for (int i = 1; i < players.size(); i++) {
+            players.offer(players.poll());
+        }
 
         while (!players.isEmpty()) {
             tmp.push(players.poll());

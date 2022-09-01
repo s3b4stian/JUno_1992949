@@ -66,10 +66,11 @@ public class DeckButton extends JButton {
                 setIcon(icon);
             }
 
-            @Override
-            public void mousePressed(MouseEvent me) {
-                AudioManager.getInstance().playSoundEffect("click");
-            }
+            /*
+             * @Override public void mousePressed(MouseEvent me) {
+             * 
+             * }
+             */
         });
     }
 }

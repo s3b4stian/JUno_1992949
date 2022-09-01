@@ -17,6 +17,8 @@ import it.seba.juno.util.Observable;
  */
 public class PlayersModel extends Observable {
 
+    boolean isProfileLoaded = false;
+
     PlayersProfileModel currentProfile;
 
     Map<String, PlayersProfileModel> playersProfile;
@@ -26,6 +28,15 @@ public class PlayersModel extends Observable {
      */
     public PlayersModel() {
         playersProfile = new HashMap<String, PlayersProfileModel>();
+    }
+
+    /**
+     * Returns if a profile is selected.
+     * 
+     * @return true if there is a profile selected, false otherwise.
+     */
+    public boolean isProfileLoaded() {
+        return isProfileLoaded;
     }
 
     /**
@@ -43,6 +54,7 @@ public class PlayersModel extends Observable {
      * @param name the name of the profile to load.
      */
     public void setCurrentProfile(String name) {
+        isProfileLoaded = true;
         currentProfile = playersProfile.get(name);
     }
 

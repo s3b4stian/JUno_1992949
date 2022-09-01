@@ -28,7 +28,7 @@ public class DrawCardListener implements ActionListener {
 
     public void startTimer() {
         timer = new Timer(GameView.getTimeFast(), this);
-        System.out.println("DrawCardListener in: " + GameView.getTime());
+        // System.out.println("DrawCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

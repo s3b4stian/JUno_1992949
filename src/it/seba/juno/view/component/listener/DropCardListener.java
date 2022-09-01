@@ -33,7 +33,7 @@ public class DropCardListener implements ActionListener {
 
     public void startTimer() {
         timer = new Timer(GameView.getTimeSlow(), this);
-        System.out.println("DropCardListener in: " + GameView.getTime());
+        // System.out.println("DropCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

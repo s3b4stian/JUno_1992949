@@ -29,7 +29,7 @@ public class CurrentPlayerMoveListener implements ActionListener {
 
     public void startTimer() {
         timer = new Timer(GameView.getTimeTurn(), this);
-        System.out.println("CurrentPlayerMoveListener in: " + GameView.getTime());
+        // System.out.println("CurrentPlayerMoveListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

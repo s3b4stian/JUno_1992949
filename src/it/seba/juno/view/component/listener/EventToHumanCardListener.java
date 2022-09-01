@@ -25,7 +25,7 @@ public class EventToHumanCardListener implements ActionListener {
 
     public void startTimer() {
         timer = new Timer(GameView.getTimeNormal() + 500, this);
-        System.out.println("EventToHumanCardListener in: " + GameView.getTime());
+        // System.out.println("EventToHumanCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

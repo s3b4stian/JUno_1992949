@@ -31,7 +31,7 @@ public class DiscardPileListener implements ActionListener {
 
     public void startTimer() {
         timer = new Timer(GameView.getTimeFast(), this);
-        System.out.println("DiscardPileListener in: " + GameView.getTime());
+        // System.out.println("DiscardPileListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

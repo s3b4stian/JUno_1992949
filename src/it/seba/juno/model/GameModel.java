@@ -211,17 +211,20 @@ public class GameModel extends Observable {
 
         UnoCard topCard = discardPile.getTopCard();
 
-        if (discardPile.getTopCard().getValue().equals(UnoValue.REVERSE)) {
+        if (discardPile.getTopCard().getValue().equals(UnoValue.REVERSE)
+                && topCard.hashCode() != currentSpecialCard.hashCode()) {
 
             this.currentSpecialCard = topCard;
 
             players.switchDirection();
+
+            nextPlayer = players.nextPlayer();
             return true;
         }
         return false;
     }
 
-    public void currentTopCardWild() {
+    public boolean currentFirstTopCardWild() {
         // if first card in discard is WILD at the first round, player choose the color
         if (first && discardPile.getTopCard().getValue().equals(UnoValue.WILD)) {
 
@@ -230,9 +233,23 @@ public class GameModel extends Observable {
                 UnoColor curentColor = ((NpcChangeColorAction) currentPlayer).changeColor();
 
                 discardPile.setCurrentColor(curentColor);
+
+                return true;
             }
+
+            return true;
         }
+
+        return false;
     }
+
+    /*
+     * public boolean humanFirstTopCardWild() { // if first card in discard is WILD
+     * at the first round, player choose the color if (first &&
+     * discardPile.getTopCard().getValue().equals(UnoValue.WILD)) { return true; }
+     * 
+     * return false; }
+     */
 
     public boolean humanDroppedChangeColorCard() {
         if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
@@ -275,7 +292,7 @@ public class GameModel extends Observable {
         if (dropped instanceof UnoCard) {
 
             this.dropped = true;
-            // skipped = 0;
+
             if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
                     || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
 

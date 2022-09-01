@@ -41,6 +41,7 @@ public class JUno {
         AudioManager audioManager = AudioManager.getInstance();
         // load sounds
         audioManager.addToPlayList("click", "ding.wav");
+        audioManager.addToPlayList("card", "card.wav");
 
         // initialize font manger
         FontManager fontManager = FontManager.getInstance();
@@ -80,6 +81,6 @@ public class JUno {
                 gameView);
         OptionsController optionsController = new OptionsController(optionsModel, mainView, menuView, optionsView);
         PlayersController playersController = new PlayersController(playersModel, mainView, menuView, playersView);
-        GameController gameController = new GameController(gameModel, mainView, menuView, gameView);
+        GameController gameController = new GameController(gameModel, playersModel, mainView, menuView, gameView);
     }
 }

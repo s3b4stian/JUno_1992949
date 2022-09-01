@@ -20,12 +20,15 @@ import it.seba.juno.event.CurrentPlayerMoveEvent;
 import it.seba.juno.event.CurrentPlayerSkipEvent;
 import it.seba.juno.event.CurrentPlayerWinnerEvent;
 import it.seba.juno.event.EnableChoseColorPanelEvent;
+import it.seba.juno.event.FirstEnableChoseColorPanelEvent;
+import it.seba.juno.event.FirstHumanPlayerChoseColorEvent;
 import it.seba.juno.event.HumanPlayerChoseColorEvent;
 import it.seba.juno.event.HumanPlayerDropEvent;
 import it.seba.juno.event.HumanPlayerDrawOneCardEvent;
 import it.seba.juno.event.ResetGameEvent;
 import it.seba.juno.event.StartGameEvent;
 import it.seba.juno.model.GameModel;
+import it.seba.juno.model.PlayersModel;
 import it.seba.juno.player.NpcChangeColorAction;
 import it.seba.juno.view.GameView;
 import it.seba.juno.view.MainView;
@@ -41,11 +44,14 @@ public class GameController {
     private MenuView menuView;
 
     private GameModel gameModel;
+    private PlayersModel playersModel;
 
-    private List<ActionListener> actions;
+    // private List<ActionListener> actions;
 
-    public GameController(GameModel gameModel, MainView mainView, MenuView menuView, GameView gameView) {
+    public GameController(GameModel gameModel, PlayersModel playersModel, MainView mainView, MenuView menuView,
+            GameView gameView) {
         this.gameModel = gameModel;
+        this.playersModel = playersModel;
 
         this.mainView = mainView;
         this.menuView = menuView;
@@ -148,17 +154,20 @@ public class GameController {
         gameModel.dropFirstCardToPileAction();
         gameModel.notifyObservers(e);
 
-        if (gameModel.getCurrentPlayer().isHuman()) {
+        // if (gameModel.getCurrentPlayer().isHuman()) {
 
-            (new EventToHumanCardListener(/* gameView, */this)).startTimer();
-        } else {
-            // GameView.resetTimer();
-            (new CurrentPlayerMoveListener(/* gameView, */this)).startTimer();
-            GameView.resetTimer();
-        }
+        // (new EventToHumanCardListener(/* gameView, */this)).startTimer();
+        // } else {
+        // GameView.resetTimer();
+        (new CurrentPlayerMoveListener(/* gameView, */this)).startTimer();
+        GameView.resetTimer();
+        // }
     }
 
     public void currentPlayerMove() {
+
+        // System.out.println();
+        // gameModel.getPlayers().forEach(e -> System.out.println(e.getName()));
 
         if (gameModel.currentTopCardSkip()) {
             removeEventToHumanPlayer();
@@ -199,34 +208,36 @@ public class GameController {
         }
 
         if (gameModel.getCurrentPlayer().isHuman()) {
+
+            if (gameModel.currentFirstTopCardWild()) {
+                gameModel.notifyObservers(new FirstEnableChoseColorPanelEvent(this));
+            }
+
             addEventToHumanPlayer();
+
             return;
         }
 
         // npc player action
         if (gameModel.getCurrentPlayer().isNpc()) {
             // if first card is wile, player choose color
-            gameModel.currentTopCardWild();
+            if (gameModel.currentFirstTopCardWild()) {
+                gameModel.notifyObservers(new CurrentPlayerChangeColorEvent(this));
+            }
 
             gameModel.dropCardNpc();
 
-            // System.out.println("\n" + gameModel.getCurrentPlayer().getName());
-
             if (gameModel.isDrawn() && gameModel.isDropped()) {
                 gameModel.notifyObservers(new CurrentPlayerDrawOneCardAndDropEvent(this));
-
-                // System.out.println("Draw and drop");
 
             } else {
 
                 if (gameModel.isDrawn()) {
                     gameModel.notifyObservers(new CurrentPlayerDrawOneCardEvent(this));
-                    // System.out.println("Draw");
                 }
 
                 if (gameModel.isDropped()) {
                     gameModel.notifyObservers(new CurrentPlayerDropEvent(this));
-                    // System.out.println("Drop");
                 }
 
             }
@@ -244,25 +255,41 @@ public class GameController {
         if (gameModel.isWinner()) {
             gameModel.notifyObservers(new CurrentPlayerWinnerEvent(this));
             removeEventToHumanPlayer();
+
+            // human player didn't win
+            // only played
+            if (playersModel.isProfileLoaded()) {
+                playersModel.getCurrentProfile().incrementPlayed();
+
+                // System.out.println("Played: " +
+                // playersModel.getCurrentProfile().getPlayed());
+                // System.out.println("Won: " + playersModel.getCurrentProfile().getWon());
+            }
+
             return;
         }
 
-        // if (gameModel.currentTopCardReverse()) {
-        // gameModel.notifyObservers(new ChangeOrderOfPlayEvent(this));
-        // }
+        if (gameModel.currentTopCardReverse()) {
+            gameModel.notifyObservers(new ChangeOrderOfPlayEvent(this));
+        }
 
         gameModel.notifyObservers(new CurrentPlayerMoveEvent(this));
         gameModel.next();
 
         GameView.resetTimer();
-        (new CurrentPlayerMoveListener(/* gameView, */this)).startTimer();
+        (new CurrentPlayerMoveListener(this)).startTimer();
     }
 
     public void humanChoseColor(HumanPlayerChoseColorEvent e, UnoColor color) {
-        // TODO Auto-generated method stub
-        gameModel.setDiscardPileColor(color);
-        gameModel.notifyObservers(e);
 
+        gameModel.setDiscardPileColor(color);
+
+        if (gameModel.currentFirstTopCardWild()) {
+            gameModel.notifyObservers(new FirstHumanPlayerChoseColorEvent(this));
+            return;
+        }
+
+        gameModel.notifyObservers(e);
         gameModel.next();
 
         // reset time for the case when the player move as first
@@ -282,24 +309,35 @@ public class GameController {
             removeEventToHumanPlayer();
             gameModel.dropCardHuman(card);
 
-            if (gameModel.humanDroppedChangeColorCard()) {
+            if (gameModel.humanDroppedChangeColorCard() && !gameModel.isWinner()) {
                 gameModel.notifyObservers(new EnableChoseColorPanelEvent(t));
                 removeEventToHumanPlayer();
                 return;
             }
 
             // if human dropped a reverse card change the order of play
-            // if (gameModel.currentTopCardReverse()) {
-            // gameModel.notifyObservers(new ChangeOrderOfPlayEvent(this));
-            // }
+            if (gameModel.currentTopCardReverse()) {
+                gameModel.notifyObservers(new ChangeOrderOfPlayEvent(this));
+            }
 
             // notify an human drop event
             gameModel.notifyObservers(new HumanPlayerDropEvent(t));
 
             // human is the winner
             if (gameModel.isWinner()) {
+
                 gameModel.notifyObservers(new CurrentPlayerWinnerEvent(this));
                 removeEventToHumanPlayer();
+
+                // human player won the match
+                if (playersModel.isProfileLoaded()) {
+                    playersModel.getCurrentProfile().incrementWon();
+
+                    // System.out.println("Played: " +
+                    // playersModel.getCurrentProfile().getPlayed());
+                    // System.out.println("Won: " + playersModel.getCurrentProfile().getWon());
+                }
+
                 return;
             }
 

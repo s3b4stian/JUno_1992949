@@ -28,11 +28,7 @@ public class PlayerCardButton extends JButton {
      */
     private final ImageIcon icon;
 
-    // private PlayerPanel parentPanel;
-
     private UnoCard card;
-
-    // private int zOrder;
 
     public UnoCard getCard() {
         return card;
@@ -41,11 +37,10 @@ public class PlayerCardButton extends JButton {
     /**
      * Class Constructor.
      */
-    public PlayerCardButton(UnoCard card/* , PlayerPanel parentPanel */) {
+    public PlayerCardButton(UnoCard card) {
         super();
 
         this.card = card;
-        // this.parentPanel = parentPanel;
 
         String filename = "card_" + card.getValue();
 
@@ -59,38 +54,25 @@ public class PlayerCardButton extends JButton {
         // button properties
         setFocusPainted(false);
         setBorderPainted(false);
-        // setBorder(new LineBorder(Color.RED));
+
         setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
         setIcon(icon);
-        // this.setBorder(new LineBorder(Color.RED));
-        // adding behavior for interaction with mouse
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
-                moveToFront();
-                // parentPanel.moveToFront(this);
-                // setBounds(origin.x, origin.y - 4, 85, 128);
-                // setBorder(new LineBorder(Color.RED));
+
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-                // moveBack();
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
-                // AudioManager.getInstance().playSoundEffect("click");
+                // AudioManager.getInstance().playSoundEffect("card");
             }
         });
     }
-
-    private void moveToFront() {
-
-    }
-
-    /*
-     * private void moveBack() { parentPanel.setComponentZOrder(this, zOrder); }
-     */
 }
