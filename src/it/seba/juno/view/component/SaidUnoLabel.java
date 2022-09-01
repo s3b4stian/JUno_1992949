@@ -35,7 +35,7 @@ public class SaidUnoLabel extends JLabel implements ActionListener {
     }
 
     private void startTimer() {
-        timer = new Timer(500, this);
+        timer = new Timer(800, this);
         timer.setRepeats(false);
         timer.start();
     }

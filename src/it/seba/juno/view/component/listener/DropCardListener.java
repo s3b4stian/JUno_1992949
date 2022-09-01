@@ -28,16 +28,12 @@ public class DropCardListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         panel.remove(this.card);
 
-        UnoCard card = ((PlayerCardLabel) this.card).getCard();
-        view.setDiscardPile(card);
-        if (card.hasColor()) {
-            view.setDiscardPileColor(card.getColor());
-        }
         timer.stop();
     }
 
     public void startTimer() {
-        timer = new Timer(GameView.getTime(), this);
+        timer = new Timer(GameView.getTimeSlow(), this);
+        System.out.println("DropCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

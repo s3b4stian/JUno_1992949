@@ -23,11 +23,13 @@ public class DealCardListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         panel.add(card);
+
         timer.stop();
     }
 
     public void startTimer() {
-        timer = new Timer(GameView.getTime(), this);
+        timer = new Timer(GameView.getTimeNormal(), this);
+        System.out.println("DealCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

@@ -42,7 +42,7 @@ public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChang
     public boolean isHuman() {
         return false;
     }
-    
+
     @Override
     public UnoCard dropCard() {
         return dropStrategy.dropCard();

@@ -60,7 +60,7 @@ public interface Player {
      * @return true if npc, false if human.
      */
     public boolean isNpc();
-    
+
     /**
      * Returns the type of the player, human.
      * 

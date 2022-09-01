@@ -54,10 +54,7 @@ public class UnoPlayers implements Iterable<Player> {
             c = 0;
         }
 
-        // System.out.println("0 -> " + index + " -> " + c);
-
         for (int i = 0; i < c; i++) {
-
             players.offer(players.poll());
         }
     }
@@ -95,9 +92,9 @@ public class UnoPlayers implements Iterable<Player> {
 
         // System.out.println(players);
 
-        for (int i = 1; i < players.size(); i++) {
-            players.offer(players.poll());
-        }
+        // for (int i = 1; i < players.size(); i++) {
+        players.offer(players.poll());
+        // }
 
         while (!players.isEmpty()) {
             tmp.push(players.poll());
