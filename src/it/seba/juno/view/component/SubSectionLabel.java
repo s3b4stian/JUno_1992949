@@ -1,11 +1,5 @@
 package it.seba.juno.view.component;
 
-import java.awt.Color;
-
-import javax.swing.JLabel;
-
-import it.seba.juno.manger.FontManager;
-
 /**
  * Label to title a sub section in a view.
  * 

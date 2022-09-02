@@ -1,6 +1,7 @@
 package it.seba.juno.view.component;
 
 import java.awt.Insets;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 

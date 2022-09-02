@@ -47,6 +47,11 @@ public class UnoPlayers implements Iterable<Player> {
         players.offer(player);
     }
 
+    /**
+     * Set the dealer, iterate through players until the dealer is reached.
+     * 
+     * @param index the index of the player.
+     */
     public void setDealer(int index) {
         int c = index + 1;
 
@@ -89,8 +94,6 @@ public class UnoPlayers implements Iterable<Player> {
         clockwise = clockwise ? false : true;
 
         ArrayDeque<Player> tmp = new ArrayDeque<Player>();
-
-        // System.out.println(players);
 
         for (int i = 1; i < players.size(); i++) {
             players.offer(players.poll());

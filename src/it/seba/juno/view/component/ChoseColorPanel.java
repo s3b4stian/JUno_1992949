@@ -1,15 +1,11 @@
 package it.seba.juno.view.component;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
 
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class ChoseColorPanel extends JPanel {

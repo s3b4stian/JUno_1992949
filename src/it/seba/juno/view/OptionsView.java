@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
-import it.seba.juno.JUno;
+
 import it.seba.juno.event.FirstLoadEvent;
 import it.seba.juno.manger.AudioManager;
 import it.seba.juno.model.OptionsModel;

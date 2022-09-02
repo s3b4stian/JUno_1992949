@@ -1,23 +1,13 @@
 package it.seba.juno.view.component;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Area;
-import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
 
 import it.seba.juno.card.UnoCard;
-import it.seba.juno.manger.AudioManager;
 
 public class PlayerCardButton extends JButton {
 

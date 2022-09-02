@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import it.seba.juno.card.UnoCard;
 import it.seba.juno.view.GameView;
-import it.seba.juno.view.component.PlayerCardLabel;
 import it.seba.juno.view.component.PlayerPanel;
 
 public class DropCardListener implements ActionListener {

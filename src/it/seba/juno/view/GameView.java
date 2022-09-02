@@ -35,16 +35,14 @@ import it.seba.juno.event.FirstEnableChoseColorPanelEvent;
 import it.seba.juno.event.FirstHumanPlayerChoseColorEvent;
 import it.seba.juno.event.FirstLoadEvent;
 import it.seba.juno.event.HumanPlayerChoseColorEvent;
-import it.seba.juno.event.HumanPlayerDropEvent;
 import it.seba.juno.event.HumanPlayerDrawOneCardEvent;
+import it.seba.juno.event.HumanPlayerDropEvent;
 import it.seba.juno.event.ResetGameEvent;
 import it.seba.juno.event.StartGameEvent;
 import it.seba.juno.manger.AudioManager;
 import it.seba.juno.model.GameModel;
 import it.seba.juno.model.OptionsModel;
 import it.seba.juno.model.PlayersProfileModel;
-import it.seba.juno.player.HumanPlayer;
-import it.seba.juno.player.NpcPlayer;
 import it.seba.juno.player.Player;
 import it.seba.juno.player.UnoPlayers;
 import it.seba.juno.util.InterfaceObserver;
@@ -119,10 +117,10 @@ public class GameView extends JPanel implements InterfaceObserver {
     private PlayerPanel panelSouth;
     private PlayerPanel panelWest;
 
-    private ChoseColorPanel chooseColorPanel;
+    private ChoseColorPanel panelChooseColor;
 
     public ChoseColorPanel getChooseColorPanel() {
-        return chooseColorPanel;
+        return panelChooseColor;
     }
 
     private PlayerLabel playerName;
@@ -146,8 +144,6 @@ public class GameView extends JPanel implements InterfaceObserver {
      * Audio manager, to play sounds.
      */
     private AudioManager audioManager;
-
-    // private int numberOfPlayers;
 
     public GameView() {
 
@@ -177,7 +173,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         panelDeck = new DeckPanel(new Dimension(136, 171));
         panelDiscardPile = new DeckPanel(new Dimension(136, 171));
 
-        chooseColorPanel = new ChoseColorPanel(/* new Dimension(200, 32) */);
+        panelChooseColor = new ChoseColorPanel();
 
         buttonDeck = new DeckButton();
         GridBagConstraints gbc = new GridBagConstraints();
@@ -196,7 +192,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         discardPileColor = new DiscardPileColorLabel();
 
         saidUno = new SaidUnoLabel();
-        // matchInfo = new PlayerLabel();
         playerName = new PlayerLabel();
         dealer = new DealerLabel();
         orderOfPlay = new OrderOfPlayLabel();
@@ -204,8 +199,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         buttonBack = new MenuButton("Back");
         buttonStart = new MenuButton("Start");
         buttonRestart = new MenuButton("Restart");
-        // buttonNext = new MenuButton("Move");
-        // buttonNext.setVisible(false);
 
         logTextAreaScrollPane = new JScrollPane();
         logTextArea = new JTextArea();
@@ -217,7 +210,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridx = 3;
         gbc.gridy = 3;
         gbc.gridwidth = 9;
-        // gbc.gridheight = 2;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 0.9;
         add(fillerInnerNorth, gbc);
@@ -306,9 +298,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         logTextArea.setForeground(Color.WHITE);
         logTextArea.setLineWrap(true);
         logTextArea.setAutoscrolls(true);
-        // LogTextArea.setMargin(new Insets(4,4,4,4));
-        // ((DefaultCaret)
-        // LogTextArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         logTextAreaScrollPane.setViewportView(logTextArea);
 
         gbc = new GridBagConstraints();
@@ -325,7 +314,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.gridheight = 7;
-        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelWest, gbc);
@@ -336,7 +324,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 1;
         gbc.gridwidth = 9;
         gbc.gridheight = 2;
-        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelNorth, gbc);
@@ -347,7 +334,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 10;
         gbc.gridwidth = 9;
         gbc.gridheight = 2;
-        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelSouth, gbc);
@@ -358,7 +344,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.gridheight = 7;
-        // gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 0.0;
         gbc.insets = new Insets(4, 4, 4, 4);
         add(panelEast, gbc);
@@ -392,7 +377,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         add(buttonUno, gbc);
 
         // discard pile color
-        // discardPileColor.setRed();
         gbc = new GridBagConstraints();
         gbc.gridx = 9;
         gbc.gridy = 5;
@@ -408,13 +392,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.anchor = GridBagConstraints.CENTER;
         add(buttonStart, gbc);
         add(buttonRestart, gbc);
-
-        // button next
-        /*
-         * gbc = new GridBagConstraints(); gbc.gridx = 12; gbc.gridy = 1; gbc.gridwidth
-         * = 2; gbc.gridheight = 2; gbc.anchor = GridBagConstraints.CENTER;
-         * add(buttonNext, gbc);
-         */
 
         // button back
         gbc = new GridBagConstraints();
@@ -447,7 +424,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
-        add(chooseColorPanel, gbc);
+        add(panelChooseColor, gbc);
 
         // dealer icon
         gbc = new GridBagConstraints();
@@ -467,11 +444,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.weighty = 0.1;
         add(orderOfPlay, gbc);
 
-        // match info
-        /*
-         * gbc = new GridBagConstraints(); gbc.gridx = 3; gbc.gridy = 4; gbc.gridwidth =
-         * 9; gbc.insets = new Insets(4, 4, 4, 4); add(matchInfo, gbc);
-         */
     }
 
     public MenuButton getButtonStart() {
@@ -595,36 +567,36 @@ public class GameView extends JPanel implements InterfaceObserver {
         }
     }
 
+    private void repaintNpcCards(Player p, PlayerPanel panel) {
+        panel.removeAll();
+        for (UnoCard c : p.getCards()) {
+            panel.add(new PlayerCardButton(c));
+        }
+
+    }
+
+    private void repaintNpcCards(Player p, PlayerPanel panel, PlayerCardLabel.PlayerCardLabelType label) {
+        panel.removeAll();
+        for (UnoCard c : p.getCards()) {
+            panel.add(new PlayerCardLabel(c, label));
+        }
+    }
+
     private void repaintNpcCards(Player p) {
 
-        if (p.getName().equals("Human")) {
-            panelSouth.removeAll();
-            for (UnoCard c : p.getCards()) {
-                panelSouth.add(new PlayerCardButton(c));
-            }
-        }
-
-        if (p.getName().equals("NPC-East")) {
-            panelEast.removeAll();
-            for (UnoCard c : p.getCards()) {
-                panelEast.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST));
-
-            }
-        }
-
-        if (p.getName().equals("NPC-North")) {
-            panelNorth.removeAll();
-            for (UnoCard c : p.getCards()) {
-                panelNorth.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH));
-            }
-        }
-
-        if (p.getName().equals("NPC-West")) {
-            panelWest.removeAll();
-            for (UnoCard c : p.getCards()) {
-                panelWest.add(new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST));
-
-            }
+        switch (p.getName()) {
+        case "Human":
+            repaintNpcCards(p, panelSouth);
+            break;
+        case "NPC-East":
+            repaintNpcCards(p, panelEast, PlayerCardLabel.PlayerCardLabelType.EAST);
+            break;
+        case "NPC-North":
+            repaintNpcCards(p, panelNorth, PlayerCardLabel.PlayerCardLabelType.NORTH);
+            break;
+        case "NPC-West":
+            repaintNpcCards(p, panelWest, PlayerCardLabel.PlayerCardLabelType.WEST);
+            break;
         }
     }
 
@@ -632,31 +604,34 @@ public class GameView extends JPanel implements InterfaceObserver {
         logTextArea.append(text + "\n");
     }
 
+    private void dealCards(Player p, PlayerPanel panel) {
+        for (UnoCard c : p.getCards()) {
+            (new DealCardListener(panel, new PlayerCardButton(c))).startTimer();
+        }
+    }
+
+    private void dealCards(Player p, PlayerPanel panel, PlayerCardLabel.PlayerCardLabelType label) {
+        for (UnoCard c : p.getCards()) {
+            (new DealCardListener(panel, new PlayerCardLabel(c, label))).startTimer();
+        }
+    }
+
     private void dealCards(UnoPlayers players, UnoCard topCard) {
 
         players.forEach(p -> {
-            for (UnoCard c : p.getCards()) {
-
-                if (p instanceof HumanPlayer) {
-                    (new DealCardListener(panelSouth, new PlayerCardButton(c))).startTimer();
-                }
-
-                if (p instanceof NpcPlayer) {
-                    if (p.getName().equals("NPC-East")) {
-                        (new DealCardListener(panelEast,
-                                new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.EAST))).startTimer();
-                    }
-
-                    if (p.getName().equals("NPC-North")) {
-                        (new DealCardListener(panelNorth,
-                                new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.NORTH))).startTimer();
-                    }
-
-                    if (p.getName().equals("NPC-West")) {
-                        (new DealCardListener(panelWest,
-                                new PlayerCardLabel(c, PlayerCardLabel.PlayerCardLabelType.WEST))).startTimer();
-                    }
-                }
+            switch (p.getName()) {
+            case "Human":
+                dealCards(p, panelSouth);
+                break;
+            case "NPC-East":
+                dealCards(p, panelEast, PlayerCardLabel.PlayerCardLabelType.EAST);
+                break;
+            case "NPC-North":
+                dealCards(p, panelNorth, PlayerCardLabel.PlayerCardLabelType.NORTH);
+                break;
+            case "NPC-West":
+                dealCards(p, panelWest, PlayerCardLabel.PlayerCardLabelType.WEST);
+                break;
             }
         });
 
@@ -675,22 +650,19 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         resetCurrentPlayer();
 
-        if (p instanceof HumanPlayer) {
+        switch (p.getName()) {
+        case "Human":
             panelSouth.setCurrentPlayer(true);
-        }
-
-        if (p instanceof NpcPlayer) {
-            if (p.getName().equals("NPC-East")) {
-                panelEast.setCurrentPlayer(true);
-            }
-
-            if (p.getName().equals("NPC-North")) {
-                panelNorth.setCurrentPlayer(true);
-            }
-
-            if (p.getName().equals("NPC-West")) {
-                panelWest.setCurrentPlayer(true);
-            }
+            break;
+        case "NPC-East":
+            panelEast.setCurrentPlayer(true);
+            break;
+        case "NPC-North":
+            panelNorth.setCurrentPlayer(true);
+            break;
+        case "NPC-West":
+            panelWest.setCurrentPlayer(true);
+            break;
         }
 
         repaintPlayerPanels();
@@ -700,22 +672,19 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         resetCurrentPlayer();
 
-        if (p instanceof HumanPlayer) {
+        switch (p.getName()) {
+        case "Human":
             panelSouth.setCurrentPlayer(true);
-        }
-
-        if (p instanceof NpcPlayer) {
-            if (p.getName().equals("NPC-East")) {
-                panelEast.setCurrentPlayer(true);
-            }
-
-            if (p.getName().equals("NPC-North")) {
-                panelNorth.setCurrentPlayer(true);
-            }
-
-            if (p.getName().equals("NPC-West")) {
-                panelWest.setCurrentPlayer(true);
-            }
+            break;
+        case "NPC-East":
+            panelEast.setCurrentPlayer(true);
+            break;
+        case "NPC-North":
+            panelNorth.setCurrentPlayer(true);
+            break;
+        case "NPC-West":
+            panelWest.setCurrentPlayer(true);
+            break;
         }
 
         repaintPlayerPanels();
@@ -729,18 +698,17 @@ public class GameView extends JPanel implements InterfaceObserver {
     }
 
     private void playerSaidUno(Player p) {
-        if (p instanceof NpcPlayer) {
-            if (p.getName().equals("NPC-East")) {
-                saidUno.setSaidEast();
-            }
 
-            if (p.getName().equals("NPC-North")) {
-                saidUno.setSaidNorth();
-            }
-
-            if (p.getName().equals("NPC-West")) {
-                saidUno.setSaidWest();
-            }
+        switch (p.getName()) {
+        case "NPC-East":
+            saidUno.setSaidEast();
+            break;
+        case "NPC-North":
+            saidUno.setSaidNorth();
+            break;
+        case "NPC-West":
+            saidUno.setSaidWest();
+            break;
         }
     }
 
@@ -759,7 +727,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             buttonDeck.setEnabled(false);
 
-            chooseColorPanel.disableButtons();
+            panelChooseColor.disableButtons();
 
             discardPileColor.setEnabled(false);
             discardPile.setIcon(null);
@@ -998,7 +966,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         // enable the color panel, wild as first card in pile, human first to move
         if (e instanceof FirstEnableChoseColorPanelEvent) {
-            chooseColorPanel.enableButtons();
+            panelChooseColor.enableButtons();
         }
 
         // enable the color panel, after wild card drop
@@ -1010,7 +978,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             AudioManager.getInstance().playSoundEffect("card");
 
-            chooseColorPanel.enableButtons();
+            panelChooseColor.enableButtons();
         }
 
         // human player selected new color for discard pile
@@ -1021,7 +989,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             log(gameModel.getCurrentPlayer() + " changed color to " + gameModel.discardPileColor());
 
-            chooseColorPanel.disableButtons();
+            panelChooseColor.disableButtons();
 
         }
 
@@ -1032,7 +1000,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             log(gameModel.getCurrentPlayer().getName() + " changed color to " + gameModel.discardPileColor());
 
-            chooseColorPanel.disableButtons();
+            panelChooseColor.disableButtons();
 
             setNextPlayer(gameModel.getNextPlayer());
         }

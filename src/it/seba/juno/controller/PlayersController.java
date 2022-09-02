@@ -5,8 +5,9 @@ import java.util.Map;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import it.seba.juno.model.PlayersProfileModel;
+
 import it.seba.juno.model.PlayersModel;
+import it.seba.juno.model.PlayersProfileModel;
 import it.seba.juno.view.MainView;
 import it.seba.juno.view.MenuView;
 import it.seba.juno.view.PlayersView;

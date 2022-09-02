@@ -7,8 +7,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import it.seba.juno.manger.AudioManager;
-
 /**
  * Button for deck, draw a card from deck.
  * 
