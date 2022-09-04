@@ -25,7 +25,7 @@ public class Observable {
     /**
      * Add an Observer.
      * 
-     * @param o the object to be added to observers.
+     * @param o The object to be added to observers.
      */
     public void addObserver(InterfaceObserver o) {
         if (!observers.contains(o)) {
@@ -36,7 +36,7 @@ public class Observable {
     /**
      * Delete an Observer.
      * 
-     * @param o the object to be deleted from observers.
+     * @param o The object to be deleted from observers.
      */
     public void deleteObserver(InterfaceObserver o) {
         observers.remove(o);
@@ -45,7 +45,7 @@ public class Observable {
     /**
      * Notify to all Observers.
      *
-     * @param e the event that triggered the notify.
+     * @param e TShe event that triggered the notify.
      */
     public void notifyObservers(EventObject e) {
         observers.forEach(o -> o.update(this, e));

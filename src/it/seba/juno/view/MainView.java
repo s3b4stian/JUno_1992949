@@ -32,21 +32,9 @@ public class MainView extends JFrame {
     private JPanel panel;
 
     /**
-     * Change the current view.
-     * 
-     * @param component the component will be the new view.
-     */
-    public void setCurrentView(JComponent component) {
-        panel.removeAll();
-        panel.add(component);
-        panel.repaint();
-        panel.revalidate();
-    }
-
-    /**
      * Class Constructor.
      * 
-     * @param isFullScreen define if the application must start in full-screen mode
+     * @param isFullScreen Define if the application must start in full-screen mode
      *                     (true) or in windows mode (false).
      */
     public MainView(boolean isFullScreen) {
@@ -77,6 +65,18 @@ public class MainView extends JFrame {
         // current panel is a void panel, every view is loaded inside the private JPanel
         // of this class by the proper controller.
         add(panel);
+    }
+
+    /**
+     * Change the current view.
+     * 
+     * @param component the component will be the new view.
+     */
+    public void setCurrentView(JComponent component) {
+        panel.removeAll();
+        panel.add(component);
+        panel.repaint();
+        panel.revalidate();
     }
 
     /**

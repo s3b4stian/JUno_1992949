@@ -15,6 +15,9 @@ import it.seba.juno.card.UnoColor;
  */
 public abstract class AbstractColorStrategy implements ColorStrategy {
 
+    /**
+     * The player cards.
+     */
     protected List<UnoCard> cards;
 
     /**

@@ -84,7 +84,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     /**
      * Class Constructor.
      * 
-     * @param mainView the main view, used to manage both full-screen and window
+     * @param mainView The main view, used to manage both full-screen and window
      *                 mode.
      */
     public OptionsView(MainView mainView) {
@@ -180,7 +180,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * mainly to set the action performed from the radio button. The action is
      * assigned to the radio button at controller level.
      * 
-     * @return the radio button reference.
+     * @return The radio button reference.
      */
     public JRadioButton getTwoPlayersRadio() {
         return twoPlayersRadio;
@@ -191,7 +191,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * mainly to set the action performed from the radio button. The action is
      * assigned to the radio button at controller level.
      * 
-     * @return the radio button reference.
+     * @return The radio button reference.
      */
     public JRadioButton getThreePlayersRadio() {
         return threePlayersRadio;
@@ -202,7 +202,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * mainly to set the action performed from the radio button. The action is
      * assigned to the radio button at controller level.
      * 
-     * @return the radio button reference.
+     * @return The radio button reference.
      */
     public JRadioButton getFourPlayersRadio() {
         return fourPlayersRadio;
@@ -213,7 +213,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public MenuButton getButtonBack() {
         return buttonBack;
@@ -224,7 +224,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * options, used mainly to set the action performed from the toggle button. The
      * action is assigned to the toggle button at controller level.
      * 
-     * @return the toggle button reference.
+     * @return The toggle button reference.
      */
     public JToggleButton getButtonFullScreen() {
         return buttonFullScreen;
@@ -235,7 +235,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * to set the action performed from the toggle button. The action is assigned to
      * the toggle button at controller level.
      * 
-     * @return the toggle button reference.
+     * @return The toggle button reference.
      */
     public JToggleButton getButtonSound() {
         return buttonSound;
@@ -259,8 +259,8 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     /**
      * Update this view when the model had a change.
      * 
-     * @param o the observable that changed his state.
-     * @param e the event object that triggered the change.
+     * @param o The observable that changed his state.
+     * @param e The event object that triggered the change.
      */
     @Override
     public void update(Observable o, EventObject e) {

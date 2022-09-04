@@ -14,11 +14,10 @@ public class RandomColorStrategy extends AbstractColorStrategy {
     /**
      * Returns a random color.
      * 
-     * @return the color
+     * @return The color
      */
     @Override
     public UnoColor changeColor() {
-
         return UnoColor.getRandom();
     }
 }

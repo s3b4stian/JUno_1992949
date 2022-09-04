@@ -13,7 +13,7 @@ public class HumanPlayer extends AbstractPlayer implements HumanDropAction {
     /**
      * Class Constructor.
      * 
-     * @param name the name of the player.
+     * @param name The name of the player.
      */
     public HumanPlayer(String name) {
         super(name);

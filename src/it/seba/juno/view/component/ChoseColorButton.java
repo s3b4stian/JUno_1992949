@@ -5,6 +5,12 @@ import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * Button used to chose the new color for the discard pile.
+ * 
+ * @author Sebastian Rapetti.
+ *
+ */
 public class ChoseColorButton extends JButton {
 
     private static final long serialVersionUID = -158374129169260192L;
@@ -19,7 +25,10 @@ public class ChoseColorButton extends JButton {
      */
     private final ImageIcon icon;
 
-    private ImageIcon iconDisabled;
+    /**
+     * Button image icon for diabled button.
+     */
+    private final ImageIcon iconDisabled;
 
     /**
      * The type of the button.
@@ -58,7 +67,7 @@ public class ChoseColorButton extends JButton {
     /**
      * Class Constructor.
      * 
-     * @param t the type of the button from the enum.
+     * @param t The type of the button from the enum.
      */
     public ChoseColorButton(ChoseButtonType t) {
         super();

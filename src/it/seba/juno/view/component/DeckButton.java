@@ -63,12 +63,6 @@ public class DeckButton extends JButton {
             public void mouseExited(MouseEvent me) {
                 setIcon(icon);
             }
-
-            /*
-             * @Override public void mousePressed(MouseEvent me) {
-             * 
-             * }
-             */
         });
     }
 }

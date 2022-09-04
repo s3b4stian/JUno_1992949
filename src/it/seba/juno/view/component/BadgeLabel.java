@@ -16,7 +16,7 @@ public class BadgeLabel extends JLabel {
     /**
      * Class Constructor.
      * 
-     * @param badge instance of badge assigned for victories.
+     * @param badge Instance of badge assigned for victories.
      */
     public BadgeLabel(BadgeWon badge) {
         super();
@@ -28,7 +28,7 @@ public class BadgeLabel extends JLabel {
     /**
      * Class Constructor.
      * 
-     * @param badge instance of badge assigned for played matches.
+     * @param badge Instance of badge assigned for played matches.
      */
     public BadgeLabel(BadgePlayed badge) {
         super();
@@ -41,8 +41,8 @@ public class BadgeLabel extends JLabel {
     /**
      * Set icons for the label.
      * 
-     * @param icon         the icon for the enabled label.
-     * @param disabledIcon the icon for the disabled label.
+     * @param icon         The icon for the enabled label.
+     * @param disabledIcon The icon for the disabled label.
      */
     private void initIcons(ImageIcon icon, ImageIcon disabledIcon) {
 

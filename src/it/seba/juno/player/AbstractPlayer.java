@@ -14,14 +14,20 @@ import it.seba.juno.card.UnoCard;
  */
 public abstract class AbstractPlayer implements Player {
 
+    /**
+     * Player name.
+     */
     private String name;
-    // cards in hand
+
+    /**
+     * Player cards.
+     */
     protected ArrayList<UnoCard> cards;
 
     /**
      * Class Constructor.
      * 
-     * @param name the name of the player.
+     * @param name The name of the player.
      */
     public AbstractPlayer(String name) {
         this.name = name;

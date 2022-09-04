@@ -15,13 +15,20 @@ import it.seba.juno.deck.DiscardPile;
  */
 public abstract class AbstractDropStrategy implements DropStrategy {
 
+    /**
+     * The player cards.
+     */
     protected List<UnoCard> cards;
+
+    /**
+     * Discard pile reference.
+     */
     protected DiscardPile discardPile;
 
     /**
      * Class Constructor.
      * 
-     * @param dPile reference to discard pile, the place where to drop cards.
+     * @param dPile Reference to discard pile, the place where to drop cards.
      */
     public AbstractDropStrategy(DiscardPile dPile) {
         discardPile = dPile;
@@ -46,7 +53,7 @@ public abstract class AbstractDropStrategy implements DropStrategy {
      * this is a service method used by subclasses aka concrete implementation of a
      * drop strategy.
      * 
-     * @return the card that match color.
+     * @return The card that match color.
      */
     protected UnoCard searchColor() {
         for (UnoCard c : cards) {
@@ -64,7 +71,7 @@ public abstract class AbstractDropStrategy implements DropStrategy {
      * discard pile, this is a service method used by subclasses aka concrete
      * implementation of a drop strategy.
      * 
-     * @return the card that match the value.
+     * @return The card that match the value.
      */
     protected UnoCard searchValue() {
 

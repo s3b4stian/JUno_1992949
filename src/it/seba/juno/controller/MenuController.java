@@ -28,12 +28,12 @@ public class MenuController {
     /**
      * Class Constructor.
      * 
-     * @param gameModel   the game model, used to reset the game view if there is
+     * @param gameModel   The game model, used to reset the game view if there is
      *                    any change in options
-     * @param mainView    the main view, used to host all others view.
-     * @param menuView    the menu view, show the main menu.
-     * @param optionsView the options view, show the application options
-     * @param playersView the players view, manage players
+     * @param mainView    The main view, used to host all others view.
+     * @param menuView    The menu view, show the main menu.
+     * @param optionsView The options view, show the application options
+     * @param playersView The players view, manage players
      */
 
     public MenuController(GameModel gameModel, MainView mainView, MenuView menuView, OptionsView optionsView,
@@ -47,6 +47,39 @@ public class MenuController {
         this.gameView = gameView;
 
         initActions();
+    }
+
+    /**
+     * Action for the exit button, terminate the game.
+     */
+    public void exitAction() {
+        System.exit(0);
+    }
+
+    /**
+     * Action for the play button, switch current view to game view
+     */
+    public void goGameAction() {
+        if (gameModel.needReset()) {
+            gameModel.reset();
+            gameModel.notifyObservers(new ResetGameEvent(this));
+        }
+
+        mainView.setCurrentView(gameView);
+    }
+
+    /**
+     * Action for the options button, switch current view to options view
+     */
+    public void goOptionsAction() {
+        mainView.setCurrentView(optionsView);
+    }
+
+    /**
+     * Action for the players button, switch current view to players view
+     */
+    public void goPlayersAction() {
+        mainView.setCurrentView(playersView);
     }
 
     /**
@@ -66,38 +99,5 @@ public class MenuController {
         // button exit
         menuView.getButtonExit().addActionListener(e -> exitAction());
 
-    }
-
-    /**
-     * Action for the play button, switch current view to game view
-     */
-    public void goGameAction() {
-        if (gameModel.needReset()) {
-            gameModel.reset();
-            gameModel.notifyObservers(new ResetGameEvent(this));
-        }
-
-        mainView.setCurrentView(gameView);
-    }
-
-    /**
-     * Action for the players button, switch current view to players view
-     */
-    public void goPlayersAction() {
-        mainView.setCurrentView(playersView);
-    }
-
-    /**
-     * Action for the options button, switch current view to options view
-     */
-    public void goOptionsAction() {
-        mainView.setCurrentView(optionsView);
-    }
-
-    /**
-     * Action for the exit button, terminate the game.
-     */
-    public void exitAction() {
-        System.exit(0);
     }
 }

@@ -13,7 +13,7 @@ public interface WithSuit<T> {
     /**
      * Returns the suit of the card
      *
-     * @return the card suit
+     * @return The card suit
      */
     Suit<T> getSuit();
 }

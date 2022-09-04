@@ -29,31 +29,76 @@ import it.seba.juno.util.Observable;
  */
 public class GameModel extends Observable {
 
+    /**
+     * Does current player drawn a card?
+     */
     private boolean drawn = false;
+
+    /**
+     * Does current player dropped a card?
+     */
     private boolean dropped = false;
+
+    /**
+     * Does current player changed discard pile color?
+     */
     private boolean changeColor = false;
 
+    /**
+     * Is the first turn of the match?
+     */
     private boolean firstTurn = true;
 
+    /**
+     * The options model.
+     */
     private OptionsModel optionsModel;
 
+    /**
+     * The Uno deck.
+     */
     private UnoDeck deck;
+
+    /**
+     * The discard pile
+     */
     private DiscardPile discardPile;
+
+    /**
+     * The list of players for the current match.
+     */
     private UnoPlayers players;
 
+    /**
+     * The last special card dropped to discard pile, used to force actions required
+     * to the special card only for one player.
+     */
     private UnoCard currentSpecialCard;
 
+    /**
+     * The match dealer.
+     */
     private int dealer;
 
+    /**
+     * The current player.
+     */
     private Player currentPlayer;
+
+    /**
+     * The next player.
+     */
     private Player nextPlayer;
 
+    /**
+     * The number of players in match.
+     */
     private int numberOfPlayer;
 
     /**
      * Class Constructor.
      * 
-     * @param optionsModel the option model, contains the data about options.
+     * @param optionsModel The option model, contains the data about options.
      */
     public GameModel(OptionsModel optionsModel) {
 
@@ -65,118 +110,28 @@ public class GameModel extends Observable {
     }
 
     /**
-     * Returns the players of the match.
+     * Checks if the card in discard pile when the game starts is a wild card. Used
+     * to force the current player to chose the color for the discard pile.
      * 
-     * @return players as UnoPlayers object
+     * @return True if card is a wild card, false otherwise.
      */
-    public UnoPlayers getPlayers() {
-        return players;
-    }
+    public boolean currentFirstTopCardWild() {
+        // if first card in discard is WILD at the first round, player choose the color
+        if (firstTurn && discardPile.getTopCard().getValue().equals(UnoValue.WILD)) {
 
-    /**
-     * Initialize or reinitialize the model for a new game.
-     */
-    public void reset() {
-        deck = new UnoDeckSimpleFactory().makeUnoDeck();
-        discardPile = new DiscardPile();
+            if (currentPlayer instanceof NpcPlayer) {
 
-        setNumberOfPlayers();
-        randomDealer();
+                UnoColor curentColor = ((NpcChangeColorAction) currentPlayer).changeColor();
 
-        currentPlayer = players.iterator().next();
-        nextPlayer = players.nextPlayer();
+                discardPile.setCurrentColor(curentColor);
 
-        firstTurn = true;
-    }
-
-    /**
-     * Check if the number of players in game options changed.
-     * 
-     * @return true if yes, false otherwise.
-     */
-    public boolean needReset() {
-        return optionsModel.getNumberOfPlayer() != numberOfPlayer;
-    }
-
-    /**
-     * Generate players for the match, this method does not have parameters because
-     * the number of players is decided at game options level.
-     */
-    public void setNumberOfPlayers() {
-
-        numberOfPlayer = optionsModel.getNumberOfPlayer();
-
-        players = new UnoPlayers();
-
-        // default 2 players, minimum to play
-        players.add(new HumanPlayer("Human"));
-        players.add(new NpcPlayer("NPC-West", getDropStrategy(), getColorStrategy()));
-
-        // add third player
-        if (numberOfPlayer == 3) {
-            players.add(new NpcPlayer("NPC-North", getDropStrategy(), getColorStrategy()));
-        }
-        // add fourth player
-        if (numberOfPlayer == 4) {
-            players.add(new NpcPlayer("NPC-North", getDropStrategy(), getColorStrategy()));
-            players.add(new NpcPlayer("NPC-East", getDropStrategy(), getColorStrategy()));
-        }
-    }
-
-    /**
-     * Generate a random dealer, the dealer, deal card and the player at the left of
-     * the dealer is the first player of the game.
-     */
-    private void randomDealer() {
-        dealer = (int) (Math.random() * (numberOfPlayer - 0));
-        players.setDealer(dealer);
-    }
-
-    /**
-     * Returns a random drop strategy for a non human player.
-     * 
-     * @return the strategy object.
-     */
-    private DropStrategy getDropStrategy() {
-        // now there are only two strategies to use
-        // if wish to add new strategies, change how the random is generated.
-        if (Math.random() > 0.5) {
-            return new ValueDropStrategy(discardPile);
-        }
-
-        return new ColorDropStrategy(discardPile);
-    }
-
-    /**
-     * Returns a random color strategy for a non human player.
-     * 
-     * @return the strategy object.
-     */
-    private ColorStrategy getColorStrategy() {
-        // now there are only two strategies to use
-        // if wish to add new strategies, change how the random is generated.
-        if (Math.random() > 0.5) {
-            return new MostColorStrategy();
-        }
-
-        return new RandomColorStrategy();
-    }
-
-    /**
-     * Checks if the next player cannot drop a card because he has no compatible
-     * cards. Used by the view to enable the deck button for the human player.
-     * 
-     * @return true if cannot drop, false otherwise.
-     */
-    public boolean nextPlayerCannotDrop() {
-
-        for (UnoCard card : nextPlayer.getCards()) {
-            if (discardPile.cardMatch(card)) {
-                return false;
+                return true;
             }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -184,7 +139,7 @@ public class GameModel extends Observable {
      * cards. Used by the both controller and view to enable the deck button for the
      * human player.
      * 
-     * @return true if cannot drop, false otherwise.
+     * @return True if cannot drop, false otherwise.
      */
     public boolean currentPlayerCannotDrop() {
 
@@ -198,35 +153,10 @@ public class GameModel extends Observable {
     }
 
     /**
-     * Move a card from the deck to the current player.
-     */
-    public void drawOneCard() {
-        currentPlayer.takeCard(deck.dealCard());
-    }
-
-    /**
-     * Checks if the current card in discard pile is a skip card. Used to force the
-     * current player to skip the turn.
-     * 
-     * @return true if card is a skip card, false otherwise.
-     */
-    public boolean currentTopCardSkip() {
-
-        UnoCard topCard = discardPile.getTopCard();
-
-        if (topCard.getValue().equals(UnoValue.SKIP) && topCard.hashCode() != currentSpecialCard.hashCode()) {
-            this.currentSpecialCard = topCard;
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Checks if the current card in discard pile is a draw two card. Used to force
      * the current player to draw two cards.
      * 
-     * @return true if card is a draw two card, false otherwise.
+     * @return True if card is a draw two card, false otherwise.
      */
     public boolean currentTopCardDrawTwo() {
 
@@ -244,10 +174,51 @@ public class GameModel extends Observable {
     }
 
     /**
+     * Checks if the current card in discard pile is a reverse card. Used to change
+     * order of play.
+     * 
+     * @return True if card is a reverse card, false otherwise.
+     */
+    public boolean currentTopCardReverse() {
+
+        UnoCard topCard = discardPile.getTopCard();
+
+        if (discardPile.getTopCard().getValue().equals(UnoValue.REVERSE)
+                && topCard.hashCode() != currentSpecialCard.hashCode()) {
+
+            this.currentSpecialCard = topCard;
+
+            players.switchDirection();
+
+            nextPlayer = players.nextPlayer();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the current card in discard pile is a skip card. Used to force the
+     * current player to skip the turn.
+     * 
+     * @return True if card is a skip card, false otherwise.
+     */
+    public boolean currentTopCardSkip() {
+
+        UnoCard topCard = discardPile.getTopCard();
+
+        if (topCard.getValue().equals(UnoValue.SKIP) && topCard.hashCode() != currentSpecialCard.hashCode()) {
+            this.currentSpecialCard = topCard;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Checks if the current card in discard pile is a draw four card. Used to force
      * the current player to draw two cards.
      * 
-     * @return true if card is a draw four card, false otherwise.
+     * @return True if card is a draw four card, false otherwise.
      */
     public boolean currentTopCardWildDrawFour() {
 
@@ -270,72 +241,54 @@ public class GameModel extends Observable {
     }
 
     /**
-     * Checks if the current card in discard pile is a reverse card. Used to change
-     * order of play.
+     * Deal a card from the deck.
      * 
-     * @return true if card is a reverse card, false otherwise.
+     * @return The card as UnoCard object.
      */
-    public boolean currentTopCardReverse() {
-
-        UnoCard topCard = discardPile.getTopCard();
-
-        if (discardPile.getTopCard().getValue().equals(UnoValue.REVERSE)
-                && topCard.hashCode() != currentSpecialCard.hashCode()) {
-
-            this.currentSpecialCard = topCard;
-
-            players.switchDirection();
-
-            nextPlayer = players.nextPlayer();
-            return true;
-        }
-        return false;
+    public UnoCard dealCard() {
+        return deck.dealCard();
     }
 
     /**
-     * Checks if the card in discard pile when the game starts is a wild card. Used
-     * to force the current player to chose the color for the discard pile.
-     * 
-     * @return true if card is a wild card, false otherwise.
+     * Deal cards to players, used when the game starts.
      */
-    public boolean currentFirstTopCardWild() {
-        // if first card in discard is WILD at the first round, player choose the color
-        if (firstTurn && discardPile.getTopCard().getValue().equals(UnoValue.WILD)) {
-
-            if (currentPlayer instanceof NpcPlayer) {
-
-                UnoColor curentColor = ((NpcChangeColorAction) currentPlayer).changeColor();
-
-                discardPile.setCurrentColor(curentColor);
-
-                return true;
+    public void dealCardsToPlayers() {
+        players.forEach(p -> {
+            for (int i = 0; i < 7; i++) {
+                p.takeCard(deck.dealCard());
             }
-
-            return true;
-        }
-
-        return false;
+        });
     }
 
     /**
-     * Checks if the human player dropped a card that permit to change the discard
-     * pile color.
+     * Returns the discard pile color.
      * 
-     * @return true if yes, false otherwise.
+     * @return The color as UnoColor object.
      */
-    public boolean humanDroppedChangeColorCard() {
-        if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
-                || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
+    public UnoColor discardPileColor() {
+        return discardPile.getCurrentColor();
+    }
 
-            return true;
-        }
-        return false;
+    /**
+     * Return the discard pile top card.
+     * 
+     * @return The card as UnoCard object.
+     */
+    public UnoCard discardPileTopCard() {
+        return discardPile.getTopCard();
+    }
+
+    /**
+     * Move a card from the deck to the current player.
+     */
+    public void drawOneCard() {
+        currentPlayer.takeCard(deck.dealCard());
     }
 
     /**
      * Drop card action performed by Human player.
      * 
-     * @param card the card dropped by the human player.
+     * @param card The card dropped by the human player.
      */
     public void dropCardHuman(UnoCard card) {
 
@@ -405,9 +358,9 @@ public class GameModel extends Observable {
     /**
      * Checks if a card is droppable to discard pile.
      * 
-     * @param card the card to be checked.
+     * @param card The card to be checked.
      * 
-     * @return true if card is compatible with discard pile, false otherwise.
+     * @return True if card is compatible with discard pile, false otherwise.
      */
     public boolean droppable(UnoCard card) {
 
@@ -420,48 +373,164 @@ public class GameModel extends Observable {
     }
 
     /**
-     * Change the discard pile color.
+     * Returns a random color strategy for a non human player.
      * 
-     * @param color the new color of the discard pile.
+     * @return The strategy object.
      */
-    public void setDiscardPileColor(UnoColor color) {
-        discardPile.setCurrentColor(color);
+    private ColorStrategy getColorStrategy() {
+        // now there are only two strategies to use
+        // if wish to add new strategies, change how the random is generated.
+        if (Math.random() > 0.5) {
+            return new MostColorStrategy();
+        }
+
+        return new RandomColorStrategy();
     }
 
     /**
-     * Returns the discard pile color.
+     * Returns the current player of the match.
      * 
-     * @return the color as UnoColor object.
+     * @return current Player as Player object.
      */
-    public UnoColor discardPileColor() {
-        return discardPile.getCurrentColor();
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     /**
-     * Return the discard pile top card.
+     * Returns the current dealer.
      * 
-     * @return the card as UnoCard object.
+     * @return The dealer as player index.
      */
-    public UnoCard discardPileTopCard() {
-        return discardPile.getTopCard();
+    public int getDealer() {
+        return dealer;
+    }
+
+    /**
+     * Returns a random drop strategy for a non human player.
+     * 
+     * @return The strategy object.
+     */
+    private DropStrategy getDropStrategy() {
+        // now there are only two strategies to use
+        // if wish to add new strategies, change how the random is generated.
+        if (Math.random() > 0.5) {
+            return new ValueDropStrategy(discardPile);
+        }
+
+        return new ColorDropStrategy(discardPile);
+    }
+
+    /**
+     * Returns the next player of the match.
+     * 
+     * @return Next player as Player object.
+     */
+    public Player getNextPlayer() {
+        return nextPlayer;
     }
 
     /**
      * Returns the order of play for the match.
      * 
-     * @return true if clockwise, false anticlockwise.
+     * @return True if clockwise, false anticlockwise.
      */
     public boolean getOrderOfPlay() {
         return players.getOrderOfPlay();
     }
 
     /**
-     * Returns the current dealer.
+     * Returns the players of the match.
      * 
-     * @return the dealer as player index.
+     * @return Players as UnoPlayers object
      */
-    public int getDealer() {
-        return dealer;
+    public UnoPlayers getPlayers() {
+        return players;
+    }
+
+    /**
+     * Checks if the human player dropped a card that permit to change the discard
+     * pile color.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean humanDroppedChangeColorCard() {
+        if (discardPile.getTopCard().getValue().equals(UnoValue.WILD)
+                || discardPile.getTopCard().getValue().equals(UnoValue.WILD_DRAW_FOUR)) {
+
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if there is a change in discard pile color.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean isChangeColor() {
+        return changeColor;
+    }
+
+    /**
+     * Check if the current user drawn a card from the deck.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean isDrawn() {
+        return drawn;
+    }
+
+    /**
+     * Check if the current player dropped a card.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean isDropped() {
+        return dropped;
+    }
+
+    /**
+     * Returns if the match turn is the first of the match, the turn after card
+     * dealing.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean isFirst() {
+        return firstTurn;
+    }
+
+    /**
+     * Check if the player has only one card.
+     * 
+     * @return True if the player has only one card, false otherwise.
+     */
+    public boolean isOneCard() {
+        if (currentPlayer.getCardsNumber() == 1) {
+            return true;
+        }
+        return false;
+
+    }
+
+    /**
+     * Check if the player is the winner.
+     * 
+     * @return True if the player is the winner, false otherwise.
+     */
+    public boolean isWinner() {
+        if (currentPlayer.isWinner()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if the number of players in game options changed.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean needReset() {
+        return optionsModel.getNumberOfPlayer() != numberOfPlayer;
     }
 
     /**
@@ -478,102 +547,78 @@ public class GameModel extends Observable {
     }
 
     /**
-     * Returns the next player of the match.
+     * Checks if the next player cannot drop a card because he has no compatible
+     * cards. Used by the view to enable the deck button for the human player.
      * 
-     * @return next player as Player object.
+     * @return True if cannot drop, false otherwise.
      */
-    public Player getNextPlayer() {
-        return nextPlayer;
-    }
+    public boolean nextPlayerCannotDrop() {
 
-    /**
-     * Returns if the match turn is the first of the match, the turn after card
-     * dealing.
-     * 
-     * @return true if yes, false otherwise.
-     */
-    public boolean isFirst() {
-        return firstTurn;
-    }
-
-    /**
-     * Returns the current player of the match.
-     * 
-     * @return current player as Player object.
-     */
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    /**
-     * Deal a card from the deck.
-     * 
-     * @return the card as UnoCard object.
-     */
-    public UnoCard dealCard() {
-        return deck.dealCard();
-    }
-
-    /**
-     * Check if the player has only one card.
-     * 
-     * @return true if the player has only one card, false otherwise.
-     */
-    public boolean isOneCard() {
-        if (currentPlayer.getCardsNumber() == 1) {
-            return true;
-        }
-        return false;
-
-    }
-
-    /**
-     * Check if the player is the winner.
-     * 
-     * @return true if the player is the winner, false otherwise.
-     */
-    public boolean isWinner() {
-        if (currentPlayer.isWinner()) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Deal cards to players, used when the game starts.
-     */
-    public void dealCardsToPlayers() {
-        players.forEach(p -> {
-            for (int i = 0; i < 7; i++) {
-                p.takeCard(deck.dealCard());
+        for (UnoCard card : nextPlayer.getCards()) {
+            if (discardPile.cardMatch(card)) {
+                return false;
             }
-        });
+        }
+
+        return true;
     }
 
     /**
-     * Check if the current player dropped a card.
-     * 
-     * @return true if yes, false otherwise.
+     * Generate a random dealer, the dealer, deal card and the player at the left of
+     * the dealer is the first player of the game.
      */
-    public boolean isDropped() {
-        return dropped;
+    private void randomDealer() {
+        dealer = (int) (Math.random() * (numberOfPlayer - 0));
+        players.setDealer(dealer);
     }
 
     /**
-     * Check if there is a change in discard pile color.
-     * 
-     * @return true if yes, false otherwise.
+     * Initialize or reinitialize the model for a new game.
      */
-    public boolean isChangeColor() {
-        return changeColor;
+    public void reset() {
+        deck = new UnoDeckSimpleFactory().makeUnoDeck();
+        discardPile = new DiscardPile();
+
+        setNumberOfPlayers();
+        randomDealer();
+
+        currentPlayer = players.iterator().next();
+        nextPlayer = players.nextPlayer();
+
+        firstTurn = true;
     }
 
     /**
-     * Check if the current user drawn a card from the deck.
+     * Change the discard pile color.
      * 
-     * @return true if yes, false otherwise.
+     * @param color The new color of the discard pile.
      */
-    public boolean isDrawn() {
-        return drawn;
+    public void setDiscardPileColor(UnoColor color) {
+        discardPile.setCurrentColor(color);
+    }
+
+    /**
+     * Generate players for the match, this method does not have parameters because
+     * the number of players is decided at game options level.
+     */
+    public void setNumberOfPlayers() {
+
+        numberOfPlayer = optionsModel.getNumberOfPlayer();
+
+        players = new UnoPlayers();
+
+        // default 2 players, minimum to play
+        players.add(new HumanPlayer("Human"));
+        players.add(new NpcPlayer("NPC-West", getDropStrategy(), getColorStrategy()));
+
+        // add third player
+        if (numberOfPlayer == 3) {
+            players.add(new NpcPlayer("NPC-North", getDropStrategy(), getColorStrategy()));
+        }
+        // add fourth player
+        if (numberOfPlayer == 4) {
+            players.add(new NpcPlayer("NPC-North", getDropStrategy(), getColorStrategy()));
+            players.add(new NpcPlayer("NPC-East", getDropStrategy(), getColorStrategy()));
+        }
     }
 }

@@ -3,7 +3,7 @@ package it.seba.juno.event;
 import java.util.EventObject;
 
 /**
- * Used to update view when the application starts.
+ * Game event used to update view when the application starts.
  * 
  * @author Sebastian Rapetti
  *
@@ -15,7 +15,7 @@ public class FirstLoadEvent extends EventObject {
     /**
      * Class Constructor.
      * 
-     * @param source the object that triggered this event.
+     * @param source The object that triggered this event.
      */
     public FirstLoadEvent(Object source) {
         super(source);

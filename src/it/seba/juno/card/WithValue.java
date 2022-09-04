@@ -12,7 +12,7 @@ public interface WithValue<T> {
     /**
      * Returns the value of the card
      *
-     * @return the card value
+     * @return TShe card value
      */
     Value<T> getValue();
 }

@@ -13,7 +13,7 @@ public interface NpcChangeColorAction extends PlayerAction {
     /**
      * Returns a new color for the discard pile.
      * 
-     * @return a color choose using the color strategy.
+     * @return A color choose using the color strategy.
      */
     UnoColor changeColor();
 }

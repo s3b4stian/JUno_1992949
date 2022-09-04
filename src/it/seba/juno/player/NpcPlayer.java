@@ -11,15 +11,22 @@ import it.seba.juno.card.UnoColor;
  */
 public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChangeColorAction {
 
-    DropStrategy dropStrategy;
-    ColorStrategy changeColorStrategy;
+    /**
+     * The drop strategy for the npc.
+     */
+    private DropStrategy dropStrategy;
+
+    /**
+     * The color strategy for the npc.
+     */
+    private ColorStrategy changeColorStrategy;
 
     /**
      * Class Constructor.
      * 
-     * @param name      the name of the player.
-     * @param dStrategy the drop strategy used by npc.
-     * @param cStrategy the color strategy used by npc.
+     * @param name      The name of the player.
+     * @param dStrategy The drop strategy used by npc.
+     * @param cStrategy The color strategy used by npc.
      */
     public NpcPlayer(String name, DropStrategy dStrategy, ColorStrategy cStrategy) {
         super(name);
@@ -29,11 +36,14 @@ public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChang
         changeColorStrategy.setPlayerCards(cards);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isNpc() {
-        return true;
+    @Override
+    public UnoColor changeColor() {
+        return changeColorStrategy.changeColor();
+    }
+
+    @Override
+    public UnoCard dropCard() {
+        return dropStrategy.dropCard();
     }
 
     /**
@@ -43,13 +53,10 @@ public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChang
         return false;
     }
 
-    @Override
-    public UnoCard dropCard() {
-        return dropStrategy.dropCard();
-    }
-
-    @Override
-    public UnoColor changeColor() {
-        return changeColorStrategy.changeColor();
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNpc() {
+        return true;
     }
 }

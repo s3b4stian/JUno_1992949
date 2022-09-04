@@ -20,24 +20,26 @@ import it.seba.juno.model.PlayersProfileModel;
  */
 public class SerializationManager {
 
-    private final String userDir;
-    private final String jUnoDir;
-    private final String profilesDir;
-
-    private final String fileOptions;
-
     private static SerializationManager instance;
 
     /**
      * Returns the only one instance of the SerializationManager.
      * 
-     * @return the serialization manager.
+     * @return The serialization manager.
      */
     public static SerializationManager getInstance() {
         if (instance == null)
             instance = new SerializationManager();
         return instance;
     }
+
+    private final String userDir;
+
+    private final String jUnoDir;
+
+    private final String profilesDir;
+
+    private final String fileOptions;
 
     /**
      * Class Constructor.
@@ -54,18 +56,9 @@ public class SerializationManager {
     }
 
     /**
-     * Returns the profiles directory.
-     * 
-     * @return the profiles directory.
-     */
-    public String getProfilesDir() {
-        return profilesDir;
-    }
-
-    /**
      * Create a the game folder if not exists.
      * 
-     * @param newDir the name of the new directory.
+     * @param newDir The name of the new directory.
      */
     private void createGamefolder(String newDir) {
 
@@ -77,82 +70,39 @@ public class SerializationManager {
     }
 
     /**
-     * Serialize an object.
+     * Returns the profiles directory.
      * 
-     * @param o        object to be serialized
-     * @param fileName the file name to store serialized object.
-     * 
-     * @throws IOException
+     * @return The profiles directory.
      */
-    private void serialize(Object o, String fileName) throws IOException {
-        FileOutputStream file = new FileOutputStream(fileName);
-        ObjectOutputStream out = new ObjectOutputStream(file);
-
-        out.writeObject(o);
-        out.flush();
-        out.close();
-
-        file.close();
+    public String getProfilesDir() {
+        return profilesDir;
     }
 
     /**
-     * Unserialize an object.
+     * Load options from disk.
      * 
-     * @param fileName the file name containing the object to be unserialized.
-     * 
-     * @return the unserialized object.
-     * 
-     * @throws ClassNotFoundException
-     * @throws IOException
+     * @return The options model instance.
      */
-    private Object unserialize(String fileName) throws ClassNotFoundException, IOException {
-        FileInputStream file = new FileInputStream(fileName);
-        ObjectInputStream in = new ObjectInputStream(file);
+    public OptionsModel loadOptions() {
 
-        Object o = in.readObject();
+        OptionsModel optionsModel = new OptionsModel();
 
-        in.close();
-        file.close();
+        if ((new File(fileOptions)).exists()) {
+            try {
+                optionsModel = (OptionsModel) unserialize(fileOptions);
 
-        return o;
-    }
-
-    /**
-     * Save options to disk.
-     * 
-     * @param model the option model instance to be saved to disk.
-     */
-    public void saveOptions(OptionsModel model) {
-
-        createGamefolder(jUnoDir);
-
-        try {
-            serialize(model, fileOptions);
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
-    /**
-     * Save player profile to disk
-     * 
-     * @param model the player profile model instance to be saved to disk.
-     */
-    public void savePlayers(PlayersProfileModel model) {
-
-        createGamefolder(profilesDir);
-
-        try {
-            serialize(model, profilesDir + "/" + model.getName());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return optionsModel;
     }
 
     /**
      * Load a players model from disk.
      * 
-     * @return the players model instance.
+     * @return The players model instance.
      */
     public PlayersModel loadPlayer() {
         PlayersModel playersModel = new PlayersModel();
@@ -182,23 +132,75 @@ public class SerializationManager {
     }
 
     /**
-     * Load options from disk.
+     * Save options to disk.
      * 
-     * @return the options model instance.
+     * @param model The option model instance to be saved to disk.
      */
-    public OptionsModel loadOptions() {
+    public void saveOptions(OptionsModel model) {
 
-        OptionsModel optionsModel = new OptionsModel();
+        createGamefolder(jUnoDir);
 
-        if ((new File(fileOptions)).exists()) {
-            try {
-                optionsModel = (OptionsModel) unserialize(fileOptions);
-
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        try {
+            serialize(model, fileOptions);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
-        return optionsModel;
+    /**
+     * Save player profile to disk
+     * 
+     * @param model The player profile model instance to be saved to disk.
+     */
+    public void savePlayers(PlayersProfileModel model) {
+
+        createGamefolder(profilesDir);
+
+        try {
+            serialize(model, profilesDir + "/" + model.getName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Serialize an object.
+     * 
+     * @param o        Object to be serialized
+     * @param fileName The file name to store serialized object.
+     * 
+     * @throws IOException
+     */
+    private void serialize(Object o, String fileName) throws IOException {
+        FileOutputStream file = new FileOutputStream(fileName);
+        ObjectOutputStream out = new ObjectOutputStream(file);
+
+        out.writeObject(o);
+        out.flush();
+        out.close();
+
+        file.close();
+    }
+
+    /**
+     * Unserialize an object.
+     * 
+     * @param fileName The file name containing the object to be unserialized.
+     * 
+     * @return The unserialized object.
+     * 
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    private Object unserialize(String fileName) throws ClassNotFoundException, IOException {
+        FileInputStream file = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(file);
+
+        Object o = in.readObject();
+
+        in.close();
+        file.close();
+
+        return o;
     }
 }

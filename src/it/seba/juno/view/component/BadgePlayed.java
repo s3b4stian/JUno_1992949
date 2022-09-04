@@ -43,7 +43,7 @@ public enum BadgePlayed implements Badge {
     /**
      * Enum Constructor.
      * 
-     * @param image the image file name of the badge.
+     * @param image The image file name of the badge.
      */
     BadgePlayed(String image) {
         this.image = image;
@@ -61,7 +61,7 @@ public enum BadgePlayed implements Badge {
      * Casting to String, returns the image file name (with extension) associate to
      * the badge.
      * 
-     * @return the image file name.
+     * @return The image file name.
      */
     @Override
     public String toString() {

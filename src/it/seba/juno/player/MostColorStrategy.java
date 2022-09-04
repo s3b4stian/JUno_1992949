@@ -22,7 +22,7 @@ public class MostColorStrategy extends AbstractColorStrategy {
      * Returns the color that appears most in cards, if there isn't a predominant
      * color, return random.
      * 
-     * @return the color
+     * @return The color
      */
     @Override
     public UnoColor changeColor() {

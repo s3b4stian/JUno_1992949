@@ -17,11 +17,20 @@ import it.seba.juno.util.Observable;
  */
 public class PlayersModel extends Observable {
 
-    boolean isProfileLoaded = false;
+    /**
+     * Does there is a profile loaded in this model?
+     */
+    private boolean isProfileLoaded = false;
 
-    PlayersProfileModel currentProfile;
+    /**
+     * The current profile loaded.
+     */
+    private PlayersProfileModel currentProfile;
 
-    Map<String, PlayersProfileModel> playersProfile;
+    /**
+     * A map of player profiles.
+     */
+    private Map<String, PlayersProfileModel> playersProfile;
 
     /**
      * Class Constructor.
@@ -31,62 +40,52 @@ public class PlayersModel extends Observable {
     }
 
     /**
-     * Returns if a profile is selected.
-     * 
-     * @return true if there is a profile selected, false otherwise.
-     */
-    public boolean isProfileLoaded() {
-        return isProfileLoaded;
-    }
-
-    /**
-     * Returns the current profile loaded in game.
-     * 
-     * @return the current profile.
-     */
-    public PlayersProfileModel getCurrentProfile() {
-        return currentProfile;
-    }
-
-    /**
-     * Set a new current profile in game.
-     * 
-     * @param name the name of the profile to load.
-     */
-    public void setCurrentProfile(String name) {
-        isProfileLoaded = true;
-        currentProfile = playersProfile.get(name);
-    }
-
-    /**
      * Add a new player profile to the model.
      * 
-     * @param name  the name of the new profile.
-     * @param model the instance of the new profile model.
+     * @param name  The name of the new profile.
+     * @param model The instance of the new profile model.
      */
     public void addPlayer(String name, PlayersProfileModel model) {
         playersProfile.put(name, model);
     }
 
     /**
+     * Returns the current profile loaded in game.
+     * 
+     * @return The current profile.
+     */
+    public PlayersProfileModel getCurrentProfile() {
+        return currentProfile;
+    }
+
+    /**
+     * Returns all players profile saved into the map.
+     * 
+     * @return All players profile.
+     */
+    public Map<String, PlayersProfileModel> getPlayers() {
+        return playersProfile;
+    }
+
+    /**
+     * Returns if a profile is selected.
+     * 
+     * @return True if there is a profile selected, false otherwise.
+     */
+    public boolean isProfileLoaded() {
+        return isProfileLoaded;
+    }
+
+    /**
      * Remove a player profile from the profiles map.
      * 
-     * @param name the name of the player to be removed.
+     * @param name The name of the player to be removed.
      */
     public void removePlayer(String name) {
         // delete profile serialized file
         (new File(SerializationManager.getInstance().getProfilesDir() + "/" + name)).delete();
         // remove from map
         playersProfile.remove(name);
-    }
-
-    /**
-     * Returns all players profile saved into the map.
-     * 
-     * @return all players profile.
-     */
-    public Map<String, PlayersProfileModel> getPlayers() {
-        return playersProfile;
     }
 
     /**
@@ -99,5 +98,15 @@ public class PlayersModel extends Observable {
         for (Map.Entry<String, PlayersProfileModel> entry : playersProfile.entrySet()) {
             sm.savePlayers(entry.getValue());
         }
+    }
+
+    /**
+     * Set a new current profile in game.
+     * 
+     * @param name The name of the profile to load.
+     */
+    public void setCurrentProfile(String name) {
+        isProfileLoaded = true;
+        currentProfile = playersProfile.get(name);
     }
 }

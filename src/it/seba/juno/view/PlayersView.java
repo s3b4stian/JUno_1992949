@@ -254,90 +254,46 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     }
 
     /**
-     * Returns a reference to the list of the players, used mainly to set the action
-     * performed on the elements of the list. The action is assigned to every
-     * element at controller level.
-     * 
-     * @return the list reference.
+     * Delete a player from the JList of players.
      */
-    public ListPlayers<PlayersProfileModel> getListPlayers() {
-        return listPlayers;
+    private void deletePlayer() {
+        int index = listPlayers.getSelectedIndex();
+
+        if (index != -1) {
+            listPlayers.removeItem(index);
+            listPlayers.updateUI();
+
+            disablePlayedBadges();
+            disableWonBadges();
+        }
     }
 
     /**
-     * Returns a reference to the "new button" of the players, used mainly to set
-     * the action performed from the button. The action is assigned to the button at
-     * controller level.
-     * 
-     * @return the button reference.
+     * Disable all played badges.
      */
-    public MenuButton getButtonNew() {
-        return buttonNew;
+    private void disablePlayedBadges() {
+        badgePlayedGreen.setEnabled(false);
+        badgePlayedBronze.setEnabled(false);
+        badgePlayedSilver.setEnabled(false);
+        badgePlayedGold.setEnabled(false);
+        badgePlayedRed.setEnabled(false);
     }
 
     /**
-     * Returns a reference to the "delete button" of the players, used mainly to set
-     * the action performed from the button. The action is assigned to the button at
-     * controller level.
-     * 
-     * @return the button reference.
+     * Disable all won badges.
      */
-    public MenuButton getButtonDelete() {
-        return buttonDelete;
-    }
-
-    /**
-     * Returns a reference to the "back button" of the players, used mainly to set
-     * the action performed from the button. The action is assigned to the button at
-     * controller level.
-     * 
-     * @return the button reference.
-     */
-    public MenuButton getButtonBack() {
-        return buttonBack;
-    }
-
-    /**
-     * Returns a reference to the "new player custom JPanel" of the players, used
-     * mainly to set the action performed from the buttons inside this panel. The
-     * action is assigned to the buttons at controller level.
-     * 
-     * @return the custom JPanel reference.
-     */
-    public NewPlayerModal getNewPlayerModal() {
-        return newPlayerModal;
-    }
-
-    /**
-     * Returns a reference to the "delete player custom JPanel" of the players, used
-     * mainly to set the action performed from the buttons inside this panel. The
-     * action is assigned to the buttons at controller level.
-     * 
-     * @return the custom JPanel reference.
-     */
-    public DeleteModal getDeleteModal() {
-        return deleteModal;
-    }
-
-    /**
-     * Draw the panel background as diagonal gradient.
-     */
-    @Override
-    protected void paintChildren(Graphics grphcs) {
-        Graphics2D g2 = (Graphics2D) grphcs;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        // diagonal gradient as paint
-        g2.setPaint(new GradientPaint(0, getHeight(), Color.decode("#009FFD"), getWidth(), 0, Color.decode("#2A2A72")));
-        // fill the panel
-        g2.fillRect(0, 0, getWidth(), getHeight());
-
-        super.paintChildren(grphcs);
+    private void disableWonBadges() {
+        badgeWonGreen.setEnabled(false);
+        badgeWonBronze.setEnabled(false);
+        badgeWonSilver.setEnabled(false);
+        badgeWonGold.setEnabled(false);
+        badgeWonRed.setEnabled(false);
     }
 
     /**
      * Enable played badges.
      * 
-     * @param played the number of played matches.
+     * @param played The number of played matches.
      */
     private void enbalePlayedBadges(int played) {
         if (played >= 10) {
@@ -358,20 +314,9 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     }
 
     /**
-     * Disable all played badges.
-     */
-    private void disablePlayedBadges() {
-        badgePlayedGreen.setEnabled(false);
-        badgePlayedBronze.setEnabled(false);
-        badgePlayedSilver.setEnabled(false);
-        badgePlayedGold.setEnabled(false);
-        badgePlayedRed.setEnabled(false);
-    }
-
-    /**
      * Enable won badges.
      * 
-     * @param won the number of won matches.
+     * @param won The number of won matches.
      */
     private void enbaleWonBadges(int won) {
         if (won >= 10) {
@@ -392,36 +337,91 @@ public class PlayersView extends JPanel implements InterfaceObserver {
     }
 
     /**
-     * Disable all won badges.
+     * Returns a reference to the "back button" of the players, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
      */
-    private void disableWonBadges() {
-        badgeWonGreen.setEnabled(false);
-        badgeWonBronze.setEnabled(false);
-        badgeWonSilver.setEnabled(false);
-        badgeWonGold.setEnabled(false);
-        badgeWonRed.setEnabled(false);
+    public MenuButton getButtonBack() {
+        return buttonBack;
     }
 
     /**
-     * Delete a player from the JList of players.
+     * Returns a reference to the "delete button" of the players, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
      */
-    private void deletePlayer() {
-        int index = listPlayers.getSelectedIndex();
+    public MenuButton getButtonDelete() {
+        return buttonDelete;
+    }
 
-        if (index != -1) {
-            listPlayers.removeItem(index);
-            listPlayers.updateUI();
+    /**
+     * Returns a reference to the "new button" of the players, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
+     */
+    public MenuButton getButtonNew() {
+        return buttonNew;
+    }
 
-            disablePlayedBadges();
-            disableWonBadges();
-        }
+    /**
+     * Returns a reference to the "delete player custom JPanel" of the players, used
+     * mainly to set the action performed from the buttons inside this panel. The
+     * action is assigned to the buttons at controller level.
+     * 
+     * @return The custom JPanel reference.
+     */
+    public DeleteModal getDeleteModal() {
+        return deleteModal;
+    }
+
+    /**
+     * Returns a reference to the list of the players, used mainly to set the action
+     * performed on the elements of the list. The action is assigned to every
+     * element at controller level.
+     * 
+     * @return The list reference.
+     */
+    public ListPlayers<PlayersProfileModel> getListPlayers() {
+        return listPlayers;
+    }
+
+    /**
+     * Returns a reference to the "new player custom JPanel" of the players, used
+     * mainly to set the action performed from the buttons inside this panel. The
+     * action is assigned to the buttons at controller level.
+     * 
+     * @return The custom JPanel reference.
+     */
+    public NewPlayerModal getNewPlayerModal() {
+        return newPlayerModal;
+    }
+
+    /**
+     * Draw the panel background as diagonal gradient.
+     */
+    @Override
+    protected void paintChildren(Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // diagonal gradient as paint
+        g2.setPaint(new GradientPaint(0, getHeight(), Color.decode("#009FFD"), getWidth(), 0, Color.decode("#2A2A72")));
+        // fill the panel
+        g2.fillRect(0, 0, getWidth(), getHeight());
+
+        super.paintChildren(grphcs);
     }
 
     /**
      * Update this view when the model had a change.
      * 
-     * @param o the observable that changed his state.
-     * @param e the event object that triggered the change.
+     * @param o The observable that changed his state.
+     * @param e The event object that triggered the change.
      */
     @Override
     public void update(Observable o, EventObject e) {

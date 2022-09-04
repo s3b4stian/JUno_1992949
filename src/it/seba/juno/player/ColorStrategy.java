@@ -19,14 +19,14 @@ public interface ColorStrategy {
      * Return the new color for the discard pile, implemented in concrete
      * strategies.
      * 
-     * @return the new color.
+     * @return The new color.
      */
     UnoColor changeColor();
 
     /**
      * Set player card, a strategy use cards to decide what to do.
      * 
-     * @param cards the list of player cards.
+     * @param cards The list of player cards.
      */
     void setPlayerCards(List<UnoCard> cards);
 }

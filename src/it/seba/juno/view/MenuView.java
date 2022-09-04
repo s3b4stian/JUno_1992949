@@ -25,7 +25,6 @@ public class MenuView extends JPanel {
 
     private static final long serialVersionUID = 5350734895926530482L;
 
-    // all menu buttons
     /**
      * Play button, go to play a match.
      */
@@ -86,7 +85,7 @@ public class MenuView extends JPanel {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public MenuButton getButtonPlay() {
         return buttonPlay;
@@ -97,7 +96,7 @@ public class MenuView extends JPanel {
      * set the action performed from the button. The action is assigned to the
      * button at controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public MenuButton getButtonPlayers() {
         return buttonPlayers;
@@ -108,7 +107,7 @@ public class MenuView extends JPanel {
      * set the action performed from the button. The action is assigned to the
      * button at controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public MenuButton getButtonOptions() {
         return buttonOptions;
@@ -119,7 +118,7 @@ public class MenuView extends JPanel {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public MenuButton getButtonExit() {
         return buttonExit;

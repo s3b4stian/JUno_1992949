@@ -19,12 +19,10 @@ public class FontManager {
 
     private static FontManager instance;
 
-    private Font customFont;
-
     /**
      * Returns the only one instance of the FontManager.
      * 
-     * @return the font manager.
+     * @return The font manager.
      */
     public static FontManager getInstance() {
         if (instance == null)
@@ -32,10 +30,23 @@ public class FontManager {
         return instance;
     }
 
+    private Font customFont;
+
+    /**
+     * Return the custom font.
+     * 
+     * @param size the size of the custom font.
+     * 
+     * @return The custom font.
+     */
+    public Font getCustomFont(float size) {
+        return customFont.deriveFont(size);
+    }
+
     /**
      * Load custom font from disk.
      * 
-     * @param font the name of the font without extension (ex arial and not
+     * @param font The name of the font without extension (ex. arial and not
      *             arial.ttf).
      */
     public void setCustomFont(String font) {
@@ -45,16 +56,5 @@ public class FontManager {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Return the custom font.
-     * 
-     * @param size the size of the custom font.
-     * 
-     * @return the custom font.
-     */
-    public Font getCustomFont(float size) {
-        return customFont.deriveFont(size);
     }
 }

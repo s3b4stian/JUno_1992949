@@ -53,11 +53,11 @@ public class GameController {
     /**
      * Class Constructor.
      * 
-     * @param gameModel    the option model, the match between players.
-     * @param playersModel the player model, contains the data about players.
-     * @param mainView     the main view, used to host all others view.
-     * @param menuView     the menu view, show the main menu.
-     * @param gameView     the game view, show Uno game.
+     * @param gameModel    The option model, the match between players.
+     * @param playersModel The player model, contains the data about players.
+     * @param mainView     The main view, used to host all others view.
+     * @param menuView     The menu view, show the main menu.
+     * @param gameView     The game view, show Uno game.
      */
     public GameController(GameModel gameModel, PlayersModel playersModel, MainView mainView, MenuView menuView,
             GameView gameView) {
@@ -73,48 +73,8 @@ public class GameController {
     }
 
     /**
-     * Init actions in view.
+     * Add action listener to human player cards.
      */
-    private void initActions() {
-        // button back
-        gameView.getButtonBack().addActionListener(e -> goBackAction());
-
-        // button say uno
-        gameView.getButtonUno().addActionListener(e -> sayUnoAction(e));
-
-        // button deck, to draw a card from deck
-        gameView.getButtonDeck().addActionListener(e -> humanDrawCardAction(new HumanPlayerDrawOneCardEvent(this)));
-
-        // button start to start the game
-        gameView.getButtonStart().addActionListener(e -> startGameAction(new StartGameEvent(this)));
-
-        // button restart, to restart the game
-        gameView.getButtonRestart().addActionListener(e -> restartGameAction(new ResetGameEvent(this)));
-
-        // buttons for chose the color
-        gameView.getChooseColorPanel().getButtonBlue().addActionListener(
-                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.BLUE));
-        gameView.getChooseColorPanel().getButtonRed().addActionListener(
-                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.RED));
-        gameView.getChooseColorPanel().getButtonYellow().addActionListener(
-                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.YELLOW));
-        gameView.getChooseColorPanel().getButtonGreen().addActionListener(
-                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.GREEN));
-    }
-
-    private void removeActionListenersToHumanPlayer(PlayerCardButton button) {
-        for (ActionListener action : button.getActionListeners()) {
-            button.removeActionListener(action);
-        }
-    }
-
-    public void removeEventToHumanPlayer() {
-
-        for (Component comp : gameView.getPanelSouth().getComponents()) {
-            removeActionListenersToHumanPlayer((PlayerCardButton) comp);
-        }
-    }
-
     public void addEventToHumanPlayer() {
 
         for (Component comp : gameView.getPanelSouth().getComponents()) {
@@ -128,94 +88,14 @@ public class GameController {
         }
     }
 
-    public void humanDrawCardAction(HumanPlayerDrawOneCardEvent e) {
-        gameModel.drawOneCard();
-        gameModel.notifyObservers(e);
-
-        // valid only for the new card
-        addEventToHumanPlayer();
-
-        // if new card isn't droppable player move
-        if (gameModel.currentPlayerCannotDrop()) {
-
-            // next player
-            gameModel.next();
-
-            // timed call
-            GameView.resetTimer();
-            (new CurrentPlayerMoveListener(this)).startTimer();
-        }
-    }
-
-    public void restartGameAction(ResetGameEvent e) {
-        gameModel.reset();
-        gameModel.notifyObservers(e);
-    }
-
-    public void startGameAction(StartGameEvent e) {
-        // reset time
-        GameView.resetTimer();
-
-        // init actions, deal the cards and first card to discard pile
-        gameModel.dealCardsToPlayers();
-        gameModel.dropFirstCardToPileAction();
-
-        gameModel.notifyObservers(e);
-
-        // timed call
-        (new CurrentPlayerMoveListener(this)).startTimer();
-        // reset time for the case when the player move as first
-        GameView.resetTimer();
-    }
-
+    /**
+     * Action for the player move, recursive method, recursive call is timed and
+     * recursion stop when the player is a human player.
+     */
     public void currentPlayerMove() {
 
-        if (gameModel.currentTopCardReverse()) {
-            removeEventToHumanPlayer();
-
-            gameModel.notifyObservers(new ChangeOrderOfPlayEvent(this));
-
-            // go to next player
-            gameModel.next();
-
-            GameView.resetTimer();
-            (new CurrentPlayerMoveListener(this)).startTimer();
-            return;
-        }
-
-        if (gameModel.currentTopCardSkip()) {
-            removeEventToHumanPlayer();
-
-            gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
-
-            // go to next player
-            gameModel.next();
-
-            GameView.resetTimer();
-            (new CurrentPlayerMoveListener(this)).startTimer();
-            return;
-        }
-
-        if (gameModel.currentTopCardDrawTwo()) {
-            removeEventToHumanPlayer();
-
-            gameModel.notifyObservers(new CurrentPlayerDrawTwoCardEvent(this));
-            gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
-
-            // go to next player
-            gameModel.next();
-
-            GameView.resetTimer();
-            (new CurrentPlayerMoveListener(this)).startTimer();
-            return;
-        }
-
-        if (gameModel.currentTopCardWildDrawFour()) {
-            removeEventToHumanPlayer();
-
-            gameModel.notifyObservers(new CurrentPlayerDrawFourCardEvent(this));
-            gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
-
+        // check for special cards
+        if (specialCardsInDiscardPile()) {
             // go to next player
             gameModel.next();
 
@@ -310,25 +190,11 @@ public class GameController {
         (new CurrentPlayerMoveListener(this)).startTimer();
     }
 
-    public void humanChoseColorAction(HumanPlayerChoseColorEvent e, UnoColor color) {
-
-        gameModel.setDiscardPileColor(color);
-
-        if (gameModel.currentFirstTopCardWild()) {
-            gameModel.notifyObservers(new FirstHumanPlayerChoseColorEvent(this));
-            return;
-        }
-
-        gameModel.notifyObservers(e);
-
-        // go to next player
-        gameModel.next();
-
-        // timed call
-        GameView.resetTimer();
-        (new CurrentPlayerMoveListener(this)).startTimer();
-    }
-
+    /**
+     * Action for human player when drop a card.
+     * 
+     * @param e The component triggered the event/the event.
+     */
     public void dropCardToPileAction(ActionEvent e) {
 
         Object t = e.getSource();
@@ -380,14 +246,198 @@ public class GameController {
         }
     }
 
-    public void sayUnoAction(ActionEvent e) {
-        gameModel.notifyObservers(e);
-    }
-
     /**
      * Action for the back button, return to main menu.
      */
     public void goBackAction() {
         mainView.setCurrentView(menuView);
+    }
+
+    /**
+     * Action for human player when must chose a color for discard pile.
+     * 
+     * @param e     The component triggered the event/the event.
+     * @param color The new color for the discard pile.
+     */
+    public void humanChoseColorAction(HumanPlayerChoseColorEvent e, UnoColor color) {
+
+        gameModel.setDiscardPileColor(color);
+
+        if (gameModel.currentFirstTopCardWild()) {
+            gameModel.notifyObservers(new FirstHumanPlayerChoseColorEvent(this));
+            return;
+        }
+
+        gameModel.notifyObservers(e);
+
+        // go to next player
+        gameModel.next();
+
+        // timed call
+        GameView.resetTimer();
+        (new CurrentPlayerMoveListener(this)).startTimer();
+    }
+
+    /**
+     * Action for the human player draw a card.
+     * 
+     * @param e The component triggered the event/the event.
+     */
+    public void humanDrawCardAction(HumanPlayerDrawOneCardEvent e) {
+        gameModel.drawOneCard();
+        gameModel.notifyObservers(e);
+
+        // valid only for the new card
+        addEventToHumanPlayer();
+
+        // if new card isn't droppable player move
+        if (gameModel.currentPlayerCannotDrop()) {
+
+            // next player
+            gameModel.next();
+
+            // timed call
+            GameView.resetTimer();
+            (new CurrentPlayerMoveListener(this)).startTimer();
+        }
+    }
+
+    /**
+     * Init actions in view.
+     */
+    private void initActions() {
+        // button back
+        gameView.getButtonBack().addActionListener(e -> goBackAction());
+
+        // button say uno
+        gameView.getButtonUno().addActionListener(e -> sayUnoAction(e));
+
+        // button deck, to draw a card from deck
+        gameView.getButtonDeck().addActionListener(e -> humanDrawCardAction(new HumanPlayerDrawOneCardEvent(this)));
+
+        // button start to start the game
+        gameView.getButtonStart().addActionListener(e -> startGameAction(new StartGameEvent(this)));
+
+        // button restart, to restart the game
+        gameView.getButtonRestart().addActionListener(e -> restartGameAction(new ResetGameEvent(this)));
+
+        // buttons for chose the color
+        gameView.getChooseColorPanel().getButtonBlue().addActionListener(
+                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.BLUE));
+        gameView.getChooseColorPanel().getButtonRed().addActionListener(
+                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.RED));
+        gameView.getChooseColorPanel().getButtonYellow().addActionListener(
+                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.YELLOW));
+        gameView.getChooseColorPanel().getButtonGreen().addActionListener(
+                e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.GREEN));
+    }
+
+    /**
+     * Remove all action listener from human players card.
+     * 
+     * @param button The button for which remove the action listeners.
+     */
+    private void removeActionListenersToHumanPlayer(PlayerCardButton button) {
+        for (ActionListener action : button.getActionListeners()) {
+            button.removeActionListener(action);
+        }
+    }
+
+    /**
+     * Remove all action listener from human players cards.
+     */
+    public void removeEventToHumanPlayer() {
+
+        for (Component comp : gameView.getPanelSouth().getComponents()) {
+            removeActionListenersToHumanPlayer((PlayerCardButton) comp);
+        }
+    }
+
+    /**
+     * Action for the game restart.
+     * 
+     * @param e The component triggered the event/the event.
+     */
+    public void restartGameAction(ResetGameEvent e) {
+        gameModel.reset();
+        gameModel.notifyObservers(e);
+    }
+
+    /**
+     * Action for human player when must say UNO.
+     * 
+     * @param e The component triggered the event/the event.
+     */
+    public void sayUnoAction(ActionEvent e) {
+        gameModel.notifyObservers(e);
+    }
+
+    /**
+     * Checks if in discard top pile there is a special/wild card.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    private boolean specialCardsInDiscardPile() {
+
+        if (gameModel.currentTopCardReverse()) {
+            removeEventToHumanPlayer();
+
+            // notify event
+            gameModel.notifyObservers(new ChangeOrderOfPlayEvent(this));
+
+            return true;
+        }
+
+        if (gameModel.currentTopCardSkip()) {
+            removeEventToHumanPlayer();
+
+            // notify event
+            gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
+
+            return true;
+        }
+
+        if (gameModel.currentTopCardDrawTwo()) {
+            removeEventToHumanPlayer();
+
+            // notify event
+            gameModel.notifyObservers(new CurrentPlayerDrawTwoCardEvent(this));
+            gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
+
+            return true;
+        }
+
+        if (gameModel.currentTopCardWildDrawFour()) {
+            removeEventToHumanPlayer();
+
+            // notify event
+            gameModel.notifyObservers(new CurrentPlayerDrawFourCardEvent(this));
+            gameModel.notifyObservers(new CurrentPlayerSkipEvent(this));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Action for the game start
+     * 
+     * @param e The component triggered the event/the event.
+     */
+    public void startGameAction(StartGameEvent e) {
+        // reset time
+        GameView.resetTimer();
+
+        // init actions, deal the cards and first card to discard pile
+        gameModel.dealCardsToPlayers();
+        gameModel.dropFirstCardToPileAction();
+
+        gameModel.notifyObservers(e);
+
+        // timed call
+        (new CurrentPlayerMoveListener(this)).startTimer();
+        // reset time for the case when the player move as first
+        GameView.resetTimer();
     }
 }

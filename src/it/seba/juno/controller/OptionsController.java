@@ -28,10 +28,10 @@ public class OptionsController {
     /**
      * Class Constructor.
      * 
-     * @param optionsModel the option model, contains the data about options.
-     * @param mainView     the main view, used to host all others view.
-     * @param menuView     the menu view, show the main menu.
-     * @param optionsView  the options view, show options.
+     * @param optionsModel The option model, contains the data about options.
+     * @param mainView     The main view, used to host all others view.
+     * @param menuView     The menu view, show the main menu.
+     * @param optionsView  The options view, show options.
      */
     public OptionsController(OptionsModel optionsModel, MainView mainView, MenuView menuView, OptionsView optionsView) {
 
@@ -42,6 +42,34 @@ public class OptionsController {
         this.optionsView = optionsView;
 
         initActions();
+    }
+
+    /**
+     * Action for the back button, return to main menu.
+     */
+    public void goBackAction() {
+        mainView.setCurrentView(menuView);
+        optionsModel.save();
+    }
+
+    /**
+     * Action for the screen mode toggle button, set the game to full-screen.
+     * 
+     * @param e The item event that indicate if the button is selected or not.
+     */
+    public void goFullScreenAction(ItemEvent e) {
+        optionsModel.setFullScreen(true);
+        optionsModel.notifyObservers(e);
+    }
+
+    /**
+     * Action for the screen mode toggle button, set the game to window.
+     * 
+     * @param e The item event that indicate if the button is selected or not.
+     */
+    public void goWindowAction(ItemEvent e) {
+        optionsModel.setFullScreen(false);
+        optionsModel.notifyObservers(e);
     }
 
     /**
@@ -82,29 +110,9 @@ public class OptionsController {
     }
 
     /**
-     * Action for the players radio button, set a two players game.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void setTwoPlayersAction(ActionEvent e) {
-        optionsModel.setNumberOfPlayer(2);
-        optionsModel.notifyObservers(e);
-    }
-
-    /**
-     * Action for the players radio button, set a three players game.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void setThreePlayersAction(ActionEvent e) {
-        optionsModel.setNumberOfPlayer(3);
-        optionsModel.notifyObservers(e);
-    }
-
-    /**
      * Action for the players radio button, set a four players game.
      * 
-     * @param e the component triggered the event.
+     * @param e The component triggered the event.
      */
     public void setFourPlayersAction(ActionEvent e) {
         optionsModel.setNumberOfPlayer(4);
@@ -112,50 +120,42 @@ public class OptionsController {
     }
 
     /**
-     * Action for the back button, return to main menu.
-     */
-    public void goBackAction() {
-        mainView.setCurrentView(menuView);
-        optionsModel.save();
-    }
-
-    /**
-     * Action for the screen mode toggle button, set the game to full-screen.
+     * Action for the players radio button, set a three players game.
      * 
-     * @param e the item event that indicate if the button is selected or not.
+     * @param e The component triggered the event.
      */
-    public void goFullScreenAction(ItemEvent e) {
-        optionsModel.setFullScreen(true);
+    public void setThreePlayersAction(ActionEvent e) {
+        optionsModel.setNumberOfPlayer(3);
         optionsModel.notifyObservers(e);
     }
 
     /**
-     * Action for the screen mode toggle button, set the game to window.
+     * Action for the players radio button, set a two players game.
      * 
-     * @param e the item event that indicate if the button is selected or not.
+     * @param e The component triggered the event.
      */
-    public void goWindowAction(ItemEvent e) {
-        optionsModel.setFullScreen(false);
-        optionsModel.notifyObservers(e);
-    }
-
-    /**
-     * Action for the sound toggle button, enable the sound.
-     * 
-     * @param e the item event that indicate if the button is selected or not.
-     */
-    public void soundOnAction(ItemEvent e) {
-        optionsModel.setSound(true);
+    public void setTwoPlayersAction(ActionEvent e) {
+        optionsModel.setNumberOfPlayer(2);
         optionsModel.notifyObservers(e);
     }
 
     /**
      * Action for the sound toggle button, disable the sound.
      * 
-     * @param e the item event that indicate if the button is selected or not.
+     * @param e The item event that indicate if the button is selected or not.
      */
     public void soundOffAction(ItemEvent e) {
         optionsModel.setSound(false);
+        optionsModel.notifyObservers(e);
+    }
+
+    /**
+     * Action for the sound toggle button, enable the sound.
+     * 
+     * @param e The item event that indicate if the button is selected or not.
+     */
+    public void soundOnAction(ItemEvent e) {
+        optionsModel.setSound(true);
         optionsModel.notifyObservers(e);
     }
 }

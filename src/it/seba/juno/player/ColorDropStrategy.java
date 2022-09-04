@@ -16,7 +16,7 @@ public class ColorDropStrategy extends AbstractDropStrategy {
     /**
      * Class Constructor.
      * 
-     * @param dPile reference to discard pile, the place where to drop cards.
+     * @param dPile Reference to discard pile, the place where to drop cards.
      */
     public ColorDropStrategy(DiscardPile dPile) {
         super(dPile);
@@ -26,7 +26,7 @@ public class ColorDropStrategy extends AbstractDropStrategy {
      * Drop a card checking first the color, if the npc player has no cards of the
      * same color of the discard pile, checks for the same value.
      * 
-     * @return the card to drop.
+     * @return The card to drop.
      */
     @Override
     public UnoCard dropCard() {

@@ -11,14 +11,14 @@ import it.seba.juno.card.Card;
 public interface Deck {
 
     /**
-     * Shuffle the deck.
-     */
-    public void shuffle();
-
-    /**
      * Deal a card from deck.
      * 
      * @return Top UnoCard in the deck.
      */
     Card dealCard();
+
+    /**
+     * Shuffle the deck.
+     */
+    public void shuffle();
 }

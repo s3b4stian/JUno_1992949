@@ -19,18 +19,18 @@ public class PlayerCardLabel extends JButton {
     /**
      * Button image icon on mouse over.
      */
-
     private UnoCard card;
-
-    public UnoCard getCard() {
-        return card;
-    }
 
     /**
      * Button type.
      */
     private final PlayerCardLabelType type;
 
+    /**
+     * 
+     * @author user
+     *
+     */
     public enum PlayerCardLabelType {
 
         NORTH("north", 85, 128),
@@ -59,10 +59,20 @@ public class PlayerCardLabel extends JButton {
             height = h;
         }
 
+        /**
+         * Height of the card
+         * 
+         * @return
+         */
         public int getHeight() {
             return height;
         }
 
+        /**
+         * Width of the card.
+         * 
+         * @return
+         */
         public int getWidth() {
             return width;
         }
@@ -97,5 +107,14 @@ public class PlayerCardLabel extends JButton {
         setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
         setIcon(icon);
+    }
+
+    /**
+     * Return the card shown by the button.
+     * 
+     * @return
+     */
+    public UnoCard getCard() {
+        return card;
     }
 }

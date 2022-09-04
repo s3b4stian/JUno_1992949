@@ -65,75 +65,171 @@ import it.seba.juno.view.component.SaidUnoLabel;
 import it.seba.juno.view.component.listener.DealCardListener;
 import it.seba.juno.view.component.listener.DiscardPileListener;
 
+/**
+ * The game table, permit to play uno game.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class GameView extends JPanel implements InterfaceObserver {
 
     private static final long serialVersionUID = 5048154536202885401L;
 
+    /**
+     * Time for timed events
+     */
     private static int time;
 
-    public static void resetTimer() {
-        GameView.time = 0;
+    /**
+     * Returns the time to use for the next event.
+     * 
+     * @return Time, not increased.
+     */
+    public static int getTime() {
+        return GameView.time;
     }
 
+    /**
+     * Returns the time to use for the next event.
+     * 
+     * @return Time increased of 50 milliseconds.
+     */
     public static int getTimeFast() {
         GameView.time += 50;
         return GameView.time;
     }
 
+    /**
+     * Returns the time to use for the next event.
+     * 
+     * @return Time increased of 100 milliseconds.
+     */
     public static int getTimeNormal() {
         GameView.time += 100;
         return GameView.time;
     }
 
+    /**
+     * Returns the time to use for the next event.
+     * 
+     * @return Time increased of 200 milliseconds.
+     */
     public static int getTimeSlow() {
         GameView.time += 200;
         return GameView.time;
     }
 
+    /**
+     * Returns the time to use for the next event.
+     * 
+     * @return Time increased of 1500 milliseconds.
+     */
     public static int getTimeTurn() {
         GameView.time += 1500;
         return GameView.time;
     }
 
-    public static int getTime() {
-        return GameView.time;
+    /**
+     * Reset the timer.
+     */
+    public static void resetTimer() {
+        GameView.time = 0;
     }
 
+    /**
+     * The dealer label, show which player is the dealer.
+     */
     private DealerLabel dealer;
 
+    /**
+     * Show current discard pile color.
+     */
     private DiscardPileColorLabel discardPileColor;
+
+    /**
+     * Show current discard pile card.
+     */
     private DiscardPileLabel discardPile;
 
+    /**
+     * Show the order of play, clockwise or anticlockwise.
+     */
     private OrderOfPlayLabel orderOfPlay;
 
+    /**
+     * The log text area in the left of the game.
+     */
     private JTextArea logTextArea;
+
+    /**
+     * Scroll pane for the log text area.
+     */
     private JScrollPane logTextAreaScrollPane;
 
+    /**
+     * The deck of the cards at the center of the table.
+     */
     private DeckPanel panelDeck;
+
+    /**
+     * The discard pile for cards at the center of the table.
+     */
     private DeckPanel panelDiscardPile;
 
+    /**
+     * Player panel, ncp.
+     */
     private PlayerPanel panelEast;
+
+    /**
+     * Player panel, ncp.
+     */
     private PlayerPanel panelNorth;
+
+    /**
+     * Player panel, human.
+     */
     private PlayerPanel panelSouth;
+
+    /**
+     * Player panel, ncp.
+     */
     private PlayerPanel panelWest;
 
+    /**
+     * Panel to chose the color for discard pile, for human player.
+     */
     private ChoseColorPanel panelChooseColor;
 
-    public ChoseColorPanel getChooseColorPanel() {
-        return panelChooseColor;
-    }
-
+    /**
+     * Player name label displayer above the player panel.
+     */
     private PlayerLabel playerName;
+
+    /**
+     * Said uno label, show which player said uno.
+     */
     private SaidUnoLabel saidUno;
 
+    /**
+     * The button in deck panel to draw a card for the human player.
+     */
     private DeckButton buttonDeck;
-    private MenuButton buttonUno;
-    private MenuButton buttonStart;
-    private MenuButton buttonRestart;
 
-    public MenuButton getButtonRestart() {
-        return buttonRestart;
-    }
+    /**
+     * The button uno on the right of the south panel, used by human to say uno.
+     */
+    private MenuButton buttonUno;
+
+    /**
+     * Start the game.
+     */
+    private MenuButton buttonStart;
+
+    /**
+     * Restart the game.
+     */
+    private MenuButton buttonRestart;
 
     /**
      * Back button, returns to main menu view.
@@ -141,18 +237,17 @@ public class GameView extends JPanel implements InterfaceObserver {
     private MenuButton buttonBack;
 
     /**
-     * Audio manager, to play sounds.
+     * Class Constructor.
      */
-    private AudioManager audioManager;
-
     public GameView() {
 
-        audioManager = AudioManager.getInstance();
+        // audioManager = AudioManager.getInstance();
 
         setBorder(new EmptyBorder(0, 0, 0, 0));
 
         Dimension fillerDimension = new Dimension(0, 0);
 
+        // fillers
         Filler fillerInnerNorth = new Filler(fillerDimension, fillerDimension, fillerDimension);
         Filler fillerInnerSouth = new Filler(fillerDimension, fillerDimension, fillerDimension);
         Filler fillerInnerWest = new Filler(fillerDimension, fillerDimension, fillerDimension);
@@ -165,6 +260,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         Dimension panelHorizontal = new Dimension(480, 140);
         Dimension panelVertical = new Dimension(140, 480);
 
+        // interactive components
         panelWest = new PlayerPanel(panelVertical, true);
         panelNorth = new PlayerPanel(panelHorizontal, false);
         panelSouth = new PlayerPanel(panelHorizontal, false);
@@ -201,84 +297,6 @@ public class GameView extends JPanel implements InterfaceObserver {
         buttonRestart = new MenuButton("Restart");
 
         logTextAreaScrollPane = new JScrollPane();
-        logTextArea = new JTextArea();
-
-        setLayout(new GridBagLayout());
-
-        fillerInnerNorth.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 3;
-        gbc.gridwidth = 9;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 0.9;
-        add(fillerInnerNorth, gbc);
-
-        fillerInnerSouth.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 8;
-        gbc.gridwidth = 9;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 0.9;
-        add(fillerInnerSouth, gbc);
-
-        fillerInnerWest.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 5;
-        gbc.gridwidth = 3;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0.2;
-        add(fillerInnerWest, gbc);
-
-        fillerInnerEast.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 10;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0.2;
-        add(fillerInnerEast, gbc);
-
-        fillerOuterNorth.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 15;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 0.4;
-        add(fillerOuterNorth, gbc);
-
-        fillerOtherSouth.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 12;
-        gbc.gridwidth = 15;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 0.4;
-        add(fillerOtherSouth, gbc);
-
-        fillerOuterWest.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 10;
-        gbc.gridheight = 2;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0.5;
-        add(fillerOuterWest, gbc);
-
-        fillerOuterEast.setOpaque(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 14;
-        gbc.gridy = 1;
-        gbc.gridheight = 11;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0.1;
-        add(fillerOuterEast, gbc);
-
         logTextAreaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         logTextAreaScrollPane.setBorder(null);
         logTextAreaScrollPane.setHorizontalScrollBar(null);
@@ -288,6 +306,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         logTextAreaScrollPane.setAutoscrolls(true);
         logTextAreaScrollPane.getViewport().setOpaque(false);
 
+        logTextArea = new JTextArea();
         logTextArea.setColumns(20);
         logTextArea.setRows(20);
         logTextArea.setTabSize(4);
@@ -300,6 +319,91 @@ public class GameView extends JPanel implements InterfaceObserver {
         logTextArea.setAutoscrolls(true);
         logTextAreaScrollPane.setViewportView(logTextArea);
 
+        setLayout(new GridBagLayout());
+
+        // inner filler north
+        fillerInnerNorth.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 3;
+        gbc.gridwidth = 9;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 0.9;
+        add(fillerInnerNorth, gbc);
+
+        // inner filler south
+        fillerInnerSouth.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 8;
+        gbc.gridwidth = 9;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 0.9;
+        add(fillerInnerSouth, gbc);
+
+        // inner filler west
+        fillerInnerWest.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 0.2;
+        add(fillerInnerWest, gbc);
+
+        // inner filler east
+        fillerInnerEast.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 10;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 3;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 0.2;
+        add(fillerInnerEast, gbc);
+
+        // outer filler north
+        fillerOuterNorth.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 15;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 0.4;
+        add(fillerOuterNorth, gbc);
+
+        // outer filler south
+        fillerOtherSouth.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 12;
+        gbc.gridwidth = 15;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 0.4;
+        add(fillerOtherSouth, gbc);
+
+        // outer filler west
+        fillerOuterWest.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        gbc.gridheight = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 0.5;
+        add(fillerOuterWest, gbc);
+
+        // outer filler east
+        fillerOuterEast.setOpaque(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 14;
+        gbc.gridy = 1;
+        gbc.gridheight = 11;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 0.1;
+        add(fillerOuterEast, gbc);
+
+        // scroll pane for the left text area, game log
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -446,176 +550,45 @@ public class GameView extends JPanel implements InterfaceObserver {
 
     }
 
-    public MenuButton getButtonStart() {
-        return buttonStart;
-    }
-
-    public PlayerPanel getPanelSouth() {
-        return panelSouth;
-    }
-
     /**
-     * Returns a reference to the "said uno button" of the options, used mainly to
-     * set the action performed from the button. The action is assigned to the
-     * button at controller level.
+     * Draw cards of the player on deal at the start of the game, human player
+     * version.
      * 
-     * @return the button reference.
+     * @param p     The player for which draw cards.
+     * @param panel The panel where add cards
      */
-    public MenuButton getButtonUno() {
-        return buttonUno;
-    }
-
-    /**
-     * Returns a reference to the "deck button" of the options, used mainly to set
-     * the action performed from the button. The action is assigned to the button at
-     * controller level.
-     * 
-     * @return the button reference.
-     */
-    public DeckButton getButtonDeck() {
-        return buttonDeck;
-    }
-
-    /**
-     * Returns a reference to the "back button" of the options, used mainly to set
-     * the action performed from the button. The action is assigned to the button at
-     * controller level.
-     * 
-     * @return the button reference.
-     */
-    public MenuButton getButtonBack() {
-        return buttonBack;
-    }
-
-    /**
-     * Draw the panel background as diagonal gradient.
-     */
-    @Override
-    protected void paintChildren(Graphics grphcs) {
-        Graphics2D g2 = (Graphics2D) grphcs;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        // diagonal gradient as paint
-        g2.setPaint(new GradientPaint(0, getHeight(), Color.decode("#009FFD"), getWidth(), 0, Color.decode("#2A2A72")));
-        // fill the panel
-        g2.fillRect(0, 0, getWidth(), getHeight());
-
-        super.paintChildren(grphcs);
-    }
-
-    private void disablePlayerPanel() {
-        panelSouth.setEnabled(false);
-        panelEast.setEnabled(false);
-        panelNorth.setEnabled(false);
-        panelWest.setEnabled(false);
-    }
-
-    private void enablePlayerPanel(int numberOfPlayers) {
-        panelSouth.setEnabled(true);
-        panelWest.setEnabled(true);
-
-        if (numberOfPlayers == 3) {
-            this.panelNorth.setEnabled(true);
-        }
-
-        if (numberOfPlayers == 4) {
-            this.panelNorth.setEnabled(true);
-            this.panelEast.setEnabled(true);
-        }
-    }
-
-    public void setDiscardPile(UnoCard topCard) {
-        if (topCard.hasColor()) {
-            setDiscardPileColor(topCard.getColor());
-        }
-
-        discardPile.setCard(topCard);
-    }
-
-    public void setDiscardPileColor(UnoColor color) {
-        discardPileColor.setEnabled(true);
-        switch (color) {
-        case BLUE:
-            discardPileColor.setBlue();
-            break;
-        case RED:
-            discardPileColor.setRed();
-            break;
-        case GREEN:
-            discardPileColor.setGreen();
-            break;
-        case YELLOW:
-            discardPileColor.setYellow();
-            break;
-        }
-    }
-
-    private void setDealer(int d) {
-
-        switch (d) {
-        case 0:
-            dealer.setDealerSouth();
-            break;
-        case 3:
-            dealer.setDealerEast();
-            break;
-        case 2:
-            dealer.setDealerNorth();
-            break;
-        case 1:
-            dealer.setDealerWest();
-            break;
-        }
-    }
-
-    private void repaintNpcCards(Player p, PlayerPanel panel) {
-        panel.removeAll();
-        for (UnoCard c : p.getCards()) {
-            panel.add(new PlayerCardButton(c));
-        }
-
-    }
-
-    private void repaintNpcCards(Player p, PlayerPanel panel, PlayerCardLabel.PlayerCardLabelType label) {
-        panel.removeAll();
-        for (UnoCard c : p.getCards()) {
-            panel.add(new PlayerCardLabel(c, label));
-        }
-    }
-
-    private void repaintNpcCards(Player p) {
-
-        switch (p.getName()) {
-        case "Human":
-            repaintNpcCards(p, panelSouth);
-            break;
-        case "NPC-East":
-            repaintNpcCards(p, panelEast, PlayerCardLabel.PlayerCardLabelType.EAST);
-            break;
-        case "NPC-North":
-            repaintNpcCards(p, panelNorth, PlayerCardLabel.PlayerCardLabelType.NORTH);
-            break;
-        case "NPC-West":
-            repaintNpcCards(p, panelWest, PlayerCardLabel.PlayerCardLabelType.WEST);
-            break;
-        }
-    }
-
-    private void log(String text) {
-        logTextArea.append(text + "\n");
-    }
-
     private void dealCards(Player p, PlayerPanel panel) {
         for (UnoCard c : p.getCards()) {
             (new DealCardListener(panel, new PlayerCardButton(c))).startTimer();
         }
     }
 
+    /**
+     * Audio manager, to play sounds.
+     */
+    // private AudioManager audioManager;
+
+    /**
+     * Draw cards of the player on deal at the start of the game, npc player
+     * version.
+     * 
+     * @param p     The player for which draw cards.
+     * @param panel The panel where add cards
+     * @param label The type of card to draw, need to select the card with the
+     *              correct orientation.
+     */
     private void dealCards(Player p, PlayerPanel panel, PlayerCardLabel.PlayerCardLabelType label) {
         for (UnoCard c : p.getCards()) {
             (new DealCardListener(panel, new PlayerCardLabel(c, label))).startTimer();
         }
     }
 
+    /**
+     * Draw cards of the player on deal at the start of the game, generic version.
+     *
+     * @param players The list of game players.
+     * @param topCard The top card to draw for the discard pile.
+     */
     private void dealCards(UnoPlayers players, UnoCard topCard) {
 
         players.forEach(p -> {
@@ -639,6 +612,221 @@ public class GameView extends JPanel implements InterfaceObserver {
         (new DiscardPileListener(this, topCard)).startTimer();
     }
 
+    /**
+     * Disable all player panels.
+     */
+    private void disablePlayerPanel() {
+        panelSouth.setEnabled(false);
+        panelEast.setEnabled(false);
+        panelNorth.setEnabled(false);
+        panelWest.setEnabled(false);
+    }
+
+    /**
+     * Enable player panels
+     * 
+     * @param numberOfPlayers The number of players for the current match.
+     */
+    private void enablePlayerPanel(int numberOfPlayers) {
+        panelSouth.setEnabled(true);
+        panelWest.setEnabled(true);
+
+        if (numberOfPlayers == 3) {
+            this.panelNorth.setEnabled(true);
+        }
+
+        if (numberOfPlayers == 4) {
+            this.panelNorth.setEnabled(true);
+            this.panelEast.setEnabled(true);
+        }
+    }
+
+    /**
+     * Returns a reference to the "back button" of the options, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
+     */
+    public MenuButton getButtonBack() {
+        return buttonBack;
+    }
+
+    /**
+     * Returns a reference to the "deck button" of the options, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
+     */
+    public DeckButton getButtonDeck() {
+        return buttonDeck;
+    }
+
+    /**
+     * Returns a reference to the "restart button" of the game, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
+     */
+    public MenuButton getButtonRestart() {
+        return buttonRestart;
+    }
+
+    /**
+     * Returns a reference to the "start button" of the game, used mainly to set the
+     * action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
+     */
+    public MenuButton getButtonStart() {
+        return buttonStart;
+    }
+
+    /**
+     * Returns a reference to the "say UNO button" of the game, used mainly to set
+     * the action performed from the button. The action is assigned to the button at
+     * controller level.
+     * 
+     * @return The button reference.
+     */
+    public MenuButton getButtonUno() {
+        return buttonUno;
+    }
+
+    /**
+     * Returns a reference to the "panel" of the colors, used mainly to set the
+     * action performed from the buttons inside the panel. The action is assigned to
+     * the button at controller level.
+     * 
+     * @return The panel reference.
+     */
+    public ChoseColorPanel getChooseColorPanel() {
+        return panelChooseColor;
+    }
+
+    /**
+     * Return the human player panel.
+     * 
+     * @return Reference to the human player panel.
+     */
+    public PlayerPanel getPanelSouth() {
+        return panelSouth;
+    }
+
+    /**
+     * Append a text to the left text area.
+     * 
+     * @param Text the text to append
+     */
+    private void log(String text) {
+        logTextArea.append(text + "\n");
+    }
+
+    /**
+     * Draw the panel background as diagonal gradient.
+     */
+    @Override
+    protected void paintChildren(Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // diagonal gradient as paint
+        g2.setPaint(new GradientPaint(0, getHeight(), Color.decode("#009FFD"), getWidth(), 0, Color.decode("#2A2A72")));
+        // fill the panel
+        g2.fillRect(0, 0, getWidth(), getHeight());
+
+        super.paintChildren(grphcs);
+    }
+
+    /**
+     * Manage the label for show when a player said Uno.
+     * 
+     * @param p The player that said Uno.
+     */
+    private void playerSaidUno(Player p) {
+
+        switch (p.getName()) {
+        case "NPC-East":
+            saidUno.setSaidEast();
+            break;
+        case "NPC-North":
+            saidUno.setSaidNorth();
+            break;
+        case "NPC-West":
+            saidUno.setSaidWest();
+            break;
+        }
+    }
+
+    /**
+     * Redraw all cards in the player panel, general version, this method use
+     * overloading to draw cards for all players.
+     * 
+     * @param p The player for which redraw cards.
+     */
+    private void repaintNpcCards(Player p) {
+
+        switch (p.getName()) {
+        case "Human":
+            repaintNpcCards(p, panelSouth);
+            break;
+        case "NPC-East":
+            repaintNpcCards(p, panelEast, PlayerCardLabel.PlayerCardLabelType.EAST);
+            break;
+        case "NPC-North":
+            repaintNpcCards(p, panelNorth, PlayerCardLabel.PlayerCardLabelType.NORTH);
+            break;
+        case "NPC-West":
+            repaintNpcCards(p, panelWest, PlayerCardLabel.PlayerCardLabelType.WEST);
+            break;
+        }
+    }
+
+    /**
+     * Redraw all cards in the player panel, human player version.
+     * 
+     * @param p     The player for which redraw cards.
+     * @param panel The panel where add cards, panel always south panel, this
+     *              parameter will be omitted in future.
+     */
+    private void repaintNpcCards(Player p, PlayerPanel panel) {
+        panel.removeAll();
+        for (UnoCard c : p.getCards()) {
+            panel.add(new PlayerCardButton(c));
+        }
+
+    }
+
+    /**
+     * Redraw all cards in the player panel, npc player version.
+     * 
+     * @param p     The player for which redraw cards.
+     * @param panel The panel where add cards
+     * @param label The type of card to draw, need to select the card with the
+     *              correct orientation.
+     */
+    private void repaintNpcCards(Player p, PlayerPanel panel, PlayerCardLabel.PlayerCardLabelType label) {
+        panel.removeAll();
+        for (UnoCard c : p.getCards()) {
+            panel.add(new PlayerCardLabel(c, label));
+        }
+    }
+
+    /**
+     * Repaint all card panels.
+     */
+    private void repaintPlayerPanels() {
+        panelNorth.repaint();
+        panelSouth.repaint();
+        panelEast.repaint();
+        panelWest.repaint();
+    }
+
+    /**
+     * Reset the color of the card panel for all players
+     */
     private void resetCurrentPlayer() {
         panelSouth.setCurrentPlayer(false);
         panelEast.setCurrentPlayer(false);
@@ -646,6 +834,11 @@ public class GameView extends JPanel implements InterfaceObserver {
         panelWest.setCurrentPlayer(false);
     }
 
+    /**
+     * Set the color of the card panel for the player that have to move.
+     * 
+     * @param p The player will move into the turn.
+     */
     private void setCurrentPlayer(Player p) {
 
         resetCurrentPlayer();
@@ -668,6 +861,70 @@ public class GameView extends JPanel implements InterfaceObserver {
         repaintPlayerPanels();
     }
 
+    /**
+     * Set the dealer label for the game.
+     * 
+     * @param d The number of the player which will be dealer for the match.
+     */
+    private void setDealer(int d) {
+
+        switch (d) {
+        case 0:
+            dealer.setDealerSouth();
+            break;
+        case 1:
+            dealer.setDealerWest();
+            break;
+        case 2:
+            dealer.setDealerNorth();
+            break;
+        case 3:
+            dealer.setDealerEast();
+            break;
+        }
+    }
+
+    /**
+     * Draw the current discard pile card.
+     * 
+     * @param topCard The card to draw to discard pile.
+     */
+    public void setDiscardPile(UnoCard topCard) {
+        if (topCard.hasColor()) {
+            setDiscardPileColor(topCard.getColor());
+        }
+
+        discardPile.setCard(topCard);
+    }
+
+    /**
+     * Change the discard pile color.
+     * 
+     * @param color The new color for the discard pile.
+     */
+    public void setDiscardPileColor(UnoColor color) {
+        discardPileColor.setEnabled(true);
+        switch (color) {
+        case BLUE:
+            discardPileColor.setBlue();
+            break;
+        case RED:
+            discardPileColor.setRed();
+            break;
+        case GREEN:
+            discardPileColor.setGreen();
+            break;
+        case YELLOW:
+            discardPileColor.setYellow();
+            break;
+        }
+    }
+
+    /**
+     * Set the color of the card panel for the player that will move.
+     * 
+     * @param p The player will move into the next turn.
+     */
     private void setNextPlayer(Player p) {
 
         resetCurrentPlayer();
@@ -690,28 +947,13 @@ public class GameView extends JPanel implements InterfaceObserver {
         repaintPlayerPanels();
     }
 
-    private void repaintPlayerPanels() {
-        panelNorth.repaint();
-        panelSouth.repaint();
-        panelEast.repaint();
-        panelWest.repaint();
-    }
-
-    private void playerSaidUno(Player p) {
-
-        switch (p.getName()) {
-        case "NPC-East":
-            saidUno.setSaidEast();
-            break;
-        case "NPC-North":
-            saidUno.setSaidNorth();
-            break;
-        case "NPC-West":
-            saidUno.setSaidWest();
-            break;
-        }
-    }
-
+    /**
+     * Update this view when the model had a change, this method in this class is
+     * too long, need to find a solution to split the code.
+     * 
+     * @param o The observable that changed his state.
+     * @param e The event object that triggered the change.
+     */
     @Override
     public void update(Observable o, EventObject e) {
 
@@ -720,6 +962,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         OptionsModel optionModel = null;
         GameModel gameModel = null;
 
+        // reset the game for a new match.
         if (e instanceof ResetGameEvent) {
             buttonUno.setVisible(false);
             buttonStart.setVisible(true);

@@ -30,7 +30,7 @@ public class PlayersProfileModel implements Serializable {
     /**
      * Class Constructor.
      * 
-     * @param name the name of the new player.
+     * @param name The name of the new player.
      */
     public PlayersProfileModel(String name) {
         this.name = name;
@@ -39,7 +39,7 @@ public class PlayersProfileModel implements Serializable {
     /**
      * Returns the name of the player.
      * 
-     * @return the name of the player.
+     * @return The name of the player.
      */
     public String getName() {
         return name;
@@ -48,7 +48,7 @@ public class PlayersProfileModel implements Serializable {
     /**
      * Returns how many times the player has played the game.
      * 
-     * @return the number of matches played.
+     * @return The number of matches played.
      */
     public int getPlayed() {
         return played;
@@ -57,7 +57,7 @@ public class PlayersProfileModel implements Serializable {
     /**
      * Returns how many times the player won in game.
      * 
-     * @return the number of matches won.
+     * @return The number of matches won.
      */
     public int getWon() {
         return won;

@@ -10,10 +10,21 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+/**
+ * The panel used to show the deck of Uno cards in game.
+ * 
+ * @author Sebastian Rapatti.
+ *
+ */
 public class DeckPanel extends JPanel {
 
     private static final long serialVersionUID = 8947419224558984136L;
 
+    /**
+     * Class Constructor.
+     * 
+     * @param dimension Dimensions of the panel.
+     */
     public DeckPanel(Dimension dimension) {
         setMaximumSize(dimension);
         setMinimumSize(dimension);

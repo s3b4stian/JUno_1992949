@@ -12,13 +12,15 @@ import java.util.function.Consumer;
  */
 public class UnoPlayers implements Iterable<Player> {
 
-    // direction default clockwise
+    /**
+     * Is the order of play clockwise?
+     */
     private boolean clockwise = true;
-    private ArrayDeque<Player> players;
 
-    public ArrayDeque<Player> getPlayers() {
-        return players;
-    }
+    /**
+     * The number of players in match.
+     */
+    private ArrayDeque<Player> players;
 
     /**
      * Class Constructor.
@@ -28,49 +30,13 @@ public class UnoPlayers implements Iterable<Player> {
     }
 
     /**
-     * Returns the order of play, the order change when a player drops the reverse
-     * card.
-     * 
-     * @return true if clockwise, false if anti-clockwise.
-     */
-    public boolean getOrderOfPlay() {
-        return clockwise;
-    }
-
-    /**
      * Add a player for the next match, this method should be used before the start
      * of a match.
      * 
-     * @param player the player to add.
+     * @param player The player to add.
      */
     public void add(Player player) {
         players.offer(player);
-    }
-
-    /**
-     * Set the dealer, iterate through players until the dealer is reached.
-     * 
-     * @param index the index of the player.
-     */
-    public void setDealer(int index) {
-        int c = index + 1;
-
-        if (index == players.size() - 1) {
-            c = 0;
-        }
-
-        for (int i = 0; i < c; i++) {
-            players.offer(players.poll());
-        }
-    }
-
-    /**
-     * Returns the number of players in a match.
-     * 
-     * @return the number of players.
-     */
-    public int number() {
-        return players.size();
     }
 
     /**
@@ -83,6 +49,81 @@ public class UnoPlayers implements Iterable<Player> {
      */
     public void forEach(Consumer<? super Player> c) {
         players.forEach(c);
+    }
+
+    /**
+     * Returns the order of play, the order change when a player drops the reverse
+     * card.
+     * 
+     * @return True if clockwise, false if anti-clockwise.
+     */
+    public boolean getOrderOfPlay() {
+        return clockwise;
+    }
+
+    /**
+     * Returns the players in match.
+     * 
+     * @return List of the players in match.
+     */
+    public ArrayDeque<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * A way to iterate over players, every time the next player, the for cycle that
+     * use this iterator have to be stopped manually.
+     * 
+     * @return Iterator to iterate over players.
+     */
+    @Override
+    public Iterator<Player> iterator() {
+        return new Iterator<Player>() {
+
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+
+            @Override
+            public Player next() {
+
+                Player currentPlayer = players.poll();
+                players.offer(currentPlayer);
+
+                return currentPlayer;
+            }
+        };
+    }
+
+    public Player nextPlayer() {
+        return players.peek();
+    }
+
+    /**
+     * Returns the number of players in a match.
+     * 
+     * @return The number of players.
+     */
+    public int number() {
+        return players.size();
+    }
+
+    /**
+     * Set the dealer, iterate through players until the dealer is reached.
+     * 
+     * @param index The index of the player.
+     */
+    public void setDealer(int index) {
+        int c = index + 1;
+
+        if (index == players.size() - 1) {
+            c = 0;
+        }
+
+        for (int i = 0; i < c; i++) {
+            players.offer(players.poll());
+        }
     }
 
     /**
@@ -107,38 +148,6 @@ public class UnoPlayers implements Iterable<Player> {
             players.offer(tmp.pop());
         }
 
-        // System.out.println(players);
-
         tmp = null;
-    }
-
-    public Player nextPlayer() {
-        return players.peek();
-    }
-
-    /**
-     * A way to iterate over players, every time the next player, the for cycle that
-     * use this iterator have to be stopped manually.
-     * 
-     * @return iterator to iterate over players.
-     */
-    @Override
-    public Iterator<Player> iterator() {
-        return new Iterator<Player>() {
-
-            @Override
-            public boolean hasNext() {
-                return true;
-            }
-
-            @Override
-            public Player next() {
-
-                Player currentPlayer = players.poll();
-                players.offer(currentPlayer);
-
-                return currentPlayer;
-            }
-        };
     }
 }

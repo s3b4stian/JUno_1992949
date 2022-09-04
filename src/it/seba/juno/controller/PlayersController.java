@@ -34,10 +34,10 @@ public class PlayersController {
     /**
      * Class Constructor.
      * 
-     * @param playersModel the player model, contains the data about players.
-     * @param mainView     the main view, used to host all others view.
-     * @param menuView     the menu view, show the main menu.
-     * @param playersView  the players view, show players.
+     * @param playersModel The player model, contains the data about players.
+     * @param mainView     The main view, used to host all others view.
+     * @param menuView     The menu view, show the main menu.
+     * @param playersView  The players view, show players.
      */
     public PlayersController(PlayersModel playersModel, MainView mainView, MenuView menuView, PlayersView playersView) {
 
@@ -48,6 +48,60 @@ public class PlayersController {
         this.playersView = playersView;
 
         initActions();
+    }
+
+    /**
+     * Action for the cancel button in delete player dialog, hide dialog.
+     * 
+     * @param e the component triggered the event.
+     */
+    public void cancelDeleteModalAction(ActionEvent e) {
+        playersModel.notifyObservers(e);
+    }
+
+    /**
+     * Action for the cancel button in new player dialog, hide dialog.
+     * 
+     * @param e The component triggered the event.
+     */
+    public void cancelNewPlayerModalAction(ActionEvent e) {
+        playersModel.notifyObservers(e);
+    }
+
+    /**
+     * Action for the confirm button in delete player dialog, delete selected player
+     * and hide dialog.
+     * 
+     * @param e The component triggered the event.
+     */
+    public void confirmDeleteModalAction(ActionEvent e) {
+        if (listPlayers.getSelectedIndex() != -1) {
+            playersModel.setCurrentProfile(null);
+            playersModel.removePlayer(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
+            playersModel.notifyObservers(e);
+        }
+    }
+
+    /**
+     * Action for the confirm button in new player dialog, create new player and
+     * hide dialog.
+     * 
+     * @param e The component triggered the event.
+     */
+    public void confirmNewPlayerModalAction(ActionEvent e) {
+        String playerName = playersView.getNewPlayerModal().getTextField().getText();
+        PlayersProfileModel newPlayer = new PlayersProfileModel(playerName);
+        playersModel.addPlayer(playerName, newPlayer);
+        listPlayers.addItem(newPlayer);
+        playersModel.notifyObservers(e);
+    }
+
+    /**
+     * Action for the back button, return to main menu.
+     */
+    public void goBackAction() {
+        mainView.setCurrentView(menuView);
+        playersModel.save();
     }
 
     /**
@@ -89,6 +143,18 @@ public class PlayersController {
     }
 
     /**
+     * Action for the players list, load the player profile of the selected player.
+     * 
+     * @param e The component triggered the event.
+     */
+    public void loadAction(ListSelectionEvent e) {
+        if (listPlayers.getSelectedIndex() != -1) {
+            playersModel.setCurrentProfile(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
+            playersModel.notifyObservers(e);
+        }
+    }
+
+    /**
      * Load players from model to view JList component.
      */
     private void loadListPlayers() {
@@ -101,86 +167,20 @@ public class PlayersController {
     }
 
     /**
-     * Action for the back button, return to main menu.
-     */
-    public void goBackAction() {
-        mainView.setCurrentView(menuView);
-        playersModel.save();
-    }
-
-    /**
-     * Action for the new button, show the new player dialog.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void showNewPlayerModalAction(ActionEvent e) {
-        playersModel.notifyObservers(e);
-    }
-
-    /**
-     * Action for the confirm button in new player dialog, create new player and
-     * hide dialog.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void confirmNewPlayerModalAction(ActionEvent e) {
-        String playerName = playersView.getNewPlayerModal().getTextField().getText();
-        PlayersProfileModel newPlayer = new PlayersProfileModel(playerName);
-        playersModel.addPlayer(playerName, newPlayer);
-        listPlayers.addItem(newPlayer);
-        playersModel.notifyObservers(e);
-    }
-
-    /**
-     * Action for the cancel button in new player dialog, hide dialog.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void cancelNewPlayerModalAction(ActionEvent e) {
-        playersModel.notifyObservers(e);
-    }
-
-    /**
      * Action for the delete button, show the delete player dialog.
      * 
-     * @param e the component triggered the event.
+     * @param e The component triggered the event.
      */
     public void showDeleteModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
     }
 
     /**
-     * Action for the confirm button in delete player dialog, delete selected player
-     * and hide dialog.
+     * Action for the new button, show the new player dialog.
      * 
-     * @param e the component triggered the event.
+     * @param e The component triggered the event.
      */
-    public void confirmDeleteModalAction(ActionEvent e) {
-        if (listPlayers.getSelectedIndex() != -1) {
-            playersModel.setCurrentProfile(null);
-            playersModel.removePlayer(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
-            playersModel.notifyObservers(e);
-        }
-    }
-
-    /**
-     * Action for the cancel button in delete player dialog, hide dialog.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void cancelDeleteModalAction(ActionEvent e) {
+    public void showNewPlayerModalAction(ActionEvent e) {
         playersModel.notifyObservers(e);
-    }
-
-    /**
-     * Action for the players list, load the player profile of the selected player.
-     * 
-     * @param e the component triggered the event.
-     */
-    public void loadAction(ListSelectionEvent e) {
-        if (listPlayers.getSelectedIndex() != -1) {
-            playersModel.setCurrentProfile(((PlayersProfileModel) listPlayers.getSelectedValue()).getName());
-            playersModel.notifyObservers(e);
-        }
     }
 }

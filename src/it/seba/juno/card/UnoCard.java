@@ -36,6 +36,33 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b>Overridden method for UnoCard</b>
+     * </p>
+     * 
+     * <p>
+     * This is the specific implementation to compare cards in UNO card game
+     * </p>
+     */
+    @Override
+    public int compareTo(UnoCard o) {
+
+        if (hasColor && o.hasColor() == this.hasColor) {
+
+            int colorCompare = o.getColor().compareTo(getColor());
+
+            if (colorCompare != 0) {
+                return colorCompare;
+            }
+            return -o.getValue().compareTo(getValue());
+        }
+
+        return -o.getValue().compareTo(getValue());
+    }
+
+    /**
      * Compare current UNO cards with another and returns true if card are equals,
      * false otherwise
      * 
@@ -67,14 +94,6 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
      * {@inheritDoc}
      */
     @Override
-    public UnoValue getValue() {
-        return value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public UnoColor getColor() {
         return color;
     }
@@ -83,35 +102,16 @@ public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, Wit
      * {@inheritDoc}
      */
     @Override
-    public boolean hasColor() {
-        return hasColor;
+    public UnoValue getValue() {
+        return value;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * <p>
-     * <b>Overridden method for UnoCard</b>
-     * </p>
-     * 
-     * <p>
-     * This is the specific implementation to compare cards in UNO card game
-     * </p>
      */
     @Override
-    public int compareTo(UnoCard o) {
-
-        if (hasColor && o.hasColor() == this.hasColor) {
-
-            int colorCompare = o.getColor().compareTo(getColor());
-
-            if (colorCompare != 0) {
-                return colorCompare;
-            }
-            return -o.getValue().compareTo(getValue());
-        }
-
-        return -o.getValue().compareTo(getValue());
+    public boolean hasColor() {
+        return hasColor;
     }
 
     /**

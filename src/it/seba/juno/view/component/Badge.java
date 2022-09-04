@@ -11,7 +11,7 @@ public interface Badge {
     /**
      * Returns the image file name (with extension) associate to the badge.
      * 
-     * @return the image file name.
+     * @return The image file name.
      */
     String getImage();
 }

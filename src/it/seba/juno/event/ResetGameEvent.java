@@ -3,7 +3,7 @@ package it.seba.juno.event;
 import java.util.EventObject;
 
 /**
- * Used to reset game view when there is a change in options.
+ * Game event used to reset game view when there is a change in options.
  * 
  * @author Sebastian Rapetti
  *
@@ -15,7 +15,7 @@ public class ResetGameEvent extends EventObject {
     /**
      * Class Constructor.
      * 
-     * @param source the object that triggered this event.
+     * @param source The object that triggered this event.
      */
     public ResetGameEvent(Object source) {
         super(source);

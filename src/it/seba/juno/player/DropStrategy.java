@@ -17,14 +17,14 @@ public interface DropStrategy {
      * Return the card to drop to the discard pile, implemented in concrete
      * strategies.
      * 
-     * @return the card to drop.
+     * @return The card to drop.
      */
     UnoCard dropCard();
 
     /**
      * Set player card, a strategy use cards to decide what to do.
      * 
-     * @param cards the list of player cards.
+     * @param cards The list of player cards.
      */
     void setPlayerCards(List<UnoCard> cards);
 }

@@ -11,7 +11,7 @@ import java.util.Comparator;
 public class UnoCardComparator implements Comparator<UnoCard> {
 
     /**
-     * Class constructor.
+     * Class Constructor.
      */
     public UnoCardComparator() {
 

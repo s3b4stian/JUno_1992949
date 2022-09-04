@@ -13,7 +13,7 @@ public interface NpcDropAction extends PlayerAction {
     /**
      * Drop a card from cards in hand.
      * 
-     * @return a card choose using the drop strategy.
+     * @return A card choose using the drop strategy.
      */
     UnoCard dropCard();
 }

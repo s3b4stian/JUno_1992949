@@ -13,9 +13,9 @@ public interface HumanDropAction extends PlayerAction {
     /**
      * Drop a card from cards in hand.
      * 
-     * @param index the index of one card in hand.
+     * @param index The index of one card in hand.
      * 
-     * @return the card at index passed as argument.
+     * @return The card at index passed as argument.
      */
     UnoCard dropCard(int index);
 

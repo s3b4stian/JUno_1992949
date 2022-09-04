@@ -18,8 +18,8 @@ public class MainController {
     /**
      * Class Constructor.
      * 
-     * @param mainView the main view, used to host all others view.
-     * @param menuView the menu view, show the main menu.
+     * @param mainView The main view, used to host all others view.
+     * @param menuView The menu view, show the main menu.
      */
     public MainController(MainView mainView, MenuView menuView) {
         this.mainView = mainView;
