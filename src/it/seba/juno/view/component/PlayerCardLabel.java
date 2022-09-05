@@ -1,9 +1,7 @@
 package it.seba.juno.view.component;
 
-import java.awt.Insets;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import it.seba.juno.card.UnoCard;
 
@@ -13,7 +11,7 @@ import it.seba.juno.card.UnoCard;
  * @author Sebastian Rapetti
  *
  */
-public class PlayerCardLabel extends JButton {
+public class PlayerCardLabel extends JLabel {
 
     /**
      * The type of the card, where the card will be drawn.
@@ -95,17 +93,17 @@ public class PlayerCardLabel extends JButton {
     private static final long serialVersionUID = -7440244117469011026L;
 
     /**
-     * Button image icon.
+     * Label image icon.
      */
     private final ImageIcon icon;
 
     /**
-     * Button image icon on mouse over.
+     * Label image icon.
      */
-    private UnoCard card;
+    private final UnoCard card;
 
     /**
-     * Button type.
+     * Label card type.
      */
     private final PlayerCardLabelType type;
 
@@ -123,11 +121,6 @@ public class PlayerCardLabel extends JButton {
         icon = new ImageIcon(
                 cardImage.getImage().getScaledInstance(type.getWidth(), type.getHeight(), java.awt.Image.SCALE_SMOOTH));
 
-        // button properties
-        setFocusPainted(false);
-        setBorderPainted(false);
-        setContentAreaFilled(false);
-        setMargin(new Insets(0, 0, 0, 0));
         setIcon(icon);
     }
 

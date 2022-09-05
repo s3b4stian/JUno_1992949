@@ -25,7 +25,7 @@ public class PlayerCardButton extends JButton {
     /**
      * The card of the button.
      */
-    private UnoCard card;
+    private final UnoCard card;
 
     /**
      * Class Constructor.
