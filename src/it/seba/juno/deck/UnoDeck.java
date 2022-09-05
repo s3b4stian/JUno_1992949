@@ -16,8 +16,19 @@ import it.seba.juno.card.UnoCard;
  */
 public class UnoDeck implements Deck {
 
+    /**
+     * The initial list of card to build the deck.
+     */
     private List<UnoCard> initDeck;
+
+    /**
+     * The deck represented as queue data structure.
+     */
     private Deque<UnoCard> finalDeck;
+
+    /**
+     * The number of cards in deck.
+     */
     private int cardsInDeck;
 
     /**

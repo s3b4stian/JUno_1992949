@@ -36,11 +36,17 @@ public class NpcPlayer extends AbstractPlayer implements NpcDropAction, NpcChang
         changeColorStrategy.setPlayerCards(cards);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UnoColor changeColor() {
         return changeColorStrategy.changeColor();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UnoCard dropCard() {
         return dropStrategy.dropCard();

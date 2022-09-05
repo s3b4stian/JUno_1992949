@@ -9,29 +9,57 @@ import javax.swing.Timer;
 import it.seba.juno.view.GameView;
 import it.seba.juno.view.component.PlayerPanel;
 
+/**
+ * Action listener for the drop card player action, actually not used to animate
+ * cards inside the game.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class DropCardListener implements ActionListener {
 
-    private Timer timer;
+    /**
+     * The card to be added to the panel.
+     */
     private Component card;
-    private PlayerPanel panel;
-    private GameView view;
 
-    public DropCardListener(GameView view, PlayerPanel panel, Component card) {
-        this.view = view;
+    /**
+     * The panel where the card will be added.
+     */
+    private PlayerPanel panel;
+
+    /**
+     * The timer object.
+     */
+    private Timer timer;
+
+    /**
+     * Class Constructor.
+     * 
+     * @param panel The panel where the card will be added.
+     * @param card  The card to be added to the panel.
+     */
+    public DropCardListener(PlayerPanel panel, Component card) {
         this.panel = panel;
         this.card = card;
     }
 
+    /**
+     * The action performed from the action listener.
+     * 
+     * @param e The event to be processed.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         panel.remove(this.card);
-
         timer.stop();
     }
 
+    /**
+     * Starts the timer to trigger the action performed automatically.
+     */
     public void startTimer() {
         timer = new Timer(GameView.getTimeSlow(), this);
-        // System.out.println("DropCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

@@ -20,6 +20,9 @@ import it.seba.juno.model.PlayersProfileModel;
  */
 public class SerializationManager {
 
+    /**
+     * The serialization manager instance, static for singleton pattern.
+     */
     private static SerializationManager instance;
 
     /**
@@ -33,12 +36,24 @@ public class SerializationManager {
         return instance;
     }
 
+    /**
+     * The user directory, the home of the user in filesystem.
+     */
     private final String userDir;
 
+    /**
+     * The JUno dir inside the user folder.
+     */
     private final String jUnoDir;
 
+    /**
+     * The profiles directory inside JUno directory.
+     */
     private final String profilesDir;
 
+    /**
+     * The file name to serialize options model.
+     */
     private final String fileOptions;
 
     /**

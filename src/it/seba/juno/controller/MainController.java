@@ -12,7 +12,14 @@ import it.seba.juno.view.MenuView;
  */
 public class MainController {
 
+    /**
+     * The game view reference.
+     */
     private MainView mainView;
+
+    /**
+     * The menu view reference.
+     */
     private MenuView menuView;
 
     /**

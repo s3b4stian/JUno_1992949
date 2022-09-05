@@ -20,7 +20,7 @@ public class SubSectionLabel extends AbstractTextLabel {
     /**
      * Class Constructor.
      * 
-     * @param text the default text of the label.
+     * @param text The default text of the label.
      */
     public SubSectionLabel(String text) {
         super(text, 24f);

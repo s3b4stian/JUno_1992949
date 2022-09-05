@@ -26,7 +26,7 @@ public class ChoseColorButton extends JButton {
     private final ImageIcon icon;
 
     /**
-     * Button image icon for diabled button.
+     * Button image icon for disabled button.
      */
     private final ImageIcon iconDisabled;
 
@@ -48,7 +48,7 @@ public class ChoseColorButton extends JButton {
         /**
          * Enum Constructor.
          * 
-         * @param s the file name of the button icon without extension.
+         * @param s The file name of the button icon without extension.
          */
         ChoseButtonType(String s) {
             stringIcon = s;
@@ -57,7 +57,7 @@ public class ChoseColorButton extends JButton {
         /**
          * Returns the file name of the icon without extension.
          * 
-         * @return the file name.
+         * @return The file name.
          */
         public String getStringIcon() {
             return stringIcon;

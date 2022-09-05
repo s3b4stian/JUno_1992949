@@ -18,7 +18,7 @@ public class TextFieldNewPlayerModal extends JTextField {
     private static final long serialVersionUID = -2933300469612609745L;
 
     /**
-     * Class constructor.
+     * Class Constructor.
      */
     public TextFieldNewPlayerModal() {
         super("Player Name", 16);

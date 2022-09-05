@@ -31,12 +31,6 @@ public class OptionsModel extends Observable implements Serializable {
     private boolean sound = true;
 
     /**
-     * Class Constructor.
-     */
-    public OptionsModel() {
-    }
-
-    /**
      * Return the number of players that play a match.
      * 
      * @return The number of players, 2, 3 or 4 players.

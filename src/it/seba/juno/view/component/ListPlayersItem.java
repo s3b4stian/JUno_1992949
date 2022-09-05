@@ -40,7 +40,7 @@ public class ListPlayersItem extends JPanel {
     /**
      * Class constructor.
      * 
-     * @param text the name of the element into the list.
+     * @param text The name of the element into the list.
      */
     public ListPlayersItem(String text) {
 
@@ -94,20 +94,20 @@ public class ListPlayersItem extends JPanel {
     }
 
     /**
-     * Set the element of the list selected.
-     * 
-     * @param selected true if selected, false otherwise.
-     */
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    /**
      * Warn the element of the list that the mouse is over it.
      * 
-     * @param over true if mouse is over, false otherwise.
+     * @param over True if mouse is over, false otherwise.
      */
     public void setOver(boolean over) {
         this.over = over;
+    }
+
+    /**
+     * Set the element of the list selected.
+     * 
+     * @param selected True if selected, false otherwise.
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

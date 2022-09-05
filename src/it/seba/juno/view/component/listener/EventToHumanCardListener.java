@@ -10,22 +10,41 @@ import it.seba.juno.view.GameView;
 
 public class EventToHumanCardListener implements ActionListener {
 
-    private GameController gameController;
+    /**
+     * The GameController reference.
+     */
+    private GameController controller;
+
+    /**
+     * The timer object.
+     */
     private Timer timer;
 
-    public EventToHumanCardListener(/* GameView gameView, */ GameController gameController) {
-        this.gameController = gameController;
+    /**
+     * Class Constructor.
+     * 
+     * @param controller The GameController object reference.
+     */
+    public EventToHumanCardListener(GameController controller) {
+        this.controller = controller;
     }
 
+    /**
+     * The action performed from the action listener.
+     * 
+     * @param e The event to be processed.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        gameController.addEventToHumanPlayer();
+        controller.addEventToHumanPlayer();
         timer.stop();
     }
 
+    /**
+     * Starts the timer to trigger the action performed automatically.
+     */
     public void startTimer() {
         timer = new Timer(GameView.getTimeNormal() + 500, this);
-        // System.out.println("EventToHumanCardListener in: " + GameView.getTime());
         timer.setRepeats(false);
         timer.start();
     }

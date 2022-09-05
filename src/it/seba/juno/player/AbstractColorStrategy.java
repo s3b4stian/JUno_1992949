@@ -21,12 +21,6 @@ public abstract class AbstractColorStrategy implements ColorStrategy {
     protected List<UnoCard> cards;
 
     /**
-     * Class Constructor.
-     */
-    public AbstractColorStrategy() {
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

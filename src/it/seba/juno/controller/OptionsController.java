@@ -19,10 +19,24 @@ import it.seba.juno.view.OptionsView;
  */
 public class OptionsController {
 
+    /**
+     * The main view reference.
+     */
     private MainView mainView;
+
+    /**
+     * The menu view reference.
+     */
     private MenuView menuView;
+
+    /**
+     * The options view reference.
+     */
     private OptionsView optionsView;
 
+    /**
+     * The options model reference.
+     */
     private OptionsModel optionsModel;
 
     /**

@@ -34,6 +34,7 @@ public class ValueDropStrategy extends AbstractDropStrategy {
 
         UnoCard c;
 
+        // drop first a card that match the value
         if ((c = this.searchValue()) != null) {
             // official rule
             // drop is forbidden if there is a card that has the color of discard pile
@@ -47,6 +48,7 @@ public class ValueDropStrategy extends AbstractDropStrategy {
             return c;
         }
 
+        // then if no value a card that match the color
         if ((c = this.searchColor()) != null) {
             return c;
         }

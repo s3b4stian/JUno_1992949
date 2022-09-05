@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class Observable {
 
+    /**
+     * The list of observers for the observable object.
+     */
     private List<InterfaceObserver> observers;
 
     /**

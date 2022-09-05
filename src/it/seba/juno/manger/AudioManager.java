@@ -30,6 +30,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class AudioManager {
 
+    /**
+     * The audio manager instance, static for singleton pattern.
+     */
     private static AudioManager instance;
 
     /**

@@ -17,6 +17,9 @@ import java.io.IOException;
  */
 public class FontManager {
 
+    /**
+     * The font manager instance, static for singleton pattern.
+     */
     private static FontManager instance;
 
     /**
@@ -30,6 +33,9 @@ public class FontManager {
         return instance;
     }
 
+    /**
+     * The custom font managed by this class.
+     */
     private Font customFont;
 
     /**

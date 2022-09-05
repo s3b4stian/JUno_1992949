@@ -62,7 +62,7 @@ public class DeleteModal extends JPanel {
      * Returns a reference to the "text label" of the modal, used to show the player
      * name before deleting.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public SubSectionLabel getTextLabel() {
         return textLabel;
@@ -73,7 +73,7 @@ public class DeleteModal extends JPanel {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public DialogButton getConfirmButton() {
         return confirmButton;
@@ -84,14 +84,14 @@ public class DeleteModal extends JPanel {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public DialogButton getCancelButton() {
         return cancelButton;
     }
 
     /**
-     * Draw the panel background as white color with alpha.
+     * Draw the panel background.
      */
     @Override
     protected void paintChildren(Graphics grphcs) {

@@ -20,7 +20,7 @@ public class MainLabel extends AbstractTextLabel {
     /**
      * Class Constructor.
      * 
-     * @param text the default text of the label.
+     * @param text The default text of the label.
      */
     public MainLabel(String text) {
         super(text, 72f);

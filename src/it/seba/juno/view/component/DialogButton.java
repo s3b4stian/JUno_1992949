@@ -17,23 +17,6 @@ import it.seba.juno.manger.AudioManager;
  */
 public class DialogButton extends JButton {
 
-    private static final long serialVersionUID = -1904119797090591322L;
-
-    /**
-     * Button type.
-     */
-    private final DialogButtonType type;
-
-    /**
-     * Button image icon.
-     */
-    private final ImageIcon icon;
-
-    /**
-     * Button image icon on mouse over.
-     */
-    private final ImageIcon iconHover;
-
     /**
      * The type of the button.
      * 
@@ -60,7 +43,7 @@ public class DialogButton extends JButton {
         /**
          * Enum Constructor.
          * 
-         * @param s the file name of the button icon without extension.
+         * @param s The file name of the button icon without extension.
          */
         DialogButtonType(String s) {
             stringIcon = s;
@@ -69,17 +52,34 @@ public class DialogButton extends JButton {
         /**
          * Returns the file name of the icon without extension.
          * 
-         * @return the file name.
+         * @return The file name.
          */
         public String getStringIcon() {
             return stringIcon;
         }
     }
 
+    private static final long serialVersionUID = -1904119797090591322L;
+
+    /**
+     * Button type.
+     */
+    private final DialogButtonType type;
+
+    /**
+     * Button image icon.
+     */
+    private final ImageIcon icon;
+
+    /**
+     * Button image icon on mouse over.
+     */
+    private final ImageIcon iconHover;
+
     /**
      * Class Constructor.
      * 
-     * @param t the type of the button from the enum.
+     * @param t The type of the button from the enum.
      */
     public DialogButton(DialogButtonType t) {
         super();

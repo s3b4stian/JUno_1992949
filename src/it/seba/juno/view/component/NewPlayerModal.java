@@ -62,7 +62,7 @@ public class NewPlayerModal extends JPanel {
      * Returns a reference to the "text field" of the modal, used to get the name of
      * the new player before adding it to game.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public TextFieldNewPlayerModal getTextField() {
         return textField;
@@ -73,7 +73,7 @@ public class NewPlayerModal extends JPanel {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public DialogButton getConfirmButton() {
         return confirmButton;
@@ -84,7 +84,7 @@ public class NewPlayerModal extends JPanel {
      * the action performed from the button. The action is assigned to the button at
      * controller level.
      * 
-     * @return the button reference.
+     * @return The button reference.
      */
     public DialogButton getCancelButton() {
         return cancelButton;

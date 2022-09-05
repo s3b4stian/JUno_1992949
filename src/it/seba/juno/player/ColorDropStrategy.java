@@ -33,10 +33,12 @@ public class ColorDropStrategy extends AbstractDropStrategy {
 
         UnoCard c;
 
+        // drop first a card that match the color
         if ((c = this.searchColor()) != null) {
             return c;
         }
 
+        // then if no color a card that match the value
         if ((c = this.searchValue()) != null) {
             return c;
         }

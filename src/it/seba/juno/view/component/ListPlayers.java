@@ -60,18 +60,18 @@ public class ListPlayers<E extends Object> extends JList<E> {
         // adding behavior for interaction with mouse button
         addMouseListener(new MouseAdapter() {
             @Override
+            public void mouseExited(MouseEvent me) {
+                overIndex = -1;
+                repaint();
+            }
+
+            @Override
             public void mousePressed(MouseEvent me) {
                 if (SwingUtilities.isLeftMouseButton(me)) {
                     selectedIndex = locationToIndex(me.getPoint());
                     AudioManager.getInstance().playSoundEffect("click");
                     repaint();
                 }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent me) {
-                overIndex = -1;
-                repaint();
             }
         });
 
@@ -86,6 +86,15 @@ public class ListPlayers<E extends Object> extends JList<E> {
                 }
             }
         });
+    }
+
+    /**
+     * Add a player to list.
+     * 
+     * @param element The player model to be added to the list.
+     */
+    public void addItem(PlayersProfileModel element) {
+        model.addElement(element);
     }
 
     /**
@@ -111,18 +120,9 @@ public class ListPlayers<E extends Object> extends JList<E> {
     }
 
     /**
-     * Add a player to list.
-     * 
-     * @param element the player model to be added to the list.
-     */
-    public void addItem(PlayersProfileModel element) {
-        model.addElement(element);
-    }
-
-    /**
      * Remove a player from the list.
      * 
-     * @param index the list index of the player will be removed.
+     * @param index The list index of the player will be removed.
      */
     public void removeItem(int index) {
         model.remove(index);

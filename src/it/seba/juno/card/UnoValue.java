@@ -86,6 +86,9 @@ public enum UnoValue implements Value<Integer> {
      */
     WILD_DRAW_FOUR(200);
 
+    /**
+     * The value of the card.
+     */
     private final Integer value;
 
     /**

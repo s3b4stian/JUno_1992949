@@ -23,12 +23,29 @@ import it.seba.juno.view.component.ListPlayers;
  */
 public class PlayersController {
 
+    /**
+     * The main view reference.
+     */
     private MainView mainView;
+
+    /**
+     * The menu view reference.
+     */
     private MenuView menuView;
+
+    /**
+     * The players view reference.
+     */
     private PlayersView playersView;
 
+    /**
+     * The list of the game players.
+     */
     private ListPlayers<PlayersProfileModel> listPlayers;
 
+    /**
+     * The player model reference.
+     */
     private PlayersModel playersModel;
 
     /**

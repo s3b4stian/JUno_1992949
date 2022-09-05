@@ -19,7 +19,7 @@ public class OptionsRadioPlayers extends JRadioButton {
     private static final long serialVersionUID = -1104993535973891068L;
 
     /**
-     * the type of the button, which icon the button must show.
+     * The type of the button, which icon the button must show.
      */
     private final OptionRadioType type;
 
@@ -51,7 +51,7 @@ public class OptionsRadioPlayers extends JRadioButton {
         /**
          * Class Constructor.
          * 
-         * @param icon the file name without extension.
+         * @param icon The file name without extension.
          */
         OptionRadioType(String icon) {
             stringIcon = icon;
@@ -60,7 +60,7 @@ public class OptionsRadioPlayers extends JRadioButton {
         /**
          * Returns the file name of the icon without extension.
          * 
-         * @return the file name.
+         * @return The file name.
          */
         public String getType() {
             return stringIcon;
@@ -70,7 +70,7 @@ public class OptionsRadioPlayers extends JRadioButton {
     /**
      * Class Constructor.
      * 
-     * @param t the type of the button from the enum.
+     * @param t The type of the button from the enum.
      */
     public OptionsRadioPlayers(OptionRadioType t) {
         super();

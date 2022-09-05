@@ -7,7 +7,90 @@ import javax.swing.JButton;
 
 import it.seba.juno.card.UnoCard;
 
+/**
+ * The label to represent cards for the npc players.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class PlayerCardLabel extends JButton {
+
+    /**
+     * The type of the card, where the card will be drawn.
+     * 
+     * @author Sebastian Rapetti
+     *
+     */
+    public enum PlayerCardLabelType {
+
+        /**
+         * For cards in the north panel.
+         */
+        NORTH("north", 85, 128),
+
+        /**
+         * For cards in the east panel.
+         */
+        EAST("east", 128, 85),
+
+        /**
+         * For cards in the west panel.
+         */
+        WEST("west", 128, 85);
+
+        /**
+         * Button icon.
+         */
+        private final String stringIcon;
+
+        /**
+         * Card height.
+         */
+        private final int height;
+
+        /**
+         * Card width.
+         */
+        private final int width;
+
+        /**
+         * Enum Constructor.
+         * 
+         * @param s the file name of the button icon without extension.
+         */
+        PlayerCardLabelType(String s, int w, int h) {
+            stringIcon = s;
+            width = w;
+            height = h;
+        }
+
+        /**
+         * Returns the height of the card
+         * 
+         * @return Card height.
+         */
+        public int getHeight() {
+            return height;
+        }
+
+        /**
+         * Returns the file name of the icon without extension.
+         * 
+         * @return The file name.
+         */
+        public String getStringIcon() {
+            return stringIcon;
+        }
+
+        /**
+         * Return the width of the card.
+         * 
+         * @return Card width.
+         */
+        public int getWidth() {
+            return width;
+        }
+    }
 
     private static final long serialVersionUID = -7440244117469011026L;
 
@@ -27,74 +110,13 @@ public class PlayerCardLabel extends JButton {
     private final PlayerCardLabelType type;
 
     /**
-     * 
-     * @author user
-     *
-     */
-    public enum PlayerCardLabelType {
-
-        NORTH("north", 85, 128),
-
-        EAST("east", 128, 85),
-
-        WEST("west", 128, 85);
-
-        /**
-         * Button icon.
-         */
-        private final String stringIcon;
-
-        private final int height;
-
-        private final int width;
-
-        /**
-         * Enum Constructor.
-         * 
-         * @param s the file name of the button icon without extension.
-         */
-        PlayerCardLabelType(String s, int w, int h) {
-            stringIcon = s;
-            width = w;
-            height = h;
-        }
-
-        /**
-         * Height of the card
-         * 
-         * @return
-         */
-        public int getHeight() {
-            return height;
-        }
-
-        /**
-         * Width of the card.
-         * 
-         * @return
-         */
-        public int getWidth() {
-            return width;
-        }
-
-        /**
-         * Returns the file name of the icon without extension.
-         * 
-         * @return the file name.
-         */
-        public String getStringIcon() {
-            return stringIcon;
-        }
-    }
-
-    /**
      * Class Constructor.
      */
-    public PlayerCardLabel(UnoCard card, PlayerCardLabelType type) {
+    public PlayerCardLabel(UnoCard card, PlayerCardLabelType t) {
         super();
 
         this.card = card;
-        this.type = type;
+        this.type = t;
 
         ImageIcon cardImage = new ImageIcon(
                 getClass().getResource("/images/cards/deck_" + type.getStringIcon() + ".png"));
@@ -112,7 +134,7 @@ public class PlayerCardLabel extends JButton {
     /**
      * Return the card shown by the button.
      * 
-     * @return
+     * @return The card reference.
      */
     public UnoCard getCard() {
         return card;

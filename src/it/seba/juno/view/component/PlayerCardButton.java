@@ -1,14 +1,18 @@
 package it.seba.juno.view.component;
 
 import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import it.seba.juno.card.UnoCard;
 
+/**
+ * The button to represent cards for the human player, provide a way for the
+ * human player to interact with owned cards during a match.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class PlayerCardButton extends JButton {
 
     private static final long serialVersionUID = 6752631190852368100L;
@@ -18,14 +22,15 @@ public class PlayerCardButton extends JButton {
      */
     private final ImageIcon icon;
 
+    /**
+     * The card of the button.
+     */
     private UnoCard card;
-
-    public UnoCard getCard() {
-        return card;
-    }
 
     /**
      * Class Constructor.
+     * 
+     * @param card The card represented from the button.
      */
     public PlayerCardButton(UnoCard card) {
         super();
@@ -48,21 +53,14 @@ public class PlayerCardButton extends JButton {
         setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
         setIcon(icon);
+    }
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent me) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent me) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent me) {
-                // AudioManager.getInstance().playSoundEffect("card");
-            }
-        });
+    /**
+     * Returns the card of the button.
+     * 
+     * @return Card reference.
+     */
+    public UnoCard getCard() {
+        return card;
     }
 }

@@ -33,6 +33,9 @@ public class DeckPanel extends JPanel {
         setLayout(new GridBagLayout());
     }
 
+    /**
+     * Draw the panel background.
+     */
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;

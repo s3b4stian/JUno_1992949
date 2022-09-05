@@ -16,8 +16,19 @@ import it.seba.juno.card.UnoValue;
  */
 public class DiscardPile {
 
+    /**
+     * The internal store for the discard pile cards.
+     */
     private ArrayDeque<UnoCard> discardPile;
+
+    /**
+     * The top card of the discard pile.
+     */
     private UnoCard topCard;
+
+    /**
+     * The current color of the discard pile.
+     */
     private UnoColor currentColor;
 
     /**

@@ -11,24 +11,32 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLayeredPane;
 
+/**
+ * The panel that hosts label or buttons used to show cards for the players.
+ * 
+ * @author Sebastian Rapetti.
+ *
+ */
 public class PlayerPanel extends JLayeredPane {
 
     private static final long serialVersionUID = 3885628453899889822L;
 
-    private static int layer;
-
+    /**
+     * Does the card in shown in portrait or landscape mode.
+     */
     private boolean landscape;
 
+    /**
+     * Does the panel hosts the card of the player that have to do a move?
+     */
     private boolean currentPlayer;
 
-    public boolean isCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(boolean currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
+    /**
+     * Class Constructor.
+     * 
+     * @param dimension The dimension of the panel.
+     * @param landscape Orientation for the cards, true landscape, false portrait.
+     */
     public PlayerPanel(Dimension dimension, boolean landscape) {
         this.landscape = landscape;
 
@@ -39,6 +47,9 @@ public class PlayerPanel extends JLayeredPane {
         setEnabled(false);
     }
 
+    /**
+     * Add a card to the panel.
+     */
     @Override
     public Component add(Component comp) {
 
@@ -50,18 +61,16 @@ public class PlayerPanel extends JLayeredPane {
         return comp;
     }
 
-    @Override
-    public void remove(Component comp) {
-        super.remove(comp);
-        fitCards();
-    }
-
+    /**
+     * Set the positions of cards to fit arbitrary number of cards inside the panel.
+     */
     private void fitCards() {
 
         int components = getComponentCount();
         int i = 0;
         int space = 40;
 
+        // start to fit card after 9 cards in panel
         if (components > 9) {
             // 4 + components * x - 387 = 0
             // 4 + components * x = 387
@@ -71,10 +80,12 @@ public class PlayerPanel extends JLayeredPane {
             space = Math.floorDiv(383, components);
         }
 
+        // change components boudaries
         for (Component comp : getComponents()) {
 
             Point point = null;
 
+            // if landscape invert h and w
             if (landscape) {
                 point = new Point(6, 4 + (i++ * space));
                 comp.setBounds(point.x, point.y, 128, 85);
@@ -85,20 +96,34 @@ public class PlayerPanel extends JLayeredPane {
         }
     }
 
+    /**
+     * Returns if the panel hosts the current player cards.
+     * 
+     * @return True if yes, false otherwise.
+     */
+    public boolean isCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    /**
+     * Draw the panel background.
+     */
     @Override
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // white color as paint with alpha channel to 10%
+        // white color as paint with alpha channel
         g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.02f), getWidth(), 0,
                 new Color(1.0f, 1.0f, 1.0f, 0.08f)));
 
+        // white color, less transparent
         if (isEnabled()) {
             g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.1f), getWidth(), 0,
                     new Color(1.0f, 1.0f, 1.0f, 0.5f)));
         }
 
+        // orange color as paint
         if (currentPlayer) {
             g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.0f), getWidth(), 0,
                     new Color(1.0f, 0.54f, 0.22f, 1.0f)));
@@ -108,5 +133,26 @@ public class PlayerPanel extends JLayeredPane {
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 
         super.paintChildren(grphcs);
+    }
+
+    /**
+     * Remove a card from this panel.
+     * 
+     * @param comp The component to be removed.
+     */
+    @Override
+    public void remove(Component comp) {
+        super.remove(comp);
+        fitCards();
+    }
+
+    /**
+     * Set the panel to hosts the current player.
+     * 
+     * @param currentPlayer True if the panel hosts the current player, false
+     *                      otherwise.
+     */
+    public void setCurrentPlayer(boolean currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

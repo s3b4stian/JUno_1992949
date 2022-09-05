@@ -43,11 +43,29 @@ import it.seba.juno.view.component.listener.CurrentPlayerMoveListener;
  */
 public class GameController {
 
+    /**
+     * The game view reference.
+     */
     private GameView gameView;
+
+    /**
+     * The main view reference.
+     */
     private MainView mainView;
+
+    /**
+     * The menu view reference.
+     */
     private MenuView menuView;
 
+    /**
+     * The game model reference.
+     */
     private GameModel gameModel;
+
+    /**
+     * The player model reference.
+     */
     private PlayersModel playersModel;
 
     /**

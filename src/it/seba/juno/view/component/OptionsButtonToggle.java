@@ -20,7 +20,7 @@ public class OptionsButtonToggle extends JToggleButton {
     private static final long serialVersionUID = 6180177594204484803L;
 
     /**
-     * the type of the button, which icon the button must show.
+     * The type of the button, which icon the button must show.
      */
     private final OptionButtonType type;
 
@@ -55,7 +55,7 @@ public class OptionsButtonToggle extends JToggleButton {
         /**
          * Returns the file name of the icon without extension.
          * 
-         * @return the file name.
+         * @return The file name.
          */
         public String getType() {
             return stringIcon;
@@ -65,7 +65,7 @@ public class OptionsButtonToggle extends JToggleButton {
     /**
      * Class Constructor.
      * 
-     * @param t the type of the button from the enum.
+     * @param t The type of the button from the enum.
      */
     public OptionsButtonToggle(OptionButtonType t) {
         super();

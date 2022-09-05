@@ -17,12 +17,34 @@ import it.seba.juno.view.PlayersView;
  */
 public class MenuController {
 
+    /**
+     * The main view reference.
+     */
     private MainView mainView;
+
+    /**
+     * The menu view reference.
+     */
     private MenuView menuView;
+
+    /**
+     * The options view reference.
+     */
     private OptionsView optionsView;
+
+    /**
+     * The players view reference.
+     */
     private PlayersView playersView;
+
+    /**
+     * The game view reference.
+     */
     private GameView gameView;
 
+    /**
+     * The game model reference.
+     */
     private GameModel gameModel;
 
     /**

@@ -20,7 +20,7 @@ public class PlayerLabel extends AbstractTextLabel {
     /**
      * Class Constructor.
      * 
-     * @param text the default text of the label.
+     * @param text The default text of the label.
      */
     public PlayerLabel(String text) {
         super(text, 20f);

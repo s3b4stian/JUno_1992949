@@ -9,9 +9,19 @@ package it.seba.juno.card;
  */
 public class UnoCard implements Card, WithColor<String>, WithValue<Integer>, WithOptionalColor, Comparable<UnoCard> {
 
+    /**
+     * The value of the card.
+     */
     private final UnoValue value;
+
+    /**
+     * The color of the card.
+     */
     private final UnoColor color;
 
+    /**
+     * Does the card has color?
+     */
     private boolean hasColor = true;
 
     /**

@@ -65,7 +65,7 @@ public class MenuButton extends JButton {
     /**
      * Class Constructor.
      *
-     * @param text the default text for the button.
+     * @param text The default text for the button.
      */
     public MenuButton(String text) {
         super(text);
