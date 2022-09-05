@@ -340,13 +340,13 @@ public class GameController {
         gameView.getButtonRestart().addActionListener(e -> restartGameAction(new ResetGameEvent(this)));
 
         // buttons for chose the color
-        gameView.getChooseColorPanel().getButtonBlue().addActionListener(
+        gameView.getPanelChoseColor().getButtonBlue().addActionListener(
                 e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.BLUE));
-        gameView.getChooseColorPanel().getButtonRed().addActionListener(
+        gameView.getPanelChoseColor().getButtonRed().addActionListener(
                 e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.RED));
-        gameView.getChooseColorPanel().getButtonYellow().addActionListener(
+        gameView.getPanelChoseColor().getButtonYellow().addActionListener(
                 e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.YELLOW));
-        gameView.getChooseColorPanel().getButtonGreen().addActionListener(
+        gameView.getPanelChoseColor().getButtonGreen().addActionListener(
                 e -> humanChoseColorAction(new HumanPlayerChoseColorEvent(e.getSource()), UnoColor.GREEN));
     }
 

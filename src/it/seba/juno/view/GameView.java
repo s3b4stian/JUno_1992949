@@ -199,7 +199,7 @@ public class GameView extends JPanel implements InterfaceObserver {
     /**
      * Panel to chose the color for discard pile, for human player.
      */
-    private ChoseColorPanel panelChooseColor;
+    private ChoseColorPanel panelChoseColor;
 
     /**
      * Player name label displayer above the player panel.
@@ -269,7 +269,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         panelDeck = new DeckPanel(new Dimension(136, 171));
         panelDiscardPile = new DeckPanel(new Dimension(136, 171));
 
-        panelChooseColor = new ChoseColorPanel();
+        panelChoseColor = new ChoseColorPanel();
 
         buttonDeck = new DeckButton();
         GridBagConstraints gbc = new GridBagConstraints();
@@ -528,7 +528,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
-        add(panelChooseColor, gbc);
+        add(panelChoseColor, gbc);
 
         // dealer icon
         gbc = new GridBagConstraints();
@@ -703,8 +703,8 @@ public class GameView extends JPanel implements InterfaceObserver {
      * 
      * @return The panel reference.
      */
-    public ChoseColorPanel getChooseColorPanel() {
-        return panelChooseColor;
+    public ChoseColorPanel getPanelChoseColor() {
+        return panelChoseColor;
     }
 
     /**
@@ -970,7 +970,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             buttonDeck.setEnabled(false);
 
-            panelChooseColor.disableButtons();
+            panelChoseColor.disableButtons();
 
             discardPileColor.setEnabled(false);
             discardPile.setIcon(null);
@@ -1209,7 +1209,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
         // enable the color panel, wild as first card in pile, human first to move
         if (e instanceof FirstEnableChoseColorPanelEvent) {
-            panelChooseColor.enableButtons();
+            panelChoseColor.enableButtons();
         }
 
         // enable the color panel, after wild card drop
@@ -1221,7 +1221,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             AudioManager.getInstance().playSoundEffect("card");
 
-            panelChooseColor.enableButtons();
+            panelChoseColor.enableButtons();
         }
 
         // human player selected new color for discard pile
@@ -1232,7 +1232,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             log(gameModel.getCurrentPlayer() + " changed color to " + gameModel.discardPileColor());
 
-            panelChooseColor.disableButtons();
+            panelChoseColor.disableButtons();
 
         }
 
@@ -1243,7 +1243,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             log(gameModel.getCurrentPlayer().getName() + " changed color to " + gameModel.discardPileColor());
 
-            panelChooseColor.disableButtons();
+            panelChoseColor.disableButtons();
 
             setNextPlayer(gameModel.getNextPlayer());
         }

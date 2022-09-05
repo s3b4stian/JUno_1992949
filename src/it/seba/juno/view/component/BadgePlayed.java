@@ -38,6 +38,9 @@ public enum BadgePlayed implements Badge {
      */
     RED("played_red.png");
 
+    /**
+     * Badge image.
+     */
     private final String image;
 
     /**
