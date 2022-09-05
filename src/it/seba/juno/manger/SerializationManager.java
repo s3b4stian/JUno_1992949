@@ -75,7 +75,7 @@ public class SerializationManager {
      * 
      * @param newDir The name of the new directory.
      */
-    private void createGamefolder(String newDir) {
+    private void createGameFolder(String newDir) {
 
         File dir = new File(newDir);
 
@@ -153,7 +153,7 @@ public class SerializationManager {
      */
     public void saveOptions(OptionsModel model) {
 
-        createGamefolder(jUnoDir);
+        createGameFolder(jUnoDir);
 
         try {
             serialize(model, fileOptions);
@@ -169,7 +169,7 @@ public class SerializationManager {
      */
     public void savePlayers(PlayersProfileModel model) {
 
-        createGamefolder(profilesDir);
+        createGameFolder(profilesDir);
 
         try {
             serialize(model, profilesDir + "/" + model.getName());

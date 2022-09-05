@@ -42,29 +42,29 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * Two players radio button, when selected the human player play against one npc
      * player.
      */
-    private JRadioButton twoPlayersRadio;
+    private OptionsRadioPlayers twoPlayersRadio;
 
     /**
      * Three players radio button, when selected the human player play against two
      * npc player.
      */
-    private JRadioButton threePlayersRadio;
+    private OptionsRadioPlayers threePlayersRadio;
 
     /**
      * Four players radio button, when selected the human player play against three
      * npc player.
      */
-    private JRadioButton fourPlayersRadio;
+    private OptionsRadioPlayers fourPlayersRadio;
 
     /**
      * Full screen toggle button, when selected the game go full-screen.
      */
-    private JToggleButton buttonFullScreen;
+    private OptionsButtonToggle buttonFullScreen;
 
     /**
      * Sound toggle button, when selected the sound is on.
      */
-    private JToggleButton buttonSound;
+    private OptionsButtonToggle buttonSound;
 
     /**
      * Back button, returns to main menu view.
@@ -176,39 +176,6 @@ public class OptionsView extends JPanel implements InterfaceObserver {
     }
 
     /**
-     * Returns a reference to the "two players radio button" of the options, used
-     * mainly to set the action performed from the radio button. The action is
-     * assigned to the radio button at controller level.
-     * 
-     * @return The radio button reference.
-     */
-    public JRadioButton getTwoPlayersRadio() {
-        return twoPlayersRadio;
-    }
-
-    /**
-     * Returns a reference to the "three players radio button" of the options, used
-     * mainly to set the action performed from the radio button. The action is
-     * assigned to the radio button at controller level.
-     * 
-     * @return The radio button reference.
-     */
-    public JRadioButton getThreePlayersRadio() {
-        return threePlayersRadio;
-    }
-
-    /**
-     * Returns a reference to the "four players radio button" of the options, used
-     * mainly to set the action performed from the radio button. The action is
-     * assigned to the radio button at controller level.
-     * 
-     * @return The radio button reference.
-     */
-    public JRadioButton getFourPlayersRadio() {
-        return fourPlayersRadio;
-    }
-
-    /**
      * Returns a reference to the "back button" of the options, used mainly to set
      * the action performed from the button. The action is assigned to the button at
      * controller level.
@@ -226,7 +193,7 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * 
      * @return The toggle button reference.
      */
-    public JToggleButton getButtonFullScreen() {
+    public OptionsButtonToggle getButtonFullScreen() {
         return buttonFullScreen;
     }
 
@@ -237,8 +204,41 @@ public class OptionsView extends JPanel implements InterfaceObserver {
      * 
      * @return The toggle button reference.
      */
-    public JToggleButton getButtonSound() {
+    public OptionsButtonToggle getButtonSound() {
         return buttonSound;
+    }
+
+    /**
+     * Returns a reference to the "four players radio button" of the options, used
+     * mainly to set the action performed from the radio button. The action is
+     * assigned to the radio button at controller level.
+     * 
+     * @return The radio button reference.
+     */
+    public OptionsRadioPlayers getFourPlayersRadio() {
+        return fourPlayersRadio;
+    }
+
+    /**
+     * Returns a reference to the "three players radio button" of the options, used
+     * mainly to set the action performed from the radio button. The action is
+     * assigned to the radio button at controller level.
+     * 
+     * @return The radio button reference.
+     */
+    public OptionsRadioPlayers getThreePlayersRadio() {
+        return threePlayersRadio;
+    }
+
+    /**
+     * Returns a reference to the "two players radio button" of the options, used
+     * mainly to set the action performed from the radio button. The action is
+     * assigned to the radio button at controller level.
+     * 
+     * @return The radio button reference.
+     */
+    public OptionsRadioPlayers getTwoPlayersRadio() {
+        return twoPlayersRadio;
     }
 
     /**

@@ -6,6 +6,7 @@ import java.util.EventObject;
  * Game event used to start a match, trigger the card dealing to players.
  * 
  * @author Sebastian Rapetti
+ * 
  */
 public class StartGameEvent extends EventObject {
 

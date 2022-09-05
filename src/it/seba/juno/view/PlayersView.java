@@ -295,7 +295,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
      * 
      * @param played The number of played matches.
      */
-    private void enbalePlayedBadges(int played) {
+    private void enablePlayedBadges(int played) {
         if (played >= 10) {
             badgePlayedGreen.setEnabled(true);
         }
@@ -318,7 +318,7 @@ public class PlayersView extends JPanel implements InterfaceObserver {
      * 
      * @param won The number of won matches.
      */
-    private void enbaleWonBadges(int won) {
+    private void enableWonBadges(int won) {
         if (won >= 10) {
             badgeWonGreen.setEnabled(true);
         }
@@ -438,8 +438,8 @@ public class PlayersView extends JPanel implements InterfaceObserver {
             disableWonBadges();
 
             // enable badges based on player statistics
-            enbalePlayedBadges(current.getPlayed());
-            enbaleWonBadges(current.getWon());
+            enablePlayedBadges(current.getPlayed());
+            enableWonBadges(current.getWon());
         }
 
         if (t instanceof MenuButton) {

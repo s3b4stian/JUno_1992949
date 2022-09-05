@@ -3,6 +3,7 @@ package it.seba.juno.manger;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Provide a way to manage custom fonts, implemented using singleton pattern, it
@@ -31,6 +32,13 @@ public class FontManager {
         if (instance == null)
             instance = new FontManager();
         return instance;
+    }
+
+    /**
+     * Class Constructor.
+     */
+    private FontManager() {
+
     }
 
     /**

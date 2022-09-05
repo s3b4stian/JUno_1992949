@@ -37,9 +37,35 @@ public abstract class AbstractPlayer implements Player {
     /**
      * {@inheritDoc}
      */
+    @Override
+    public List<UnoCard> getCards() {
+        return cards;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getCardsNumber() {
+        return cards.size();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract public boolean isHuman();
+    
+    /**
+     * {@inheritDoc}
+     */
+    abstract public boolean isNpc();
 
     /**
      * {@inheritDoc}
@@ -66,25 +92,4 @@ public abstract class AbstractPlayer implements Player {
     public void takeCard(UnoCard card) {
         cards.add(card);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getCardsNumber() {
-        return cards.size();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<UnoCard> getCards() {
-        return cards;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    abstract public boolean isNpc();
 }
