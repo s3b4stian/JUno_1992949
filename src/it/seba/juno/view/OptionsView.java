@@ -12,7 +12,6 @@ import java.util.EventObject;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 

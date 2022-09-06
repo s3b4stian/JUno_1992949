@@ -2,7 +2,6 @@ package it.seba.juno.util;
 
 import java.util.ArrayList;
 import java.util.EventObject;
-import java.util.List;
 
 /**
  * My implementation of Observable class.<br>
@@ -16,7 +15,7 @@ public class Observable {
     /**
      * The list of observers for the observable object.
      */
-    private List<InterfaceObserver> observers;
+    private ArrayList<InterfaceObserver> observers;
 
     /**
      * Class Constructor.

@@ -1,5 +1,6 @@
 package it.seba.juno.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -46,7 +47,7 @@ public class MainView extends JFrame {
         panel = new JPanel();
         panel.setBorder(new EmptyBorder(0, 0, 0, 0));
         panel.setOpaque(false);
-        panel.setLayout(new java.awt.BorderLayout());
+        panel.setLayout(new BorderLayout());
 
         // default behavior on close
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

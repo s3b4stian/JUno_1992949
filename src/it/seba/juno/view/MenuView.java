@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 
 import javax.swing.ImageIcon;
@@ -67,7 +68,7 @@ public class MenuView extends JPanel {
         add(new JLabel("", new ImageIcon(getClass().getResource("/images/cards/logo.png")), 0), gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new java.awt.Insets(0, 10, 20, 10);
+        gbc.insets = new Insets(0, 10, 20, 10);
 
         JPanel buttons = new JPanel(new GridBagLayout());
         buttons.setOpaque(false);
