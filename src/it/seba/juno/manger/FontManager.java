@@ -3,7 +3,6 @@ package it.seba.juno.manger;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Provide a way to manage custom fonts, implemented using singleton pattern, it

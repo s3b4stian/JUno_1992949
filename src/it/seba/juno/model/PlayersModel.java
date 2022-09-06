@@ -30,7 +30,7 @@ public class PlayersModel extends Observable {
     /**
      * A map of player profiles.
      */
-    private Map<String, PlayersProfileModel> playersProfile;
+    private HashMap<String, PlayersProfileModel> playersProfile;
 
     /**
      * Class Constructor.

@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -54,7 +53,7 @@ public class AudioManager {
     /**
      * Map soud files in memory.
      */
-    private Map<String, byte[]> sounds;
+    private HashMap<String, byte[]> sounds;
 
     /**
      * Class Constructor.
@@ -98,7 +97,6 @@ public class AudioManager {
 
         if (sound) {
             try {
-
                 InputStream in = new ByteArrayInputStream(sounds.get(key));
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
                 Clip clip = AudioSystem.getClip();

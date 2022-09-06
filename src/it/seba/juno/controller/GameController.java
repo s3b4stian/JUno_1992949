@@ -260,7 +260,7 @@ public class GameController {
             // reset time for the case when the player move as first
             GameView.resetTimer();
 
-            (new CurrentPlayerMoveListener(/* gameView, */this)).startTimer();
+            (new CurrentPlayerMoveListener(this)).startTimer();
         }
     }
 
