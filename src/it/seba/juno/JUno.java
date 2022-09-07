@@ -42,6 +42,10 @@ public class JUno {
         // load sounds
         audioManager.addToPlayList("click", "ding.wav");
         audioManager.addToPlayList("card", "card.wav");
+        audioManager.addToPlayList("uno-north", "uno-north.wav");
+        audioManager.addToPlayList("uno-east", "uno-east.wav");
+        audioManager.addToPlayList("uno-west", "uno-west.wav");
+        audioManager.addToPlayList("uno-south", "uno-south.wav");
 
         // initialize font manger
         FontManager fontManager = FontManager.getInstance();

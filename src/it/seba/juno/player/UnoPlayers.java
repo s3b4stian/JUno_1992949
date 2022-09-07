@@ -141,8 +141,10 @@ public class UnoPlayers implements Iterable<Player> {
 
         ArrayDeque<Player> tmp = new ArrayDeque<Player>();
 
+        // really needed or could be enough do it only one time.
         for (int i = 1; i < players.size(); i++) {
             players.offer(players.poll());
+
         }
 
         while (!players.isEmpty()) {

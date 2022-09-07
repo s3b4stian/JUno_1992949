@@ -41,8 +41,8 @@ public class DeckPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         // white color as paint with alpha channel to 10%
-        g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.3f), getWidth(), 0,
-                new Color(1.0f, 1.0f, 1.0f, 0.5f)));
+        g2.setPaint(new GradientPaint(0, getHeight(), new Color(255, 255, 255, 30), getWidth(), 0,
+                new Color(255, 255, 255, 50)));
         // fill the panel
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 

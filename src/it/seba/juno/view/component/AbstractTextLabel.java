@@ -25,6 +25,6 @@ public class AbstractTextLabel extends JLabel {
     public AbstractTextLabel(String text, float size) {
         super(text);
         setFont(FontManager.getInstance().getCustomFont(size));
-        setForeground(new Color(255, 255, 255));
+        setForeground(Color.WHITE);
     }
 }

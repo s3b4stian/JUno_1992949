@@ -131,8 +131,8 @@ public class ChoseColorPanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // white color as paint with alpha channel
-        g2.setPaint(new GradientPaint(0, getHeight(), new Color(1.0f, 1.0f, 1.0f, 0.1f), getWidth(), 0,
-                new Color(1.0f, 1.0f, 1.0f, 0.5f)));
+        g2.setPaint(new GradientPaint(0, getHeight(), new Color(255, 255, 255, 10), getWidth(), 0,
+                new Color(255, 255, 255, 50)));
 
         // fill the panel
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);

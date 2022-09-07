@@ -114,7 +114,7 @@ public class SaidUnoLabel extends JLabel implements ActionListener {
      * Start the timer for the action listener.
      */
     private void startTimer() {
-        timer = new Timer(800, this);
+        timer = new Timer(1000, this);
         timer.setRepeats(false);
         timer.start();
     }

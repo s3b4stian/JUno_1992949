@@ -750,12 +750,15 @@ public class GameView extends JPanel implements InterfaceObserver {
         switch (p.getName()) {
         case "NPC-East":
             saidUno.setSaidEast();
+            AudioManager.getInstance().playSoundEffect("uno-east");
             break;
         case "NPC-North":
             saidUno.setSaidNorth();
+            AudioManager.getInstance().playSoundEffect("uno-north");
             break;
         case "NPC-West":
             saidUno.setSaidWest();
+            AudioManager.getInstance().playSoundEffect("uno-west");
             break;
         }
     }
@@ -1266,6 +1269,7 @@ public class GameView extends JPanel implements InterfaceObserver {
         if (t instanceof MenuButton && t == buttonUno) {
 
             saidUno.setSaidSouth();
+            AudioManager.getInstance().playSoundEffect("uno-south");
         }
     }
 }
