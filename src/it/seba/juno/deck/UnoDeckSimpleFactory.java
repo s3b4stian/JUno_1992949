@@ -20,7 +20,7 @@ public class UnoDeckSimpleFactory {
      * 
      * @return A ready to use deck.
      */
-    public UnoDeck makeUnoDeck() {
+    public static UnoDeck makeUnoDeck() {
 
         List<UnoCard> cardList = new ArrayList<UnoCard>();
 

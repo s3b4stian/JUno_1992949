@@ -576,7 +576,7 @@ public class GameModel extends Observable {
      * Initialize or reinitialize the model for a new game.
      */
     public void reset() {
-        deck = new UnoDeckSimpleFactory().makeUnoDeck();
+        deck = UnoDeckSimpleFactory.makeUnoDeck();
         discardPile = new DiscardPile();
 
         setNumberOfPlayers();
