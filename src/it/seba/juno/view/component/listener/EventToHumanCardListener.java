@@ -8,6 +8,13 @@ import javax.swing.Timer;
 import it.seba.juno.controller.GameController;
 import it.seba.juno.view.GameView;
 
+/**
+ * Action listener to add events (delayed mode) to human player cards, actually
+ * not used to animate cards inside the game.
+ * 
+ * @author Sebastian Rapetti
+ *
+ */
 public class EventToHumanCardListener implements ActionListener {
 
     /**

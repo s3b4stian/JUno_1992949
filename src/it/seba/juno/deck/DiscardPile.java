@@ -161,7 +161,7 @@ public class DiscardPile {
      * Set the current color in drop pile, used to keeping track of the current
      * color to check before card drop.
      * 
-     * @param CSolor the new current color.
+     * @param color The new current color.
      */
     public void setCurrentColor(UnoColor color) {
         currentColor = color;

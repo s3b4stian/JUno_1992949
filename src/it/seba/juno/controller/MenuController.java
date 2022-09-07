@@ -56,8 +56,9 @@ public class MenuController {
      * @param menuView    The menu view, show the main menu.
      * @param optionsView The options view, show the application options
      * @param playersView The players view, manage players
+     * @param gameView    The game view, manage the game table and the match between
+     *                    players
      */
-
     public MenuController(GameModel gameModel, MainView mainView, MenuView menuView, OptionsView optionsView,
             PlayersView playersView, GameView gameView) {
 

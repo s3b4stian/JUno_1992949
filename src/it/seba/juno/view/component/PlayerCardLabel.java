@@ -109,6 +109,9 @@ public class PlayerCardLabel extends JLabel {
 
     /**
      * Class Constructor.
+     * 
+     * @param card The card for the label, not shown.
+     * @param t    The orientation of the card.
      */
     public PlayerCardLabel(UnoCard card, PlayerCardLabelType t) {
         super();

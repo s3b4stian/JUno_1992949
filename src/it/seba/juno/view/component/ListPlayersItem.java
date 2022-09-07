@@ -48,7 +48,7 @@ public class ListPlayersItem extends JPanel {
         label = new JLabel(text);
         label.setOpaque(false);
         label.setFont(FontManager.getInstance().getCustomFont(24f));
-        label.setForeground(new Color(255, 255, 255));
+        label.setForeground(Color.WHITE);
         label.setIcon(new ImageIcon(getClass().getResource("/images/icons/list-item.png")));
 
         GroupLayout layout = new GroupLayout(this);

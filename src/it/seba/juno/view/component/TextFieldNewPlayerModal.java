@@ -26,6 +26,6 @@ public class TextFieldNewPlayerModal extends JTextField {
         setFont(FontManager.getInstance().getCustomFont(22f));
         setOpaque(false);
         setBorder(null);
-        setForeground(new Color(255, 255, 255));
+        setForeground(Color.WHITE);
     }
 }

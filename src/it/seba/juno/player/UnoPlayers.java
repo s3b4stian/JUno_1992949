@@ -96,6 +96,11 @@ public class UnoPlayers implements Iterable<Player> {
         };
     }
 
+    /**
+     * Snoop the player that have to move in the next turn.
+     * 
+     * @return The player.
+     */
     public Player nextPlayer() {
         return players.peek();
     }

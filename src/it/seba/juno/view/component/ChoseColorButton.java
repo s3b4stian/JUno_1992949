@@ -38,7 +38,25 @@ public class ChoseColorButton extends JButton {
      */
     public enum ChoseButtonType {
 
-        BLUE("blue"), GREEN("green"), RED("red"), YELLOW("yellow");
+        /**
+         * Color for blue button.
+         */
+        BLUE("blue"),
+
+        /**
+         * Color for green button.
+         */
+        GREEN("green"),
+
+        /**
+         * Color for red button.
+         */
+        RED("red"),
+
+        /**
+         * Color for yellow button.
+         */
+        YELLOW("yellow");
 
         /**
          * Button icon.
