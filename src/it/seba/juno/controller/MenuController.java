@@ -83,6 +83,7 @@ public class MenuController {
      * Action for the play button, switch current view to game view
      */
     public void goGameAction() {
+        // it should be moved in options, but here already works
         if (gameModel.needReset()) {
             gameModel.reset();
             gameModel.notifyObservers(new ResetGameEvent(this));
