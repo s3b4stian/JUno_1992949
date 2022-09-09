@@ -6,6 +6,7 @@ import it.seba.juno.card.UnoValue;
 import it.seba.juno.deck.DiscardPile;
 import it.seba.juno.deck.UnoDeck;
 import it.seba.juno.deck.UnoDeckSimpleFactory;
+import it.seba.juno.observer.Observable;
 import it.seba.juno.player.ColorDropStrategy;
 import it.seba.juno.player.ColorStrategy;
 import it.seba.juno.player.DropStrategy;
@@ -19,7 +20,6 @@ import it.seba.juno.player.Player;
 import it.seba.juno.player.RandomColorStrategy;
 import it.seba.juno.player.UnoPlayers;
 import it.seba.juno.player.ValueDropStrategy;
-import it.seba.juno.util.Observable;
 
 /**
  * The model for the game, manage whole match.

@@ -5,8 +5,8 @@ it.seba.juno.deck
 it.seba.juno.event
 it.seba.juno.manger
 it.seba.juno.model
+it.seba.juno.observer
 it.seba.juno.player
-it.seba.juno.util
 it.seba.juno.view
 it.seba.juno.view.component
 it.seba.juno.view.component.listener

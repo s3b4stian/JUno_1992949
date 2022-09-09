@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import it.seba.juno.model.PlayersProfileModel;
-import it.seba.juno.util.InterfaceObserver;
-import it.seba.juno.util.Observable;
+import it.seba.juno.observer.InterfaceObserver;
+import it.seba.juno.observer.Observable;
 import it.seba.juno.view.component.BadgeLabel;
 import it.seba.juno.view.component.BadgePlayed;
 import it.seba.juno.view.component.BadgeWon;

@@ -3,7 +3,7 @@ package it.seba.juno.model;
 import java.io.Serializable;
 
 import it.seba.juno.manger.SerializationManager;
-import it.seba.juno.util.Observable;
+import it.seba.juno.observer.Observable;
 
 /**
  * The model for the options of the game.

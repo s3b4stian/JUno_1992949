@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.seba.juno.manger.SerializationManager;
-import it.seba.juno.util.Observable;
+import it.seba.juno.observer.Observable;
 
 /**
  * The model for the players of the game, the instance of this class isn't
