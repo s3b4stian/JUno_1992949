@@ -282,6 +282,12 @@ public class GameModel extends Observable {
      * Move a card from the deck to the current player.
      */
     public void drawOneCard() {
+        
+        // if cards in deck are low, refill the deck
+        if (deck.getCardsInDeck() < 5) {
+            deck.refill(discardPile.reset());
+        }
+
         currentPlayer.takeCard(deck.dealCard());
     }
 
