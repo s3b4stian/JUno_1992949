@@ -1233,7 +1233,7 @@ public class GameView extends JPanel implements InterfaceObserver {
 
             setDiscardPileColor(gameModel.discardPileColor());
 
-            log(gameModel.getCurrentPlayer() + " changed color to " + gameModel.discardPileColor());
+            log(gameModel.getCurrentPlayer().getName() + " changed color to " + gameModel.discardPileColor());
 
             panelChoseColor.disableButtons();
 
